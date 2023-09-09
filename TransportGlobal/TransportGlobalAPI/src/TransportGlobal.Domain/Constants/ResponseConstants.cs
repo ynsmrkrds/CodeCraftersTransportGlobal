@@ -1,6 +1,6 @@
 ﻿using TransportGlobal.Domain.Models;
 
-namespace EventManagement.Domain.Constants
+namespace TransportGlobal.Domain.Constants
 {
     public static class ResponseConstants
     {
