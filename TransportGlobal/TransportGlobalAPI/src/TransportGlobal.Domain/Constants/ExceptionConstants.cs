@@ -6,5 +6,6 @@
         public const string TokenError = "Please login, then try again!";
         public const string NoAuthority = "You are not authorized to access here!";
         public const string NotFoundUser = "No such user is registered in the system!";
+        public const string NotFoundTransportRequest = "No such transportation request is registered in the system!";
     }
 }

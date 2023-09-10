@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using TransportGlobal.Domain.Entities.TransportContextEntities;
 using TransportGlobal.Domain.Entities.UserContextEntities;
 
 namespace TransportGlobal.Infrastructure.Context
@@ -8,6 +9,14 @@ namespace TransportGlobal.Infrastructure.Context
     {
         #region User Bounded Context DbSets 
         public DbSet<UserEntity> Users { get; set; }
+        #endregion
+
+        #region
+        public DbSet<TransportRequestEntity> TransportRequests { get; set; }
+        #endregion
+
+        #region
+        public DbSet<TransportEntity> Transports { get; set; }
         #endregion
 
         public TransportGlobalDBContext(DbContextOptions<TransportGlobalDBContext> options) : base(options)

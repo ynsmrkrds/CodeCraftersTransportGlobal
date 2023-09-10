@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransportGlobal.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using TransportGlobal.Infrastructure.Context;
 namespace TransportGlobal.Infrastructure.Migrations
 {
     [DbContext(typeof(TransportGlobalDBContext))]
-    partial class TransportGlobalDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230909170823_TransportRequestContextAdded")]
+    partial class TransportRequestContextAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,28 +24,6 @@ namespace TransportGlobal.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("TransportGlobal.Domain.Entities.TransportContextEntities.TransportEntity", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("TransportRequestID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VehicleID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Transports");
-                });
 
             modelBuilder.Entity("TransportGlobal.Domain.Entities.TransportContextEntities.TransportRequestEntity", b =>
                 {
