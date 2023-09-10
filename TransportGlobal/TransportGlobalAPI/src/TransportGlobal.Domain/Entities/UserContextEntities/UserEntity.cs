@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TransportGlobal.Domain.Entities.CompanyContextEntities;
 using TransportGlobal.Domain.Enums.UserContextEnums;
 using TransportGlobal.Domain.SeedWorks;
 
@@ -18,6 +19,8 @@ namespace TransportGlobal.Domain.Entities.UserContextEntities
         public string PasswordHash { get; set; }
 
         public UserType Type { get; set; }
+
+        public CompanyEntity? Company { get; set; }
 
         public UserEntity(string name, string surname, string email, string passwordHash, UserType type)
         {

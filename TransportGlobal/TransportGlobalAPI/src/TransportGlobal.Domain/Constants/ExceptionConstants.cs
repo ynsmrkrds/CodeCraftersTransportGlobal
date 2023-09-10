@@ -6,5 +6,8 @@
         public const string TokenError = "Please login, then try again!";
         public const string NoAuthority = "You are not authorized to access here!";
         public const string NotFoundUser = "No such user is registered in the system!";
+        public const string NotFoundCompany = "No such company is registered in the system!";
+        public const string NotFoundVehicle = "No such vehicle is registered in the system!";
+        public const string NotFoundEmployee = "No such employee is registered in the system!";
     }
 }

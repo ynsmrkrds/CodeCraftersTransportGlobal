@@ -20,5 +20,10 @@ namespace TransportGlobal.Infrastructure.Repositories.UserContextRepositories
         {
             return _context.Users.Where(x => x.Email == email && x.PasswordHash == passwordHash).FirstOrDefault();
         }
+
+        public bool HasCompany(int id)
+        {
+            return _context.Users.First(x => x.ID == id).Company != null;
+        }
     }
 }

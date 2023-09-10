@@ -7,5 +7,7 @@ namespace TransportGlobal.Domain.Repositories.UserContextRepositories
         bool IsExistsWithSameEmail(string email);
 
         UserEntity? ValidateUser(string email, string passwordHash);
+
+        bool HasCompany(int id);
     }
 }
