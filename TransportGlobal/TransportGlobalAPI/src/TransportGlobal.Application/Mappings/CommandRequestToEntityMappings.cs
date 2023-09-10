@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using TransportGlobal.Application.CQRSs.ReviewContextCQRSs.CommandCreateReview;
 using TransportGlobal.Application.CQRSs.UserContextCQRSs.CommandCreateUser;
 using TransportGlobal.Application.CQRSs.UserContextCQRSs.CommandUpdateUser;
+using TransportGlobal.Domain.Entities.ReviewContextEntities;
 using TransportGlobal.Domain.Entities.UserContextEntities;
 
 namespace TransportGlobal.Application.Mappings
@@ -15,6 +17,10 @@ namespace TransportGlobal.Application.Mappings
                 .ConstructUsing(src => new UserEntity(src.Name, src.Surname, src.Email, src.Password, src.Type));
 
             CreateMap<UpdateUserCommandRequest, UserEntity>();
+            #endregion
+
+            #region Review Bounded Context Mappings
+            CreateMap<CreateReviewCommandRequest, ReviewEntity>();
             #endregion
         }
     }
