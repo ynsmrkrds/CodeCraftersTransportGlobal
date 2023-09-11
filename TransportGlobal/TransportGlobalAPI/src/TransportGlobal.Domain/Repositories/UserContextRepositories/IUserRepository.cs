@@ -1,4 +1,5 @@
-﻿using TransportGlobal.Domain.Entities.UserContextEntities;
+﻿using TransportGlobal.Domain.Entities.TransporterContextEntities;
+using TransportGlobal.Domain.Entities.UserContextEntities;
 
 namespace TransportGlobal.Domain.Repositories.UserContextRepositories
 {
@@ -7,5 +8,7 @@ namespace TransportGlobal.Domain.Repositories.UserContextRepositories
         bool IsExistsWithSameEmail(string email);
 
         UserEntity? ValidateUser(string email, string passwordHash);
+
+        bool HasCompany(int id);
     }
 }
