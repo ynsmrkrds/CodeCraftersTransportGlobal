@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using TransportGlobal.Domain.Entities.CompanyContextEntities;
+using TransportGlobal.Domain.Entities.TransporterContextEntities;
 using TransportGlobal.Domain.Entities.UserContextEntities;
 
 namespace TransportGlobal.Infrastructure.Context
@@ -11,7 +11,7 @@ namespace TransportGlobal.Infrastructure.Context
         public DbSet<UserEntity> Users { get; set; }
         #endregion
 
-        #region Company Bounded Context DbSets 
+        #region Transporter Bounded Context DbSets 
         public DbSet<EmployeeEntity> Employees { get; set; }
 
         public DbSet<VehicleEntity> Vehicles { get; set; }
@@ -29,17 +29,18 @@ namespace TransportGlobal.Infrastructure.Context
 
             #region User Bounded Context Configurations
             modelBuilder.Entity<UserEntity>()
-                .HasOne(x => x.Company)
+                .HasMany(x => x.Companies)
                 .WithOne(x => x.OwnerUser)
-                .HasForeignKey<CompanyEntity>(x => x.OwnerUserID);
+                .HasForeignKey(x => x.OwnerUserID)
+                .OnDelete(DeleteBehavior.Cascade);
             #endregion
 
-            #region Company Bounded Context Configurations
+            #region Transporter Bounded Context Configurations
             modelBuilder.Entity<VehicleEntity>()
                 .HasMany(x => x.Employees)
                 .WithOne(x => x.Vehicle)
                 .HasForeignKey(x => x.VehicleID)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<CompanyEntity>()
                 .HasMany(x => x.Vehicles)

@@ -1,14 +1,15 @@
 ﻿using AutoMapper;
-using TransportGlobal.Application.CQRSs.CompanyContextCQRSs.CommandCreateCompany;
-using TransportGlobal.Application.CQRSs.CompanyContextCQRSs.CommandCreateEmployee;
-using TransportGlobal.Application.CQRSs.CompanyContextCQRSs.CommandCreateVehicle;
-using TransportGlobal.Application.CQRSs.CompanyContextCQRSs.CommandUpdateCompany;
-using TransportGlobal.Application.CQRSs.CompanyContextCQRSs.CommandUpdateVehicle;
+using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandCreateCompany;
+using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandCreateEmployee;
+using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandCreateVehicle;
+using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandUpdateCompany;
+using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandUpdateEmployee;
+using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandUpdateVehicle;
 using TransportGlobal.Application.CQRSs.UserContextCQRSs.CommandCreateUser;
 using TransportGlobal.Application.CQRSs.UserContextCQRSs.CommandUpdateUser;
-using TransportGlobal.Domain.Entities.CompanyContextEntities;
+using TransportGlobal.Domain.Entities.TransporterContextEntities;
 using TransportGlobal.Domain.Entities.UserContextEntities;
-using TransportGlobal.Domain.Enums.CompanyContextEntities;
+using TransportGlobal.Domain.Enums.TransporterContextEnums;
 
 namespace TransportGlobal.Application.Mappings
 {
@@ -24,7 +25,7 @@ namespace TransportGlobal.Application.Mappings
             CreateMap<UpdateUserCommandRequest, UserEntity>();
             #endregion
 
-            #region Company Bounded Context Mappings
+            #region Transporter Bounded Context Mappings
             CreateMap<CreateCompanyCommandRequest, CompanyEntity>();
 
             CreateMap<UpdateCompanyCommandRequest, CompanyEntity>();
@@ -34,7 +35,11 @@ namespace TransportGlobal.Application.Mappings
 
             CreateMap<UpdateVehicleCommandRequest, VehicleEntity>();
 
-            CreateMap<CreateEmployeeCommandRequest, EmployeeEntity>();
+            CreateMap<CreateEmployeeCommandRequest, EmployeeEntity>()
+                 .ConstructUsing(src => new EmployeeEntity(0, src.VehicleID ?? null, src.Name, src.Surname, src.Email, src.Title, false));
+
+            CreateMap<UpdateEmployeeCommandRequest, EmployeeEntity>()
+                 .ConstructUsing(src => new EmployeeEntity(0, src.VehicleID ?? null, src.Name, src.Surname, src.Email, src.Title, false));
             #endregion
         }
     }

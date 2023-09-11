@@ -1,4 +1,5 @@
-﻿using TransportGlobal.Domain.Entities.UserContextEntities;
+﻿using TransportGlobal.Domain.Entities.TransporterContextEntities;
+using TransportGlobal.Domain.Entities.UserContextEntities;
 
 namespace TransportGlobal.Domain.Repositories.UserContextRepositories
 {

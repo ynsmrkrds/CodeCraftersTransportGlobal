@@ -9,5 +9,6 @@
         public const string NotFoundCompany = "No such company is registered in the system!";
         public const string NotFoundVehicle = "No such vehicle is registered in the system!";
         public const string NotFoundEmployee = "No such employee is registered in the system!";
+        public const string CannotUpdateWithValue = "You cannot update with this value!";
     }
 }

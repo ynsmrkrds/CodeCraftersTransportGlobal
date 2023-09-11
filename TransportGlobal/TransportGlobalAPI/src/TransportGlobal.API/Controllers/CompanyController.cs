@@ -2,14 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using TransportGlobal.API.Extensions.Attributes;
-using TransportGlobal.Application.CQRSs.CompanyContextCQRSs.CommandCreateCompany;
-using TransportGlobal.Application.CQRSs.CompanyContextCQRSs.CommandDeleteCompany;
-using TransportGlobal.Application.CQRSs.CompanyContextCQRSs.CommandUpdateCompany;
-using TransportGlobal.Application.CQRSs.CompanyContextCQRSs.QueryGetAllCompanies;
-using TransportGlobal.Application.CQRSs.CompanyContextCQRSs.QueryGetCompany;
+using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandCreateCompany;
+using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandDeleteCompany;
+using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandUpdateCompany;
+using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.QueryGetCompany;
+using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.QueryGetOwnCompany;
 using TransportGlobal.Application.DTOs.ResponseDTOs;
 using TransportGlobal.Domain.Enums.UserContextEnums;
-using TransportGlobal.Domain.Models;
 
 namespace TransportGlobal.API.Controllers
 {
@@ -23,20 +22,20 @@ namespace TransportGlobal.API.Controllers
         }
 
         [HttpGet]
-        [Route("{page}/{size}")]
-        [Authority(UserType.Customer, UserType.Shipper)]
-        public async Task<IActionResult> GetAll(int page, int size)
-        {
-            GetAllCompaniesQueryResponse queryResponse = await _mediator.Send(new GetAllCompaniesQueryRequest(new PaginationModel(page, size)));
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, queryResponse.Companies));
-        }
-
-        [HttpGet]
         [Route("{id}")]
         [Authority(UserType.Customer, UserType.Shipper)]
         public async Task<IActionResult> Get(int id)
         {
             GetCompanyQueryResponse queryResponse = await _mediator.Send(new GetCompanyQueryRequest(id));
+            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, queryResponse.Company));
+        }
+
+        [HttpGet]
+        [Route("own")]
+        [Authority(UserType.Customer, UserType.Shipper)]
+        public async Task<IActionResult> GetOwnCompany()
+        {
+            GetOwnCompanyQueryResponse queryResponse = await _mediator.Send(new GetOwnCompanyQueryRequest());
             return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, queryResponse.Company));
         }
 

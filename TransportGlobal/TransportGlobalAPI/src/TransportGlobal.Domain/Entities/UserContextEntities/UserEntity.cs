@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using TransportGlobal.Domain.Entities.CompanyContextEntities;
+using TransportGlobal.Domain.Entities.TransporterContextEntities;
 using TransportGlobal.Domain.Enums.UserContextEnums;
 using TransportGlobal.Domain.SeedWorks;
 
@@ -20,7 +20,9 @@ namespace TransportGlobal.Domain.Entities.UserContextEntities
 
         public UserType Type { get; set; }
 
-        public CompanyEntity? Company { get; set; }
+        public ICollection<CompanyEntity> Companies { get; set; } = new List<CompanyEntity>();
+
+        public CompanyEntity? ActiveCompany => Companies.FirstOrDefault(x => x.IsDeleted == false);
 
         public UserEntity(string name, string surname, string email, string passwordHash, UserType type)
         {

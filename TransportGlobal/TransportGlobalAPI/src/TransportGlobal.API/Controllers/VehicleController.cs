@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using TransportGlobal.API.Extensions.Attributes;
-using TransportGlobal.Application.CQRSs.CompanyContextCQRSs.CommandCreateVehicle;
-using TransportGlobal.Application.CQRSs.CompanyContextCQRSs.CommandDeleteVehicle;
-using TransportGlobal.Application.CQRSs.CompanyContextCQRSs.CommandUpdateVehicle;
-using TransportGlobal.Application.CQRSs.CompanyContextCQRSs.QueryGetAllVehicles;
-using TransportGlobal.Application.CQRSs.CompanyContextCQRSs.QueryGetVehicle;
+using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandCreateVehicle;
+using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandDeleteVehicle;
+using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandUpdateVehicle;
+using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.QueryGetOwnVehicles;
+using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.QueryGetVehicle;
 using TransportGlobal.Application.DTOs.ResponseDTOs;
 using TransportGlobal.Domain.Enums.UserContextEnums;
 using TransportGlobal.Domain.Models;
@@ -23,30 +23,21 @@ namespace TransportGlobal.API.Controllers
         }
 
         [HttpGet]
-        [Route("{page}/{size}")]
-        [Authority(UserType.Customer, UserType.Shipper)]
-        public async Task<IActionResult> GetAll(int page, int size)
-        {
-            GetAllVehiclesQueryResponse queryResponse = await _mediator.Send(new GetAllVehiclesQueryRequest(new PaginationModel(page, size)));
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, queryResponse.Vehicles));
-        }
-
-        [HttpGet]
-        [Route("{page}/{size}?companyID={companyID}")]
-        [Authority(UserType.Customer, UserType.Shipper)]
-        public async Task<IActionResult> GetAllByCompanyID(int page, int size, [FromQuery] int companyID)
-        {
-            GetAllVehiclesQueryResponse queryResponse = await _mediator.Send(new GetAllVehiclesQueryRequest(new PaginationModel(page, size), companyID));
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, queryResponse.Vehicles));
-        }
-
-        [HttpGet]
         [Route("{id}")]
-        [Authority(UserType.Customer, UserType.Shipper)]
+        [Authority(UserType.Shipper)]
         public async Task<IActionResult> Get(int id)
         {
             GetVehicleQueryResponse queryResponse = await _mediator.Send(new GetVehicleQueryRequest(id));
             return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, queryResponse.Vehicle));
+        }
+
+        [HttpGet]
+        [Route("own/{page}/{size}")]
+        [Authority(UserType.Shipper)]
+        public async Task<IActionResult> GetOwnVehicles(int page, int size)
+        {
+            GetOwnVehiclesQueryResponse queryResponse = await _mediator.Send(new GetOwnVehiclesQueryRequest(new PaginationModel(page, size)));
+            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, queryResponse.Vehicles));
         }
 
         [HttpPost]
