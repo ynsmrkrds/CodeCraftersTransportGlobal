@@ -5,7 +5,6 @@ using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandCreateVeh
 using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandUpdateCompany;
 using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandUpdateEmployee;
 using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandUpdateVehicle;
-using TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCreateTransport;
 using TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCreateTransportRequest;
 using TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandUpdateTransportRequest;
 using TransportGlobal.Application.CQRSs.UserContextCQRSs.CommandCreateUser;
@@ -15,6 +14,7 @@ using TransportGlobal.Domain.Entities.TransportContextEntities;
 using TransportGlobal.Domain.Entities.UserContextEntities;
 using TransportGlobal.Domain.Enums.TransporterContextEnums;
 using TransportGlobal.Domain.Enums.TransportContextEnums;
+using TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCreateTransportContract;
 
 namespace TransportGlobal.Application.Mappings
 {
@@ -53,7 +53,8 @@ namespace TransportGlobal.Application.Mappings
             
             CreateMap<UpdateTransportRequestCommandRequest, TransportRequestEntity>();
 
-            CreateMap<CreateTransportCommandRequest, TransportEntity>();
+            CreateMap<CreateTransportContractCommandRequest, TransportContractEntity>()
+                .ConstructUsing(src => new TransportContractEntity(0, 0, src.TransportRequestID, src.VehicleID, src.Price, false));
             #endregion
         }
     }

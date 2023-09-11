@@ -6,11 +6,50 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TransportGlobal.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class CompanyContextTables : Migration
+    public partial class TablesRelationsAdded : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "TransportRequests",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserID = table.Column<int>(type: "int", nullable: false),
+                    TransportType = table.Column<int>(type: "int", nullable: false),
+                    Weight = table.Column<double>(type: "float", nullable: false),
+                    Volume = table.Column<double>(type: "float", nullable: false),
+                    TransportDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LoadingAddress = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    DeliveryAddress = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    StatusType = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TransportRequests", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Surname = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.ID);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Companies",
                 columns: table => new
@@ -91,11 +130,50 @@ namespace TransportGlobal.Infrastructure.Migrations
                         principalColumn: "ID");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "TransportContracts",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserID = table.Column<int>(type: "int", nullable: false),
+                    CompanyID = table.Column<int>(type: "int", nullable: false),
+                    TransportRequestID = table.Column<int>(type: "int", nullable: false),
+                    VehicleID = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TransportContracts", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_TransportContracts_Companies_CompanyID",
+                        column: x => x.CompanyID,
+                        principalTable: "Companies",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_TransportContracts_TransportRequests_TransportRequestID",
+                        column: x => x.TransportRequestID,
+                        principalTable: "TransportRequests",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TransportContracts_Users_UserID",
+                        column: x => x.UserID,
+                        principalTable: "Users",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TransportContracts_Vehicles_VehicleID",
+                        column: x => x.VehicleID,
+                        principalTable: "Vehicles",
+                        principalColumn: "ID");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Companies_OwnerUserID",
                 table: "Companies",
-                column: "OwnerUserID",
-                unique: true);
+                column: "OwnerUserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_CompanyID",
@@ -105,6 +183,26 @@ namespace TransportGlobal.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_VehicleID",
                 table: "Employees",
+                column: "VehicleID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TransportContracts_CompanyID",
+                table: "TransportContracts",
+                column: "CompanyID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TransportContracts_TransportRequestID",
+                table: "TransportContracts",
+                column: "TransportRequestID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TransportContracts_UserID",
+                table: "TransportContracts",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TransportContracts_VehicleID",
+                table: "TransportContracts",
                 column: "VehicleID");
 
             migrationBuilder.CreateIndex(
@@ -120,10 +218,19 @@ namespace TransportGlobal.Infrastructure.Migrations
                 name: "Employees");
 
             migrationBuilder.DropTable(
+                name: "TransportContracts");
+
+            migrationBuilder.DropTable(
+                name: "TransportRequests");
+
+            migrationBuilder.DropTable(
                 name: "Vehicles");
 
             migrationBuilder.DropTable(
                 name: "Companies");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

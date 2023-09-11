@@ -24,7 +24,7 @@ namespace TransportGlobal.Domain.Entities.TransportContextEntities
 
         public StatusType StatusType { get; set; }
 
-        public ICollection<TransportEntity> Transports { get; set; } = new List<TransportEntity>();
+        public ICollection<TransportContractEntity> TransportContracts { get; set; } = new List<TransportContractEntity>();
 
         public TransportRequestEntity(int userID, TransportType transportType, double weight, double volume, DateTime transportDate, string loadingAddress, string deliveryAddress, StatusType statusType)
         {

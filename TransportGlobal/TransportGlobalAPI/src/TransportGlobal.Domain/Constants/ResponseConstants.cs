@@ -47,5 +47,9 @@ namespace TransportGlobal.Domain.Constants
         public static readonly ResponseConstantModel EmployeeCannotAssignToVehicle = new(false, "An employee cannot be assigned to a vehicle at work!");
 
         public static readonly ResponseConstantModel NotTransportRequestOwner = new(false, "The transport request does not belong to the user!");
+
+        public static readonly ResponseConstantModel CannotMakeContractAgreement = new(false, "Since a contract has been made for this transport request, no further contract can be made!");
+
+        public static readonly ResponseConstantModel NotTransportContractOwner = new(false, "The transport request does not belong to the user!");
     }
 }
