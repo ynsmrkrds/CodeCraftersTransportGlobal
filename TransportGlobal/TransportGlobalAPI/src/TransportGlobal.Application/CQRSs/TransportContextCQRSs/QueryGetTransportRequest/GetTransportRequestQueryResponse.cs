@@ -2,7 +2,7 @@
 
 namespace TransportGlobal.Application.CQRSs.TransportContextCQRSs.QueryGetTransportRequest
 {
-    public class GetTransportRequestQueryResponse 
+    public class GetTransportRequestQueryResponse
     {
         public TransportRequestViewModel TransportRequest { get; set; }
 

@@ -24,8 +24,6 @@ namespace TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCreateT
         {
             TokenModel tokenModel = TokenHelper.Instance().DecodeTokenInRequest() ?? throw new ClientSideException(ExceptionConstants.TokenError);
 
-            if (tokenModel == null) return Task.FromResult(new CreateTransportRequestCommandResponse(ResponseConstants.CreateFailed));
-
             TransportRequestEntity transportRequestEntity = _mapper.Map<TransportRequestEntity>(request);
             transportRequestEntity.UserID = tokenModel.UserID;
 

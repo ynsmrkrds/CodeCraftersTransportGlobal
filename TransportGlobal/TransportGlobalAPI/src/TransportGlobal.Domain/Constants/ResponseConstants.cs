@@ -23,5 +23,7 @@ namespace TransportGlobal.Domain.Constants
         public static readonly ResponseConstantModel CurrentPasswordIncorrect = new(false, "The Current password is incorrect!");
 
         public static readonly ResponseConstantModel ExistsUserWithSameEmail = new(false, "A user with the same email address already exists!");
+
+        public static readonly ResponseConstantModel NotTransportRequestOwner = new(false, "The transport request does not belong to the user!");
     }
 }

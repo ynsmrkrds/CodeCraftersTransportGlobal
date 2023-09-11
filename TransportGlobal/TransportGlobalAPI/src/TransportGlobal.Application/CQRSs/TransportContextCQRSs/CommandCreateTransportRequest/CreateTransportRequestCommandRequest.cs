@@ -13,19 +13,16 @@ namespace TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCreateT
 
         public DateTime TransportDate { get; set; }
 
-        public DateTime RequestDate { get; set; }
-
         public string LoadingAddress { get; set; }
 
         public string DeliveryAddress { get; set; }
 
-        public CreateTransportRequestCommandRequest(TransportType transportType, double weight, double volume, DateTime transportDate, DateTime requestDate, string loadingAddress, string deliveryAddress)
+        public CreateTransportRequestCommandRequest(TransportType transportType, double weight, double volume, DateTime transportDate, string loadingAddress, string deliveryAddress)
         {
             TransportType = transportType;
             Weight = weight;
             Volume = volume;
             TransportDate = transportDate;
-            RequestDate = requestDate;
             LoadingAddress = loadingAddress;
             DeliveryAddress = deliveryAddress;
         }

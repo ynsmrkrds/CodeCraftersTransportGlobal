@@ -4,6 +4,12 @@ namespace TransportGlobal.Domain.Repositories.TransportContextRepositories
 {
     public interface ITransportRequestRepository : IRepository<TransportRequestEntity> 
     {
-        List<TransportRequestEntity> GetTransportRequestWithPendingEntities();
+        IEnumerable<TransportRequestEntity> GetPendingTransportRequests();
+
+        IEnumerable<TransportRequestEntity> GetTransportRequestsByUserID(int userID);
+
+        bool? CanDelete(int id);
+
+        bool? CanUpdate(int id);
     }
 }

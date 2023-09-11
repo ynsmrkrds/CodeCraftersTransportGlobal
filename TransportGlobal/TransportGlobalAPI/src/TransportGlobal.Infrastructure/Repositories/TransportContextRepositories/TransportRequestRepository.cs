@@ -11,9 +11,32 @@ namespace TransportGlobal.Infrastructure.Repositories.TransportContextRepositori
         {
         }
 
-        public List<TransportRequestEntity> GetTransportRequestWithPendingEntities()
+        public IEnumerable<TransportRequestEntity> GetPendingTransportRequests()
         {
-            return _context.TransportRequests.Where(x => x.StatusType == StatusType.Pending).ToList();
+            return _context.TransportRequests
+                .Where(x => x.StatusType == StatusType.Pending)
+                .AsEnumerable();
+        }
+
+        public IEnumerable<TransportRequestEntity> GetTransportRequestsByUserID(int userID)
+        {
+            return _context.TransportRequests.Where(x => x.UserID == userID).AsEnumerable();
+        }
+
+        public bool? CanDelete(int id)
+        {
+            TransportRequestEntity? transportRequest = _context.TransportRequests.FirstOrDefault(x => x.ID == id);
+            if (transportRequest == null) return null;
+
+            return transportRequest.StatusType == StatusType.Pending || transportRequest.StatusType == StatusType.Cancelled;
+        }
+
+        public bool? CanUpdate(int id)
+        {
+            TransportRequestEntity? transportRequest = _context.TransportRequests.FirstOrDefault(x => x.ID == id);
+            if (transportRequest == null) return null;
+
+            return transportRequest.StatusType == StatusType.Pending;
         }
     }
 }

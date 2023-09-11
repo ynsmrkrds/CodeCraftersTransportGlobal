@@ -22,12 +22,12 @@ namespace TransportGlobal.Application.Mappings
             CreateMap<UpdateUserCommandRequest, UserEntity>();
             #endregion
 
-            #region Transport Request Bounded Context Mappings
-            CreateMap<CreateTransportRequestCommandRequest, TransportRequestEntity>().ConstructUsing(src => new TransportRequestEntity(0, src.TransportType, src.Weight, src.Volume, src.TransportDate, src.RequestDate, src.LoadingAddress, src.DeliveryAddress, StatusType.Pending));
-            CreateMap<UpdateTransportRequestCommandRequest, TransportRequestEntity>();
-            #endregion
-
             #region Transport Bounded Context Mappings
+            CreateMap<CreateTransportRequestCommandRequest, TransportRequestEntity>()
+                .ConstructUsing(src => new TransportRequestEntity(0, src.TransportType, src.Weight, src.Volume, src.TransportDate, src.LoadingAddress, src.DeliveryAddress, StatusType.Pending));
+            
+            CreateMap<UpdateTransportRequestCommandRequest, TransportRequestEntity>();
+
             CreateMap<CreateTransportCommandRequest, TransportEntity>();
             #endregion
         }

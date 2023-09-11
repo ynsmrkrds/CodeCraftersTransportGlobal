@@ -11,12 +11,11 @@ namespace TransportGlobal.Infrastructure.Context
         public DbSet<UserEntity> Users { get; set; }
         #endregion
 
-        #region
+        #region Transport Bounded Context DbSets
         public DbSet<TransportRequestEntity> TransportRequests { get; set; }
-        #endregion
 
-        #region
         public DbSet<TransportEntity> Transports { get; set; }
+
         #endregion
 
         public TransportGlobalDBContext(DbContextOptions<TransportGlobalDBContext> options) : base(options)
@@ -26,6 +25,14 @@ namespace TransportGlobal.Infrastructure.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            #region Transport Bounded Context Configurations
+            modelBuilder.Entity<TransportEntity>()
+                .HasOne(x => x.TransportRequest)
+                .WithMany(x => x.Transports)
+                .HasForeignKey(x => x.TransportRequestID)
+                .OnDelete(DeleteBehavior.Cascade);
+            #endregion
 
             base.OnModelCreating(modelBuilder);
         }

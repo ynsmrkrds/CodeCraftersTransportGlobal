@@ -1,9 +1,7 @@
 ﻿using MediatR;
-using TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandUpdateTransportRequest;
 using TransportGlobal.Application.Helpers;
 using TransportGlobal.Domain.Constants;
 using TransportGlobal.Domain.Entities.TransportContextEntities;
-using TransportGlobal.Domain.Enums.TransportContextEnums;
 using TransportGlobal.Domain.Exceptions;
 using TransportGlobal.Domain.Models;
 using TransportGlobal.Domain.Repositories.TransportContextRepositories;
@@ -22,12 +20,12 @@ namespace TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandDeleteT
         public Task<DeleteTransportRequestCommandResponse> Handle(DeleteTransportRequestCommandRequest request, CancellationToken cancellationToken)
         {
             TokenModel tokenModel = TokenHelper.Instance().DecodeTokenInRequest() ?? throw new ClientSideException(ExceptionConstants.TokenError);
-            if (tokenModel == null) return Task.FromResult(new DeleteTransportRequestCommandResponse(ResponseConstants.DeleteFailed));
 
-            TransportRequestEntity? transportRequestEntity = _transportRequestRepository.GetByID(request.ID);
-            if(transportRequestEntity == null) throw new ClientSideException(ExceptionConstants.NotFoundTransportRequest);
+            TransportRequestEntity transportRequestEntity = _transportRequestRepository.GetByID(request.ID) ?? throw new ClientSideException(ExceptionConstants.NotFoundTransportRequest);
 
-            if (transportRequestEntity.StatusType != StatusType.Pending && transportRequestEntity.StatusType != StatusType.Cancelled) return Task.FromResult(new DeleteTransportRequestCommandResponse(ResponseConstants.DeleteFailed));
+            if (tokenModel.UserID != transportRequestEntity.UserID) return Task.FromResult(new DeleteTransportRequestCommandResponse(ResponseConstants.NotTransportRequestOwner));
+
+            if (_transportRequestRepository.CanDelete(request.ID) == false) return Task.FromResult(new DeleteTransportRequestCommandResponse(ResponseConstants.DeleteFailed));
 
             _transportRequestRepository.Delete(transportRequestEntity);
 
@@ -35,7 +33,6 @@ namespace TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandDeleteT
             if (effectedRows == 0) return Task.FromResult(new DeleteTransportRequestCommandResponse(ResponseConstants.DeleteFailed));
 
             return Task.FromResult(new DeleteTransportRequestCommandResponse(ResponseConstants.SuccessfullyDeleted));
-
         }
     }
 }
