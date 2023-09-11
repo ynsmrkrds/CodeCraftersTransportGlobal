@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TransportGlobal.Domain.Entities.TransportContextEntities;
 using TransportGlobal.Domain.Entities.UserContextEntities;
 using TransportGlobal.Domain.SeedWorks;
 
@@ -28,6 +29,8 @@ namespace TransportGlobal.Domain.Entities.TransporterContextEntities
         public ICollection<VehicleEntity> Vehicles { get; set; } = new List<VehicleEntity>();
 
         public ICollection<EmployeeEntity> Employees { get; set; } = new List<EmployeeEntity>();
+
+        public ICollection<TransportContractEntity> TransportContracts { get; set; } = new List<TransportContractEntity>();
 
         public CompanyEntity(string name, string address, string phoneNumber, string email, bool isDeleted = false)
         {

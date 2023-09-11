@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using TransportGlobal.Domain.Entities.TransportContextEntities;
 using TransportGlobal.Domain.Enums.TransporterContextEnums;
 using TransportGlobal.Domain.SeedWorks;
 
@@ -20,6 +21,8 @@ namespace TransportGlobal.Domain.Entities.TransporterContextEntities
         public bool IsDeleted { get; set; }
 
         public ICollection<EmployeeEntity> Employees { get; set; } = new List<EmployeeEntity>();
+
+        public ICollection<TransportContractEntity> TransportContracts { get; set; } = new List<TransportContractEntity>();
 
         public VehicleEntity(int companyID, string identificationNumber, VehicleType type, VehicleStatusType status, bool isDeleted = false)
         {

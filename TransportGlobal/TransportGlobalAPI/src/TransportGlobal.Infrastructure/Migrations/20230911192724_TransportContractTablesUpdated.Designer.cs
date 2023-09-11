@@ -12,8 +12,8 @@ using TransportGlobal.Infrastructure.Context;
 namespace TransportGlobal.Infrastructure.Migrations
 {
     [DbContext(typeof(TransportGlobalDBContext))]
-    [Migration("20230910180655_CompanyContextTables")]
-    partial class CompanyContextTables
+    [Migration("20230911192724_TransportContractTablesUpdated")]
+    partial class TransportContractTablesUpdated
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,92 @@ namespace TransportGlobal.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("TransportGlobal.Domain.Entities.TransportContextEntities.TransportContractEntity", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("CompanyID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsAgreed")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("TransportRequestID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VehicleID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CompanyID");
+
+                    b.HasIndex("TransportRequestID");
+
+                    b.HasIndex("UserID");
+
+                    b.HasIndex("VehicleID");
+
+                    b.ToTable("TransportContracts");
+                });
+
+            modelBuilder.Entity("TransportGlobal.Domain.Entities.TransportContextEntities.TransportRequestEntity", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeliveryAddress")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("LoadingAddress")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("StatusType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TransportDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TransportType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Volume")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Weight")
+                        .HasColumnType("float");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("TransportRequests");
+                });
 
             modelBuilder.Entity("TransportGlobal.Domain.Entities.TransporterContextEntities.CompanyEntity", b =>
                 {
@@ -62,8 +148,7 @@ namespace TransportGlobal.Infrastructure.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("OwnerUserID")
-                        .IsUnique();
+                    b.HasIndex("OwnerUserID");
 
                     b.ToTable("Companies");
                 });
@@ -185,11 +270,46 @@ namespace TransportGlobal.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("TransportGlobal.Domain.Entities.TransportContextEntities.TransportContractEntity", b =>
+                {
+                    b.HasOne("TransportGlobal.Domain.Entities.TransporterContextEntities.CompanyEntity", "Company")
+                        .WithMany("TransportContracts")
+                        .HasForeignKey("CompanyID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TransportGlobal.Domain.Entities.TransportContextEntities.TransportRequestEntity", "TransportRequest")
+                        .WithMany("TransportContracts")
+                        .HasForeignKey("TransportRequestID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TransportGlobal.Domain.Entities.UserContextEntities.UserEntity", "User")
+                        .WithMany("TransportContracts")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TransportGlobal.Domain.Entities.TransporterContextEntities.VehicleEntity", "Vehicle")
+                        .WithMany("TransportContracts")
+                        .HasForeignKey("VehicleID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("TransportRequest");
+
+                    b.Navigation("User");
+
+                    b.Navigation("Vehicle");
+                });
+
             modelBuilder.Entity("TransportGlobal.Domain.Entities.TransporterContextEntities.CompanyEntity", b =>
                 {
                     b.HasOne("TransportGlobal.Domain.Entities.UserContextEntities.UserEntity", "OwnerUser")
-                        .WithOne("Company")
-                        .HasForeignKey("TransportGlobal.Domain.Entities.TransporterContextEntities.CompanyEntity", "OwnerUserID")
+                        .WithMany("Companies")
+                        .HasForeignKey("OwnerUserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -225,9 +345,16 @@ namespace TransportGlobal.Infrastructure.Migrations
                     b.Navigation("Company");
                 });
 
+            modelBuilder.Entity("TransportGlobal.Domain.Entities.TransportContextEntities.TransportRequestEntity", b =>
+                {
+                    b.Navigation("TransportContracts");
+                });
+
             modelBuilder.Entity("TransportGlobal.Domain.Entities.TransporterContextEntities.CompanyEntity", b =>
                 {
                     b.Navigation("Employees");
+
+                    b.Navigation("TransportContracts");
 
                     b.Navigation("Vehicles");
                 });
@@ -235,11 +362,15 @@ namespace TransportGlobal.Infrastructure.Migrations
             modelBuilder.Entity("TransportGlobal.Domain.Entities.TransporterContextEntities.VehicleEntity", b =>
                 {
                     b.Navigation("Employees");
+
+                    b.Navigation("TransportContracts");
                 });
 
             modelBuilder.Entity("TransportGlobal.Domain.Entities.UserContextEntities.UserEntity", b =>
                 {
-                    b.Navigation("Company");
+                    b.Navigation("Companies");
+
+                    b.Navigation("TransportContracts");
                 });
 #pragma warning restore 612, 618
         }

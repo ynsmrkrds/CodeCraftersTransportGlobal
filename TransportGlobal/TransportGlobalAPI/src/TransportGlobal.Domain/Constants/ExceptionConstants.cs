@@ -10,5 +10,7 @@
         public const string NotFoundVehicle = "No such vehicle is registered in the system!";
         public const string NotFoundEmployee = "No such employee is registered in the system!";
         public const string CannotUpdateWithValue = "You cannot update with this value!";
+        public const string NotFoundTransportRequest = "No such transport request is registered in the system!";
+        public const string NotFoundTransportContract = "No such transport contract is registered in the system!";
     }
 }

@@ -5,11 +5,16 @@ using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandCreateVeh
 using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandUpdateCompany;
 using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandUpdateEmployee;
 using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandUpdateVehicle;
+using TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCreateTransportRequest;
+using TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandUpdateTransportRequest;
 using TransportGlobal.Application.CQRSs.UserContextCQRSs.CommandCreateUser;
 using TransportGlobal.Application.CQRSs.UserContextCQRSs.CommandUpdateUser;
 using TransportGlobal.Domain.Entities.TransporterContextEntities;
+using TransportGlobal.Domain.Entities.TransportContextEntities;
 using TransportGlobal.Domain.Entities.UserContextEntities;
 using TransportGlobal.Domain.Enums.TransporterContextEnums;
+using TransportGlobal.Domain.Enums.TransportContextEnums;
+using TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCreateTransportContract;
 
 namespace TransportGlobal.Application.Mappings
 {
@@ -40,6 +45,16 @@ namespace TransportGlobal.Application.Mappings
 
             CreateMap<UpdateEmployeeCommandRequest, EmployeeEntity>()
                  .ConstructUsing(src => new EmployeeEntity(0, src.VehicleID ?? null, src.Name, src.Surname, src.Email, src.Title, false));
+            #endregion
+
+            #region Transport Bounded Context Mappings
+            CreateMap<CreateTransportRequestCommandRequest, TransportRequestEntity>()
+                .ConstructUsing(src => new TransportRequestEntity(0, src.TransportType, src.Weight, src.Volume, src.TransportDate, src.LoadingAddress, src.DeliveryAddress, StatusType.Pending));
+            
+            CreateMap<UpdateTransportRequestCommandRequest, TransportRequestEntity>();
+
+            CreateMap<CreateTransportContractCommandRequest, TransportContractEntity>()
+                .ConstructUsing(src => new TransportContractEntity(0, 0, src.TransportRequestID, src.VehicleID, src.Price, false));
             #endregion
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TransportGlobal.Domain.Entities.TransportContextEntities;
 using TransportGlobal.Domain.Entities.TransporterContextEntities;
 using TransportGlobal.Domain.Enums.UserContextEnums;
 using TransportGlobal.Domain.SeedWorks;
@@ -22,7 +23,7 @@ namespace TransportGlobal.Domain.Entities.UserContextEntities
 
         public ICollection<CompanyEntity> Companies { get; set; } = new List<CompanyEntity>();
 
-        public CompanyEntity? ActiveCompany => Companies.FirstOrDefault(x => x.IsDeleted == false);
+        public ICollection<TransportContractEntity> TransportContracts { get; set; } = new List<TransportContractEntity>();
 
         public UserEntity(string name, string surname, string email, string passwordHash, UserType type)
         {
@@ -32,5 +33,7 @@ namespace TransportGlobal.Domain.Entities.UserContextEntities
             PasswordHash = passwordHash;
             Type = type;
         }
+
+        public CompanyEntity? ActiveCompany => Companies.FirstOrDefault(x => x.IsDeleted == false);
     }
 }
