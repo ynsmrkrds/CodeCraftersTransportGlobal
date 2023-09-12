@@ -127,6 +127,14 @@ namespace TransportGlobal.Infrastructure.Context
               .OnDelete(DeleteBehavior.Cascade);
             #endregion
 
+            #region Review Bounded Context Configurations
+            modelBuilder.Entity<ReviewEntity>()
+              .HasOne(x => x.TransportContract)
+              .WithOne(x => x.Review)
+              .HasForeignKey<ReviewEntity>(x => x.TransportContractID)
+              .OnDelete(DeleteBehavior.NoAction);
+            #endregion
+
             base.OnModelCreating(modelBuilder);
         }
     }

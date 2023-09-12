@@ -4,9 +4,10 @@ using System.Net;
 using TransportGlobal.API.Extensions.Attributes;
 using TransportGlobal.Application.CQRSs.ReviewContextCQRSs.CommandCreateReview;
 using TransportGlobal.Application.CQRSs.ReviewContextCQRSs.CommandDeleteReview;
-using TransportGlobal.Application.CQRSs.ReviewContextCQRSs.QueryGetAllReviews;
+using TransportGlobal.Application.CQRSs.ReviewContextCQRSs.QueryGetCompanyReviews;
 using TransportGlobal.Application.DTOs.ResponseDTOs;
 using TransportGlobal.Domain.Enums.UserContextEnums;
+using TransportGlobal.Domain.Models;
 
 namespace TransportGlobal.API.Controllers
 {
@@ -20,11 +21,11 @@ namespace TransportGlobal.API.Controllers
         }
 
         [HttpGet]
-        [Route("?transportID={transportID}")]
+        [Route("company/{companyID}/{page}/{size}")]
         [Authority(UserType.Customer, UserType.Shipper)]
-        public async Task<IActionResult> GetAll([FromQuery] int transportID)
+        public async Task<IActionResult> GetCompanyReview(int companyID, int page, int size)
         {
-            GetAllReviewsQueryResponse queryResponse = await _mediator.Send(new GetAllReviewsQueryRequest(transportID));
+            GetCompanyReviewsQueryResponse queryResponse = await _mediator.Send(new GetCompanyReviewsQueryRequest(companyID, new PaginationModel(page, size)));
             return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, queryResponse.Reviews));
         }
 
@@ -35,14 +36,15 @@ namespace TransportGlobal.API.Controllers
             CreateReviewCommandResponse commandResponse = await _mediator.Send(request);
             if (commandResponse.IsSuccessful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, commandResponse.Message));
 
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse));
+            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse.Message));
         }
 
-        [HttpPost]
+        [HttpDelete]
+        [Route("{id}")]
         [Authority(UserType.Customer)]
-        public async Task<IActionResult> Delete([FromBody] DeleteReviewCommandRequest request)
+        public async Task<IActionResult> Delete(int id)
         {
-            DeleteReviewCommandResponse commandResponse = await _mediator.Send(request);
+            DeleteReviewCommandResponse commandResponse = await _mediator.Send(new DeleteReviewCommandRequest(id));
             if (commandResponse.IsSuccessful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, commandResponse.Message));
 
             return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse.Message));

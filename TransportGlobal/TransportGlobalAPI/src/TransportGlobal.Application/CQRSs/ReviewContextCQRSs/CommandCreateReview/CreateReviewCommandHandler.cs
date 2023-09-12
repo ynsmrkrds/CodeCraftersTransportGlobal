@@ -1,35 +1,34 @@
 ﻿using AutoMapper;
 using MediatR;
+using TransportGlobal.Application.Helpers;
 using TransportGlobal.Domain.Constants;
 using TransportGlobal.Domain.Entities.ReviewContextEntities;
+using TransportGlobal.Domain.Exceptions;
 using TransportGlobal.Domain.Repositories.ReviewContextRepositories;
+using TransportGlobal.Domain.Repositories.TransportContextRepositories;
 
 namespace TransportGlobal.Application.CQRSs.ReviewContextCQRSs.CommandCreateReview
 {
     public class CreateReviewCommandHandler : IRequestHandler<CreateReviewCommandRequest, CreateReviewCommandResponse>
     {
         private readonly IReviewRepository _reviewRepository;
+        private readonly ITransportContractRepository _transportContractRepository;
         private readonly IMapper _mapper;
 
-        public CreateReviewCommandHandler(IReviewRepository reviewRepository, IMapper mapper)
+        public CreateReviewCommandHandler(IReviewRepository reviewRepository, ITransportContractRepository transportContractRepository, IMapper mapper)
         {
             _reviewRepository = reviewRepository;
+            _transportContractRepository = transportContractRepository;
             _mapper = mapper;
         }
 
         public Task<CreateReviewCommandResponse> Handle(CreateReviewCommandRequest request, CancellationToken cancellationToken)
         {
-            /* TODO:
-             * Değerlendirme yapılmak istenilen Transport'a ait Transport Request'te yer alan kullanıcı ile 
-             * değerlendirmeyi yapan kullanıcı aynı değil ise işleme devam edilmez.
-             */
+            int userID = TokenHelper.Instance().DecodeTokenInRequest()?.UserID ?? throw new ClientSideException(ExceptionConstants.TokenError);
 
-            /* TODO:
-             * Değerlendirme yapılmak istenilen Transport'a ait aynı kullanıcının değerlendirmesi var ise
-             * tekrar değerlendirme yapılamaz.
-             */
+            if (_transportContractRepository.IsOwner(request.TransportContractID, userID) == false) return Task.FromResult(new CreateReviewCommandResponse(ResponseConstants.NotTransportContractOwner));
 
-            if (request.Score > 5 || request.Score < 1) return Task.FromResult(new CreateReviewCommandResponse(ResponseConstants.ReviewScoreOutOfRange));
+            if (_transportContractRepository.CanReview(request.TransportContractID) == false) return Task.FromResult(new CreateReviewCommandResponse(ResponseConstants.CannotReview));
 
             ReviewEntity reviewEntity = _mapper.Map<CreateReviewCommandRequest, ReviewEntity>(request);
             _reviewRepository.Add(reviewEntity);

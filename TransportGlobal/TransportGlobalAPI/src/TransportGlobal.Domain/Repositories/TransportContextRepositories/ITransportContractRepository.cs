@@ -1,4 +1,5 @@
 ﻿using TransportGlobal.Domain.Entities.TransportContextEntities;
+using TransportGlobal.Domain.Enums.UserContextEnums;
 
 namespace TransportGlobal.Domain.Repositories.TransportContextRepositories
 {
@@ -9,5 +10,9 @@ namespace TransportGlobal.Domain.Repositories.TransportContextRepositories
         IEnumerable<TransportContractEntity> GetAllByCompanyID(int companyID);
 
         bool IsThereAgreedContract(int transportRequestID);
+
+        bool? IsOwner(int id, int userID);
+
+        bool? CanReview(int id);
     }
 }
