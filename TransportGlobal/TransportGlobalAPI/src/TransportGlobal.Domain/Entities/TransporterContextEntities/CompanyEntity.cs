@@ -24,8 +24,6 @@ namespace TransportGlobal.Domain.Entities.TransporterContextEntities
         [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")]
         public string Email { get; set; }
 
-        public bool IsDeleted { get; set; }
-
         public ICollection<VehicleEntity> Vehicles { get; set; } = new List<VehicleEntity>();
 
         public ICollection<EmployeeEntity> Employees { get; set; } = new List<EmployeeEntity>();

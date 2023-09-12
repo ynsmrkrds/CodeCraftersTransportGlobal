@@ -54,7 +54,7 @@ namespace TransportGlobal.Application.Mappings
 
             #region Transport Bounded Context Mappings
             CreateMap<CreateTransportRequestCommandRequest, TransportRequestEntity>()
-                .ConstructUsing(src => new TransportRequestEntity(0, src.TransportType, src.Weight, src.Volume, src.TransportDate, src.LoadingAddress, src.DeliveryAddress, StatusType.Pending));
+                .ConstructUsing(src => new TransportRequestEntity(0, src.TransportType, src.Weight, src.Volume, src.TransportDate, src.LoadingAddress, src.DeliveryAddress, TransportRequestStatusType.Pending));
 
             CreateMap<UpdateTransportRequestCommandRequest, TransportRequestEntity>();
 

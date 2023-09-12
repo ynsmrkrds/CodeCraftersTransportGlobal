@@ -13,5 +13,7 @@ namespace TransportGlobal.Domain.Repositories.TransporterContextRepositories
         void OnVehicleEmployeesChanged(int id);
 
         bool? IsVehicleAtWork(int id);
+
+        bool? IsOwner(int id, int userId);
     }
 }

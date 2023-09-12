@@ -21,6 +21,8 @@ namespace TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandDelet
             int userID = TokenHelper.Instance().DecodeTokenInRequest()?.UserID ?? throw new ClientSideException(ExceptionConstants.TokenError);
 
             CompanyEntity companyEntity = _companyRepository.GetByID(request.ID) ?? throw new ClientSideException(ExceptionConstants.NotFoundCompany);
+            if (companyEntity.IsDeleted) throw new ClientSideException(ExceptionConstants.NotFoundCompany);
+
             if (companyEntity.OwnerUserID != userID) return Task.FromResult(new DeleteCompanyCommandResponse(ResponseConstants.NotCompanyOwner));
 
             companyEntity.IsDeleted = true;

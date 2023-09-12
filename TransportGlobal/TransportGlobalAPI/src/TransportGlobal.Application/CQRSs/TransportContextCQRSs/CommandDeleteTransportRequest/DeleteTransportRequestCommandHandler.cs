@@ -27,7 +27,8 @@ namespace TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandDeleteT
 
             if (_transportRequestRepository.CanDelete(request.ID) == false) return Task.FromResult(new DeleteTransportRequestCommandResponse(ResponseConstants.DeleteFailed));
 
-            _transportRequestRepository.Delete(transportRequestEntity);
+            transportRequestEntity.IsDeleted = true;
+            _transportRequestRepository.Update(transportRequestEntity);
 
             int effectedRows = _transportRequestRepository.SaveChanges();
             if (effectedRows == 0) return Task.FromResult(new DeleteTransportRequestCommandResponse(ResponseConstants.DeleteFailed));

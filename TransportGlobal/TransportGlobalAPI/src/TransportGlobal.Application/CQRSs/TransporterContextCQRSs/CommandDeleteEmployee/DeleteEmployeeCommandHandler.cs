@@ -29,9 +29,12 @@ namespace EventManagement.Application.CQRSs.LocationContextCQRSs.CommandDeleteLo
             UserEntity userEntity = _userRepository.GetByID(userID) ?? throw new ClientSideException(ExceptionConstants.NotFoundUser);
 
             EmployeeEntity employeeEntity = _employeeRepository.GetByID(request.ID) ?? throw new ClientSideException(ExceptionConstants.NotFoundEmployee);
+            if (employeeEntity.IsDeleted) throw new ClientSideException(ExceptionConstants.NotFoundEmployee);
+
             if (employeeEntity.CompanyID != userEntity.ActiveCompany?.ID) return Task.FromResult(new DeleteEmployeeCommandResponse(ResponseConstants.NotEmployeeOwner));
 
-            _employeeRepository.Delete(employeeEntity);
+            employeeEntity.IsDeleted = true;
+            _employeeRepository.Update(employeeEntity);
 
             int effectedRows = _employeeRepository.SaveChanges();
             if (effectedRows == 0) return Task.FromResult(new DeleteEmployeeCommandResponse(ResponseConstants.DeleteFailed));

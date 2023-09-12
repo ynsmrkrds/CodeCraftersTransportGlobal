@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using TransportGlobal.API.Extensions.Attributes;
+using TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCompleteTransportRequest;
 using TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCreateTransportRequest;
 using TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandDeleteTransportRequest;
 using TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandUpdateTransportRequest;
@@ -65,6 +66,17 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> Update([FromBody] UpdateTransportRequestCommandRequest request)
         {
             UpdateTransportRequestCommandResponse commandResponse = await _mediator.Send(request);
+            if (commandResponse.IsSuccessful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, commandResponse.Message));
+
+            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse.Message));
+        }
+
+        [HttpPut]
+        [Route("complete")]
+        [Authority(UserType.Customer)]
+        public async Task<IActionResult> Complete([FromBody] CompleteTransportRequestCommandRequest request)
+        {
+            CompleteTransportRequestCommandResponse commandResponse = await _mediator.Send(request);
             if (commandResponse.IsSuccessful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, commandResponse.Message));
 
             return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse.Message));

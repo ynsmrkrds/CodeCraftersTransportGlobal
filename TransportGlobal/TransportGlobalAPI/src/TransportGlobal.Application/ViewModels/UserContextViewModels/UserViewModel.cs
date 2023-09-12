@@ -12,7 +12,7 @@ namespace TransportGlobal.Application.ViewModels.UserContextViewModels
 
         public UserType Type { get; set; }
 
-        public UserViewModel(int id, DateTime createdDate, string name, string surname, string email, UserType type) : base(id, createdDate)
+        public UserViewModel(int id, DateTime createdDate, bool isDeleted, string name, string surname, string email, UserType type) : base(id, createdDate, isDeleted)
         {
             Name = name;
             Surname = surname;

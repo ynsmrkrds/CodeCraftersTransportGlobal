@@ -13,28 +13,31 @@ namespace TransportGlobal.Infrastructure.Repositories.UserContextRepositories
 
         public bool IsExistsWithSameEmail(string email)
         {
-            return _context.Users
+            return GetAll()
+                .Where(x => x.IsDeleted == false)
                 .Any(x => x.Email == email);
         }
 
         public UserEntity? ValidateUser(string email, string passwordHash)
         {
-            return _context.Users
+            return GetAll()
+                .Where(x => x.IsDeleted == false)
                 .Where(x => x.Email == email && x.PasswordHash == passwordHash)
                 .FirstOrDefault();
         }
 
         public bool HasCompany(int id)
         {
-            return _context.Users
+            return GetAll()
                 .Include(x => x.Companies)
-                .First(x => x.ID == id).Companies
+                .First(x => x.ID == id)
+                .Companies
                 .Any(x => x.IsDeleted == false);
         }
 
         public override UserEntity? GetByID(int id)
         {
-            return _context.Users
+            return GetAll()
                 .Include(x => x.Companies)
                 .FirstOrDefault(x => x.ID == id);
         }

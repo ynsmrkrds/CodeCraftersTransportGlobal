@@ -28,8 +28,6 @@ namespace TransportGlobal.Domain.Entities.TransporterContextEntities
 
         public EmployeeTitle Title { get; set; }
 
-        public bool IsDeleted { get; set; }
-
         public EmployeeEntity(int companyID, int? vehicleID, string name, string surname, string email, EmployeeTitle title, bool isDeleted)
         {
             CompanyID = companyID;
