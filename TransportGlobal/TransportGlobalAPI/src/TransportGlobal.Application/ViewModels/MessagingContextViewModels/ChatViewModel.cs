@@ -8,7 +8,7 @@
 
         public int ReceiverUserID { get; set; }
 
-        public ChatViewModel(int id, DateTime createdDate, int transportRequestID, int senderUserID, int receiverUserID) : base(id, createdDate)
+        public ChatViewModel(int id, DateTime createdDate, bool isDeleted, int transportRequestID, int senderUserID, int receiverUserID) : base(id, createdDate, isDeleted)
         {
             TransportRequestID = transportRequestID;
             SenderUserID = senderUserID;

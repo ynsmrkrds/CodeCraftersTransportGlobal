@@ -23,13 +23,13 @@ namespace TransportGlobal.Domain.Entities.TransportContextEntities
         [StringLength(150, MinimumLength = 10)]
         public string DeliveryAddress { get; set; }
 
-        public StatusType StatusType { get; set; }
+        public TransportRequestStatusType StatusType { get; set; }
 
         public ICollection<TransportContractEntity> TransportContracts { get; set; } = new List<TransportContractEntity>();
 
         public ICollection<ChatEntity> Chats { get; set; } = new List<ChatEntity>();
 
-        public TransportRequestEntity(int userID, TransportType transportType, double weight, double volume, DateTime transportDate, string loadingAddress, string deliveryAddress, StatusType statusType)
+        public TransportRequestEntity(int userID, TransportType transportType, double weight, double volume, DateTime transportDate, string loadingAddress, string deliveryAddress, TransportRequestStatusType statusType)
         {
             UserID = userID;
             TransportType = transportType;

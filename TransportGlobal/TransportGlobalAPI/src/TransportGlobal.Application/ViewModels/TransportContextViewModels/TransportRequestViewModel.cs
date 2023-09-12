@@ -18,9 +18,9 @@ namespace TransportGlobal.Application.ViewModels.TransportContextViewModels
 
         public string DeliveryAddress { get; set; }
 
-        public StatusType StatusType { get; set; }
+        public TransportRequestStatusType StatusType { get; set; }
 
-        public TransportRequestViewModel(int id, DateTime createdDate, int userID, TransportType transportType, double weight, double volume, DateTime transportDate, string loadingAddress, string deliveryAddress, StatusType statusType) : base(id, createdDate)
+        public TransportRequestViewModel(int id, DateTime createdDate, bool isDeleted, int userID, TransportType transportType, double weight, double volume, DateTime transportDate, string loadingAddress, string deliveryAddress, TransportRequestStatusType statusType) : base(id, createdDate, isDeleted)
         {
             UserID = userID;
             TransportType = transportType;

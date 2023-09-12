@@ -6,7 +6,7 @@
 
         public string Comment { get; set; }
 
-        public ReviewViewModel(int id, DateTime createdDate, int score, string comment) : base(id, createdDate)
+        public ReviewViewModel(int id, DateTime createdDate, bool isDeleted, int score, string comment) : base(id, createdDate, isDeleted)
         {
             Score = score;
             Comment = comment;

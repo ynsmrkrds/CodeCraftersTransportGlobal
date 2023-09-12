@@ -18,8 +18,6 @@ namespace TransportGlobal.Domain.Entities.TransporterContextEntities
 
         public VehicleStatusType Status { get; set; }
 
-        public bool IsDeleted { get; set; }
-
         public ICollection<EmployeeEntity> Employees { get; set; } = new List<EmployeeEntity>();
 
         public ICollection<TransportContractEntity> TransportContracts { get; set; } = new List<TransportContractEntity>();

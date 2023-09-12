@@ -2,7 +2,7 @@
 using TransportGlobal.Domain.Repositories.TransporterContextRepositories;
 using TransportGlobal.Infrastructure.Context;
 
-namespace TransportGlobal.Infrastructure.Repositories.TransporterContextRepository
+namespace TransportGlobal.Infrastructure.Repositories.TransporterContextRepositories
 {
     public class EmployeeRepository : Repository<EmployeeEntity>, IEmployeeRepository
     {
@@ -12,20 +12,21 @@ namespace TransportGlobal.Infrastructure.Repositories.TransporterContextReposito
 
         public bool IsExistsWithSameEmail(string email)
         {
-            return _context.Employees
+            return GetAll()
+                .Where(x => x.IsDeleted == false)
                 .Any(x => x.Email == email);
         }
 
         public IEnumerable<EmployeeEntity> GetAllByCompanyID(int companyID)
         {
-            return _context.Employees
+            return GetAll()
                 .Where(x => x.CompanyID == companyID)
                 .AsEnumerable();
         }
 
         public IEnumerable<EmployeeEntity> GetAllByVehicleID(int vehicleID)
         {
-            return _context.Employees
+            return GetAll()
                 .Where(x => x.VehicleID == vehicleID)
                 .AsEnumerable();
         }

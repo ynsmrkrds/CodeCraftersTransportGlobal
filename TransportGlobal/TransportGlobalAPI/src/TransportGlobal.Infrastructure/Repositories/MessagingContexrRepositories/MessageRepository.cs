@@ -12,10 +12,10 @@ namespace TransportGlobal.Infrastructure.Repositories.MessagingContexrRepositori
         }
 
         public IEnumerable<MessageEntity> GetMessagesByChatID(int chatID)
-        {
+        {             
             return GetAll()
-                .OrderByDescending(x => x.CreatedDate)
                 .Where(x => x.ChatID == chatID)
+                .OrderByDescending(x => x.CreatedDate)
                 .AsEnumerable();
         }
 

@@ -9,7 +9,7 @@ namespace TransportGlobal.Domain.Repositories.MessagingContextRepositories
 
         ChatEntity? GetByTransportRequestID(int transportRequestID, int senderUserID);
 
-        bool IsExists(int senderUserID, int receiverUserID);
+        bool IsExists(int transportRequestID, int senderUserID, int receiverUserID);
 
         bool? IsChatBelongToUser(int chatID, UserType userType, int userID);
     }

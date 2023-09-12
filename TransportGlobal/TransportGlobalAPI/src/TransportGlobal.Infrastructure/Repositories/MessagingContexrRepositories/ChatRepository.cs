@@ -25,10 +25,11 @@ namespace TransportGlobal.Infrastructure.Repositories.MessagingContexrRepositori
             return chats.AsEnumerable();
         }
 
-        public bool IsExists(int senderUserID, int receiverUserID)
+        public bool IsExists(int transportRequestID, int senderUserID, int receiverUserID)
         {
-            return _context.Chats
-                .Any(x => x.SenderUserID == senderUserID && x.ReceiverUserID == receiverUserID);
+            return GetAll()
+                .Where(x => x.IsDeleted == false)
+                .Any(x => x.TransportRequestID == transportRequestID && x.SenderUserID == senderUserID && x.ReceiverUserID == receiverUserID);
         }
 
         public bool? IsChatBelongToUser(int chatID, UserType userType, int userID)
@@ -46,7 +47,8 @@ namespace TransportGlobal.Infrastructure.Repositories.MessagingContexrRepositori
 
         public ChatEntity? GetByTransportRequestID(int transportRequestID, int senderUserID)
         {
-            return _context.Chats
+            return GetAll()
+                .Where(x => x.IsDeleted == false)
                 .FirstOrDefault(x => x.TransportRequestID == transportRequestID && x.SenderUserID == senderUserID);
         }
     }

@@ -1,9 +1,10 @@
-﻿using TransportGlobal.Domain.Entities.TransporterContextEntities;
+﻿using Microsoft.EntityFrameworkCore;
+using TransportGlobal.Domain.Entities.TransporterContextEntities;
 using TransportGlobal.Domain.Enums.TransporterContextEnums;
 using TransportGlobal.Domain.Repositories.TransporterContextRepositories;
 using TransportGlobal.Infrastructure.Context;
 
-namespace TransportGlobal.Infrastructure.Repositories.TransporterContextRepository
+namespace TransportGlobal.Infrastructure.Repositories.TransporterContextRepositories
 {
     public class VehicleRepository : Repository<VehicleEntity>, IVehicleRepository
     {
@@ -13,21 +14,25 @@ namespace TransportGlobal.Infrastructure.Repositories.TransporterContextReposito
 
         public bool IsExistsWithSameIdentificationNumber(string identificationNumber)
         {
-            return _context.Vehicles
+            return GetAll()
                 .Where(x => x.IdentificationNumber == identificationNumber)
+                .Where(x => x.IsDeleted == false)
                 .Any();
         }
 
         public IEnumerable<VehicleEntity> GetAllByCompanyID(int companyID)
         {
-            return _context.Vehicles
+            return GetAll()
                 .Where(x => x.CompanyID == companyID)
                 .AsEnumerable();
         }
 
         public bool CanVehicleWork(int id)
         {
-            List<EmployeeEntity> employees = _context.Employees.Where(x => x.VehicleID == id).ToList();
+            List<EmployeeEntity> employees = _context.Employees
+                .Where(x => x.IsDeleted == false)
+                .Where(x => x.VehicleID == id)
+                .ToList();
 
             bool isThereDriver = employees.Any(x => x.Title == EmployeeTitle.Driver);
             bool isThereLoadingUnloadingOperator = employees.Any(x => x.Title == EmployeeTitle.LoadingUnloadingOperator);
@@ -37,7 +42,7 @@ namespace TransportGlobal.Infrastructure.Repositories.TransporterContextReposito
 
         public void OnVehicleEmployeesChanged(int id)
         {
-            VehicleEntity? vehicle = _context.Vehicles.FirstOrDefault(x => x.ID == id);
+            VehicleEntity? vehicle = GetAll().FirstOrDefault(x => x.ID == id);
             if (vehicle == null) return;
 
             if (vehicle.Status == VehicleStatusType.AtWork) return;
@@ -50,10 +55,21 @@ namespace TransportGlobal.Infrastructure.Repositories.TransporterContextReposito
 
         public bool? IsVehicleAtWork(int id)
         {
-            VehicleEntity? vehicle = _context.Vehicles.FirstOrDefault(x => x.ID == id);
+            VehicleEntity? vehicle = GetAll()
+                 .Where(x => x.IsDeleted == false)
+                 .FirstOrDefault(x => x.ID == id);
             if (vehicle == null) return null;
 
             return vehicle.Status == VehicleStatusType.AtWork;
+        }
+
+        public bool? IsOwner(int id, int userId)
+        {
+            return GetAll()
+                .Include(x => x.Company)
+                .FirstOrDefault(x => x.ID == id)
+                ?.Company
+                ?.OwnerUserID == userId;
         }
     }
 }

@@ -21,12 +21,11 @@ namespace TransportGlobal.Infrastructure.Repositories.TransportContextRepositori
 
         public override IQueryable<TransportContractEntity> GetAll()
         {
-            return _context.TransportContracts
+            return base.GetAll()
                 .Include(x => x.User)
                 .Include(x => x.Company)
                 .Include(x => x.Vehicle)
                 .Include(x => x.TransportRequest)
-                .Where(x => x.IsAgreed)
                 .AsQueryable();
         }
 
@@ -46,8 +45,9 @@ namespace TransportGlobal.Infrastructure.Repositories.TransportContextRepositori
 
         public bool IsThereAgreedContract(int transportRequestID)
         {
-            return _context.TransportContracts
+            return GetAll()
                 .Where(x => x.TransportRequestID == transportRequestID)
+                .Where(x => x.IsDeleted == false)
                 .Any(x => x.IsAgreed);
         }
 
@@ -58,11 +58,12 @@ namespace TransportGlobal.Infrastructure.Repositories.TransportContextRepositori
 
         public bool? CanReview(int id)
         {
-            return _context.TransportContracts
+            return GetAll()
                 .Include(x => x.TransportRequest)
+                .Where(x => x.IsDeleted == false)
                 .FirstOrDefault(x => x.ID == id)
                 ?.TransportRequest
-                ?.StatusType == StatusType.Done;
+                ?.StatusType == TransportRequestStatusType.Done;
         }
     }
 }

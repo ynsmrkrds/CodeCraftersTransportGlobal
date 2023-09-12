@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using TransportGlobal.Domain.Entities.MessagingContextEntities;
+using TransportGlobal.Domain.Entities.ReviewContextEntities;
 using TransportGlobal.Domain.Entities.TransportContextEntities;
 using TransportGlobal.Domain.Entities.TransporterContextEntities;
-using TransportGlobal.Domain.Entities.ReviewContextEntities;
 using TransportGlobal.Domain.Entities.UserContextEntities;
 
 namespace TransportGlobal.Infrastructure.Context
@@ -52,13 +52,13 @@ namespace TransportGlobal.Infrastructure.Context
                 .HasMany(x => x.Companies)
                 .WithOne(x => x.OwnerUser)
                 .HasForeignKey(x => x.OwnerUserID)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<UserEntity>()
                 .HasMany(x => x.TransportContracts)
                 .WithOne(x => x.User)
                 .HasForeignKey(x => x.UserID)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<UserEntity>()
                .HasMany(x => x.SenderUserChats)
@@ -84,13 +84,13 @@ namespace TransportGlobal.Infrastructure.Context
                 .HasMany(x => x.Vehicles)
                 .WithOne(x => x.Company)
                 .HasForeignKey(x => x.CompanyID)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<CompanyEntity>()
                 .HasMany(x => x.Employees)
                 .WithOne(x => x.Company)
                 .HasForeignKey(x => x.CompanyID)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<CompanyEntity>()
                .HasMany(x => x.TransportContracts)
@@ -110,13 +110,13 @@ namespace TransportGlobal.Infrastructure.Context
                 .HasOne(x => x.TransportRequest)
                 .WithMany(x => x.TransportContracts)
                 .HasForeignKey(x => x.TransportRequestID)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<TransportRequestEntity>()
                .HasMany(x => x.Chats)
                .WithOne(x => x.TransportRequest)
                .HasForeignKey(x => x.TransportRequestID)
-               .OnDelete(DeleteBehavior.Cascade);
+               .OnDelete(DeleteBehavior.NoAction);
             #endregion
 
             #region Messaging Bounded Context Configurations
@@ -124,7 +124,7 @@ namespace TransportGlobal.Infrastructure.Context
               .HasMany(x => x.Messages)
               .WithOne(x => x.Chat)
               .HasForeignKey(x => x.ChatID)
-              .OnDelete(DeleteBehavior.Cascade);
+              .OnDelete(DeleteBehavior.NoAction);
             #endregion
 
             #region Review Bounded Context Configurations
