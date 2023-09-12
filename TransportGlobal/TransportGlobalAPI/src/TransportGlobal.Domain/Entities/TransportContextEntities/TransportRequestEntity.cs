@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TransportGlobal.Domain.Entities.MessagingContextEntities;
 using TransportGlobal.Domain.Enums.TransportContextEnums;
 using TransportGlobal.Domain.SeedWorks;
 
@@ -25,6 +26,8 @@ namespace TransportGlobal.Domain.Entities.TransportContextEntities
         public StatusType StatusType { get; set; }
 
         public ICollection<TransportContractEntity> TransportContracts { get; set; } = new List<TransportContractEntity>();
+
+        public ICollection<ChatEntity> Chats { get; set; } = new List<ChatEntity>();
 
         public TransportRequestEntity(int userID, TransportType transportType, double weight, double volume, DateTime transportDate, string loadingAddress, string deliveryAddress, StatusType statusType)
         {

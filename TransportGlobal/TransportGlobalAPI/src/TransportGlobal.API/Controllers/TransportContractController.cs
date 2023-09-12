@@ -4,7 +4,6 @@ using System.Net;
 using TransportGlobal.API.Extensions.Attributes;
 using TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandAgreeTransportContract;
 using TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCreateTransportContract;
-using TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandUpdateTransportRequest;
 using TransportGlobal.Application.CQRSs.TransportContextCQRSs.QueryGetOwnTransportContracts;
 using TransportGlobal.Application.CQRSs.TransportContextCQRSs.QueryGetOwnTransportContractsByUserType;
 using TransportGlobal.Application.CQRSs.TransportContextCQRSs.QueryGetTransportContract;
@@ -45,10 +44,10 @@ namespace TransportGlobal.API.Controllers
         [Authority(UserType.Shipper)]
         public async Task<IActionResult> Create([FromBody] CreateTransportContractCommandRequest request)
         {
-            CreateTransportContractCommandResponse commandResponse = await _mediator.Send(request);
-            if (commandResponse.IsSuccessful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, commandResponse.Message));
+            CreateTransportContractCommandResponse createTransportContractCommandResponse = await _mediator.Send(request);
+            if (createTransportContractCommandResponse.IsSuccessful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, createTransportContractCommandResponse.Message));
 
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse.Message));
+            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, createTransportContractCommandResponse.Message));
         }
 
         [HttpPut]

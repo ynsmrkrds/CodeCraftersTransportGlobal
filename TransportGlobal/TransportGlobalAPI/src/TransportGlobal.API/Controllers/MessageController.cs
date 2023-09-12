@@ -1,9 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using TransportGlobal.API.Extensions.Attributes;
 using TransportGlobal.Application.CQRSs.MessagingContextCQRSs.CommandCreateMessage;
-using TransportGlobal.Application.CQRSs.MessagingContextCQRSs.QueryGetMessage;
+using TransportGlobal.Application.CQRSs.MessagingContextCQRSs.QueryGetMessagesByChatID;
 using TransportGlobal.Application.DTOs.ResponseDTOs;
+using TransportGlobal.Domain.Enums.UserContextEnums;
+using TransportGlobal.Domain.Models;
 
 namespace TransportGlobal.API.Controllers
 {
@@ -17,15 +20,16 @@ namespace TransportGlobal.API.Controllers
         }
 
         [HttpGet]
-        [Route("get")]
-        public async Task<IActionResult> Get()
+        [Route("chat/{chatID}/{page}/{size}")]
+        [Authority(UserType.Customer, UserType.Shipper)]
+        public async Task<IActionResult> GetMessagesByChatID(int chatID, int page, int size)
         {
-            GetMessageQueryResponse queryResponse = await _mediator.Send(new GetMessageQueryRequest());
+            GetMessagesByChatIDQueryResponse queryResponse = await _mediator.Send(new GetMessagesByChatIDQueryRequest(chatID, new PaginationModel(page, size)));
             return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, queryResponse.Messages));
         }
 
         [HttpPost]
-        [Route("post")]
+        [Authority(UserType.Customer, UserType.Shipper)]
         public async Task<IActionResult> Create([FromBody] CreateMessageCommandRequest request)
         {
             CreateMessageCommandResponse commandResponse = await _mediator.Send(request);

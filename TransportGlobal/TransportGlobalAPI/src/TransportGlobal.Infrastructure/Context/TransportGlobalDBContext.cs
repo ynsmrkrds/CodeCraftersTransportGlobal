@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using TransportGlobal.Domain.Entities.TransporterContextEntities;
-using TransportGlobal.Domain.Entities.TransportContextEntities;
 using TransportGlobal.Domain.Entities.MessagingContextEntities;
+using TransportGlobal.Domain.Entities.TransportContextEntities;
+using TransportGlobal.Domain.Entities.TransporterContextEntities;
 using TransportGlobal.Domain.Entities.UserContextEntities;
 
 namespace TransportGlobal.Infrastructure.Context
@@ -28,7 +28,7 @@ namespace TransportGlobal.Infrastructure.Context
 
         #endregion
 
-        #region Message Bounded Context DbSets
+        #region Messaging Bounded Context DbSets
         public DbSet<ChatEntity> Chats { get; set; }
 
         public DbSet<MessageEntity> Messages { get; set; }
@@ -54,6 +54,18 @@ namespace TransportGlobal.Infrastructure.Context
                 .WithOne(x => x.User)
                 .HasForeignKey(x => x.UserID)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<UserEntity>()
+               .HasMany(x => x.SenderUserChats)
+               .WithOne(x => x.SenderUser)
+               .HasForeignKey(x => x.SenderUserID)
+               .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<UserEntity>()
+               .HasMany(x => x.ReceiverUserChats)
+               .WithOne(x => x.ReceiverUser)
+               .HasForeignKey(x => x.ReceiverUserID)
+               .OnDelete(DeleteBehavior.NoAction);
             #endregion
 
             #region Transporter Bounded Context Configurations
@@ -94,6 +106,20 @@ namespace TransportGlobal.Infrastructure.Context
                 .WithMany(x => x.TransportContracts)
                 .HasForeignKey(x => x.TransportRequestID)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TransportRequestEntity>()
+               .HasMany(x => x.Chats)
+               .WithOne(x => x.TransportRequest)
+               .HasForeignKey(x => x.TransportRequestID)
+               .OnDelete(DeleteBehavior.Cascade);
+            #endregion
+
+            #region Messaging Bounded Context Configurations
+            modelBuilder.Entity<ChatEntity>()
+              .HasMany(x => x.Messages)
+              .WithOne(x => x.Chat)
+              .HasForeignKey(x => x.ChatID)
+              .OnDelete(DeleteBehavior.Cascade);
             #endregion
 
             base.OnModelCreating(modelBuilder);

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TransportGlobal.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class TablesRelationsAdded : Migration
+    public partial class MessagingContextCreated : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -51,6 +51,38 @@ namespace TransportGlobal.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Chats",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TransportRequestID = table.Column<int>(type: "int", nullable: false),
+                    SenderUserID = table.Column<int>(type: "int", nullable: false),
+                    ReceiverUserID = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Chats", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Chats_TransportRequests_TransportRequestID",
+                        column: x => x.TransportRequestID,
+                        principalTable: "TransportRequests",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Chats_Users_ReceiverUserID",
+                        column: x => x.ReceiverUserID,
+                        principalTable: "Users",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_Chats_Users_SenderUserID",
+                        column: x => x.SenderUserID,
+                        principalTable: "Users",
+                        principalColumn: "ID");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Companies",
                 columns: table => new
                 {
@@ -71,6 +103,29 @@ namespace TransportGlobal.Infrastructure.Migrations
                         name: "FK_Companies_Users_OwnerUserID",
                         column: x => x.OwnerUserID,
                         principalTable: "Users",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Messages",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ChatID = table.Column<int>(type: "int", nullable: false),
+                    ContentType = table.Column<int>(type: "int", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SendingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Messages", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Messages_Chats_ChatID",
+                        column: x => x.ChatID,
+                        principalTable: "Chats",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -141,6 +196,7 @@ namespace TransportGlobal.Infrastructure.Migrations
                     TransportRequestID = table.Column<int>(type: "int", nullable: false),
                     VehicleID = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
+                    IsAgreed = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -171,6 +227,21 @@ namespace TransportGlobal.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Chats_ReceiverUserID",
+                table: "Chats",
+                column: "ReceiverUserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Chats_SenderUserID",
+                table: "Chats",
+                column: "SenderUserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Chats_TransportRequestID",
+                table: "Chats",
+                column: "TransportRequestID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Companies_OwnerUserID",
                 table: "Companies",
                 column: "OwnerUserID");
@@ -184,6 +255,11 @@ namespace TransportGlobal.Infrastructure.Migrations
                 name: "IX_Employees_VehicleID",
                 table: "Employees",
                 column: "VehicleID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_ChatID",
+                table: "Messages",
+                column: "ChatID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TransportContracts_CompanyID",
@@ -218,13 +294,19 @@ namespace TransportGlobal.Infrastructure.Migrations
                 name: "Employees");
 
             migrationBuilder.DropTable(
+                name: "Messages");
+
+            migrationBuilder.DropTable(
                 name: "TransportContracts");
 
             migrationBuilder.DropTable(
-                name: "TransportRequests");
+                name: "Chats");
 
             migrationBuilder.DropTable(
                 name: "Vehicles");
+
+            migrationBuilder.DropTable(
+                name: "TransportRequests");
 
             migrationBuilder.DropTable(
                 name: "Companies");

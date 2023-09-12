@@ -1,12 +1,12 @@
 ﻿using TransportGlobal.Application.ViewModels.MessagingContextViewModels;
 
-namespace TransportGlobal.Application.CQRSs.MessagingContextCQRSs.QueryGetChat
+namespace TransportGlobal.Application.CQRSs.MessagingContextCQRSs.QueryGetOwnChats
 {
-    public class GetChatQueryResponse
+    public class GetOwnChatsQueryResponse
     {
         public List<ChatViewModel> Chats { get; set; }
 
-        public GetChatQueryResponse(List<ChatViewModel> chats)
+        public GetOwnChatsQueryResponse(List<ChatViewModel> chats)
         {
             Chats = chats;
         }

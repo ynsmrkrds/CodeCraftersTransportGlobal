@@ -1,22 +1,23 @@
 ﻿using AutoMapper;
+using TransportGlobal.Application.CQRSs.MessagingContextCQRSs.CommandCreateMessage;
+using TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCreateTransportContract;
+using TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCreateTransportRequest;
+using TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandUpdateTransportRequest;
 using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandCreateCompany;
 using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandCreateEmployee;
 using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandCreateVehicle;
 using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandUpdateCompany;
 using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandUpdateEmployee;
 using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandUpdateVehicle;
-using TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCreateTransportRequest;
-using TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandUpdateTransportRequest;
-using TransportGlobal.Application.CQRSs.MessagingContextCQRSs.CommandCreateChat;
 using TransportGlobal.Application.CQRSs.UserContextCQRSs.CommandCreateUser;
 using TransportGlobal.Application.CQRSs.UserContextCQRSs.CommandUpdateUser;
-using TransportGlobal.Domain.Entities.TransporterContextEntities;
-using TransportGlobal.Domain.Entities.TransportContextEntities;
 using TransportGlobal.Domain.Entities.MessagingContextEntities;
+using TransportGlobal.Domain.Entities.TransportContextEntities;
+using TransportGlobal.Domain.Entities.TransporterContextEntities;
 using TransportGlobal.Domain.Entities.UserContextEntities;
-using TransportGlobal.Domain.Enums.TransporterContextEnums;
+using TransportGlobal.Domain.Enums.MessagingContextEnums;
 using TransportGlobal.Domain.Enums.TransportContextEnums;
-using TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCreateTransportContract;
+using TransportGlobal.Domain.Enums.TransporterContextEnums;
 
 namespace TransportGlobal.Application.Mappings
 {
@@ -52,7 +53,7 @@ namespace TransportGlobal.Application.Mappings
             #region Transport Bounded Context Mappings
             CreateMap<CreateTransportRequestCommandRequest, TransportRequestEntity>()
                 .ConstructUsing(src => new TransportRequestEntity(0, src.TransportType, src.Weight, src.Volume, src.TransportDate, src.LoadingAddress, src.DeliveryAddress, StatusType.Pending));
-            
+
             CreateMap<UpdateTransportRequestCommandRequest, TransportRequestEntity>();
 
             CreateMap<CreateTransportContractCommandRequest, TransportContractEntity>()
@@ -60,7 +61,8 @@ namespace TransportGlobal.Application.Mappings
             #endregion
 
             #region Messaging Bounded Context Mappings
-            CreateMap<CreateChatCommandRequest, ChatEntity>();
+            CreateMap<CreateMessageCommandRequest, MessageEntity>()
+                .ConstructUsing(src => new MessageEntity(src.ChatID, MessageContentType.Text, src.Content, DateTime.Now));
             #endregion
         }
     }

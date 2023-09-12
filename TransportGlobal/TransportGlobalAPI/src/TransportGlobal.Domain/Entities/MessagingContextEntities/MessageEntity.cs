@@ -1,23 +1,36 @@
-﻿using TransportGlobal.Domain.SeedWorks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using TransportGlobal.Domain.Constants;
+using TransportGlobal.Domain.Enums.MessagingContextEnums;
+using TransportGlobal.Domain.Exceptions;
+using TransportGlobal.Domain.SeedWorks;
 
 namespace TransportGlobal.Domain.Entities.MessagingContextEntities
 {
     public class MessageEntity : BaseEntity
     {
+        [ForeignKey(nameof(Chat))]
         public int ChatID { get; set; }
+
+        public ChatEntity? Chat { get; set; }
+
+        public MessageContentType ContentType { get; set; }
 
         public string Content { get; set; }
 
         public DateTime SendingDate { get; set; }
 
-        public bool WasRead { get; set; }
-
-        public MessageEntity(int chatID, string content, DateTime sendingDate, bool wasRead)
+        public MessageEntity(int chatID, MessageContentType contentType, string content, DateTime sendingDate)
         {
+            // Content Type is Contract, content must be contract id
+            if (contentType == MessageContentType.Contract && int.TryParse(content, out int _) == false)
+            {
+                throw new ClientSideException(ExceptionConstants.MessageContentInvalid);
+            }
+
             ChatID = chatID;
+            ContentType = contentType;
             Content = content;
             SendingDate = sendingDate;
-            WasRead = wasRead;
         }
     }
 }
