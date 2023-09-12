@@ -32,6 +32,8 @@ namespace TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandUpdat
             UserEntity userEntity = _userRepository.GetByID(userID) ?? throw new ClientSideException(ExceptionConstants.NotFoundUser);
 
             EmployeeEntity employeeEntity = _employeeRepository.GetByID(request.ID) ?? throw new ClientSideException(ExceptionConstants.NotFoundEmployee);
+            if (employeeEntity.IsDeleted) throw new ClientSideException(ExceptionConstants.NotFoundEmployee);
+
             if (employeeEntity.CompanyID != userEntity.ActiveCompany?.ID) return Task.FromResult(new UpdateEmployeeCommandResponse(ResponseConstants.NotVehicleOwner));
 
             if (employeeEntity.Email != request.Email && _userRepository.IsExistsWithSameEmail(request.Email)) return Task.FromResult(new UpdateEmployeeCommandResponse(ResponseConstants.ExistsEmployeeWithSameEmail));

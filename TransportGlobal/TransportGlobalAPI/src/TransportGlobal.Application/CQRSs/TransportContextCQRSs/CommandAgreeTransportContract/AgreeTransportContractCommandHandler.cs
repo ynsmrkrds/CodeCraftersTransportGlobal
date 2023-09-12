@@ -24,6 +24,7 @@ namespace TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandAgreeTr
             int userID = TokenHelper.Instance().DecodeTokenInRequest()?.UserID ?? throw new ClientSideException(ExceptionConstants.TokenError);
 
             TransportContractEntity transportContractEntity = _transportContractRepository.GetByID(request.ID) ?? throw new ClientSideException(ExceptionConstants.NotFoundTransportContract);
+            if (transportContractEntity.IsDeleted) throw new ClientSideException(ExceptionConstants.NotFoundTransportContract);
 
             if (transportContractEntity.UserID != userID) return Task.FromResult(new AgreeTransportContractCommandResponse(ResponseConstants.NotTransportContractOwner));
 

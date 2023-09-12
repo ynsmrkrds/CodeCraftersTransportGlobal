@@ -33,7 +33,6 @@ namespace TransportGlobal.Infrastructure.Repositories.TransportContextRepositori
         {
             return GetAll()
                 .Where(x => x.UserID == userID)
-                .Where(x => x.IsAgreed)
                 .AsEnumerable();
         }
 
@@ -41,7 +40,6 @@ namespace TransportGlobal.Infrastructure.Repositories.TransportContextRepositori
         {
             return GetAll()
                 .Where(x => x.CompanyID == companyID)
-                .Where(x => x.IsAgreed)
                 .AsEnumerable();
         }
 

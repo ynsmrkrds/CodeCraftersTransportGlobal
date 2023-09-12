@@ -20,6 +20,7 @@ namespace TransportGlobal.Infrastructure.Repositories.TransporterContextReposito
         public CompanyEntity? GetCompanyByUserID(int userID)
         {
             return GetAll()
+                .Where(x => x.IsDeleted == false)
                 .FirstOrDefault(x => x.OwnerUserID == userID);
         }
     }

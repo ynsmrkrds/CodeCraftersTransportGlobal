@@ -15,13 +15,16 @@ namespace TransportGlobal.Application.ViewModels.TransportContextViewModels
 
         public double Price { get; set; }
 
-        public TransportContractViewModel(int id, DateTime createdDate, bool isDeleted, UserViewModel user, CompanyViewModel company, TransportRequestViewModel transportRequest, VehicleViewModel vehicle, double price) : base(id, createdDate, isDeleted)
+        public bool IsAgreed { get; set; }
+
+        public TransportContractViewModel(int id, DateTime createdDate, bool isDeleted, UserViewModel user, CompanyViewModel company, TransportRequestViewModel transportRequest, VehicleViewModel vehicle, double price, bool isAgreed) : base(id, createdDate, isDeleted)
         {
             User = user;
             Company = company;
             TransportRequest = transportRequest;
             Vehicle = vehicle;
             Price = price;
+            IsAgreed = isAgreed;
         }
     }
 }

@@ -25,6 +25,7 @@ namespace TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandComplet
             int userID = TokenHelper.Instance().DecodeTokenInRequest()?.UserID ?? throw new ClientSideException(ExceptionConstants.TokenError);
 
             TransportRequestEntity transportRequestEntity = _transportRequestRepository.GetByID(request.ID) ?? throw new ClientSideException(ExceptionConstants.NotFoundTransportRequest);
+            if (transportRequestEntity.IsDeleted) throw new ClientSideException(ExceptionConstants.NotFoundTransportRequest);
 
             if (userID != transportRequestEntity.UserID) return Task.FromResult(new CompleteTransportRequestCommandResponse(ResponseConstants.NotTransportRequestOwner));
 

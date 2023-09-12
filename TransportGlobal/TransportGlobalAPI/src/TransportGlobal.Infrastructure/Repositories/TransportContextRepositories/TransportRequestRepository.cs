@@ -14,6 +14,7 @@ namespace TransportGlobal.Infrastructure.Repositories.TransportContextRepositori
         public IEnumerable<TransportRequestEntity> GetPendingTransportRequests()
         {
             return GetAll()
+                .Where(x => x.IsDeleted == false)
                 .Where(x => x.StatusType == TransportRequestStatusType.Pending)
                 .AsEnumerable();
         }

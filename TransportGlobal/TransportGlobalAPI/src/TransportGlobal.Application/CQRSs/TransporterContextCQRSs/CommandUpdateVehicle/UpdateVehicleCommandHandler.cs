@@ -32,6 +32,8 @@ namespace TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandUpdat
             UserEntity userEntity = _userRepository.GetByID(userID) ?? throw new ClientSideException(ExceptionConstants.NotFoundUser);
 
             VehicleEntity vehicleEntity = _vehicleRepository.GetByID(request.ID) ?? throw new ClientSideException(ExceptionConstants.NotFoundVehicle);
+            if (vehicleEntity.IsDeleted) throw new ClientSideException(ExceptionConstants.NotFoundVehicle);
+
             if (vehicleEntity.CompanyID != userEntity.ActiveCompany?.ID) return Task.FromResult(new UpdateVehicleCommandResponse(ResponseConstants.NotVehicleOwner));
 
             if (vehicleEntity.Status == VehicleStatusType.AtWork) return Task.FromResult(new UpdateVehicleCommandResponse(ResponseConstants.VehicleStatusCannotUpdate));

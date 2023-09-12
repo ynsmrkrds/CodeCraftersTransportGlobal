@@ -25,11 +25,11 @@ namespace TransportGlobal.Infrastructure.Repositories.MessagingContexrRepositori
             return chats.AsEnumerable();
         }
 
-        public bool IsExists(int senderUserID, int receiverUserID)
+        public bool IsExists(int transportRequestID, int senderUserID, int receiverUserID)
         {
             return GetAll()
                 .Where(x => x.IsDeleted == false)
-                .Any(x => x.SenderUserID == senderUserID && x.ReceiverUserID == receiverUserID);
+                .Any(x => x.TransportRequestID == transportRequestID && x.SenderUserID == senderUserID && x.ReceiverUserID == receiverUserID);
         }
 
         public bool? IsChatBelongToUser(int chatID, UserType userType, int userID)

@@ -24,6 +24,8 @@ namespace TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandUpdat
             int userID = TokenHelper.Instance().DecodeTokenInRequest()?.UserID ?? throw new ClientSideException(ExceptionConstants.TokenError);
 
             CompanyEntity companyEntity = _companyRepository.GetByID(request.ID) ?? throw new ClientSideException(ExceptionConstants.NotFoundCompany);
+            if (companyEntity.IsDeleted) throw new ClientSideException(ExceptionConstants.NotFoundCompany);
+
             if (companyEntity.OwnerUserID != userID) return Task.FromResult(new UpdateCompanyCommandResponse(ResponseConstants.NotCompanyOwner));
 
             _mapper.Map(request, companyEntity);
