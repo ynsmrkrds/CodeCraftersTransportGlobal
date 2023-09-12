@@ -36,6 +36,8 @@ namespace TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandCreat
 
             if (request.VehicleID != null && _vehicleRepository.IsVehicleAtWork((int)request.VehicleID) == true) return Task.FromResult(new CreateEmployeeCommandResponse(ResponseConstants.EmployeeCannotAssignToVehicle));
 
+            if (request.VehicleID != null && _vehicleRepository.IsOwner((int)request.VehicleID, userID) == false) return Task.FromResult(new CreateEmployeeCommandResponse(ResponseConstants.NotVehicleOwner));
+
             EmployeeEntity employeeEntity = _mapper.Map<EmployeeEntity>(request);
             employeeEntity.CompanyID = userEntity.ActiveCompany!.ID;
 

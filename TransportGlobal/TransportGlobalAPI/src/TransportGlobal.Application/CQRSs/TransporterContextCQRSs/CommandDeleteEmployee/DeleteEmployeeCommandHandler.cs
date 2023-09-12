@@ -31,7 +31,8 @@ namespace EventManagement.Application.CQRSs.LocationContextCQRSs.CommandDeleteLo
             EmployeeEntity employeeEntity = _employeeRepository.GetByID(request.ID) ?? throw new ClientSideException(ExceptionConstants.NotFoundEmployee);
             if (employeeEntity.CompanyID != userEntity.ActiveCompany?.ID) return Task.FromResult(new DeleteEmployeeCommandResponse(ResponseConstants.NotEmployeeOwner));
 
-            _employeeRepository.Delete(employeeEntity);
+            employeeEntity.IsDeleted = true;
+            _employeeRepository.Update(employeeEntity);
 
             int effectedRows = _employeeRepository.SaveChanges();
             if (effectedRows == 0) return Task.FromResult(new DeleteEmployeeCommandResponse(ResponseConstants.DeleteFailed));

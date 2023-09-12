@@ -10,15 +10,12 @@
 
         public string Email { get; set; }
 
-        public bool IsDeleted { get; set; }
-
-        public CompanyViewModel(int id, DateTime createdDate, string name, string address, string phoneNumber, string email, bool isDeleted) : base(id, createdDate)
+        public CompanyViewModel(int id, DateTime createdDate, bool isDeleted, string name, string address, string phoneNumber, string email) : base(id, createdDate, isDeleted)
         {
             Name = name;
             Address = address;
             PhoneNumber = phoneNumber;
             Email = email;
-            IsDeleted = isDeleted;
         }
     }
 }

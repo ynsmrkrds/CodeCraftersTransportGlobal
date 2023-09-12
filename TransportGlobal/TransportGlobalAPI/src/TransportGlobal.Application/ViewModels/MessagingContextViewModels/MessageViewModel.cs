@@ -8,7 +8,7 @@
 
         public DateTime SendingDate { get; set; }
 
-        public MessageViewModel(int id, DateTime createdDate, int chatID, string content, DateTime sendingDate) : base(id, createdDate)
+        public MessageViewModel(int id, DateTime createdDate, bool isDeleted, int chatID, string content, DateTime sendingDate) : base(id, createdDate, isDeleted)
         {
             ChatID = chatID;
             Content = content;

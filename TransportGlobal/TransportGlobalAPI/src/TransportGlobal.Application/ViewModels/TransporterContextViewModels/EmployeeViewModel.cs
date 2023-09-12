@@ -18,16 +18,13 @@ namespace TransportGlobal.Application.ViewModels.TransporterContextViewModels
 
         public EmployeeTitle Title { get; set; }
 
-        public bool IsDeleted { get; set; }
-
-        public EmployeeViewModel(int id, DateTime createdDate, int? vehicleID, string name, string surname, string email, EmployeeTitle title, bool isDeleted) : base(id, createdDate)
+        public EmployeeViewModel(int id, DateTime createdDate, bool isDeleted, int? vehicleID, string name, string surname, string email, EmployeeTitle title) : base(id, createdDate, isDeleted)
         {
             VehicleID = vehicleID;
             Name = name;
             Surname = surname;
             Email = email;
             Title = title;
-            IsDeleted = isDeleted;
         }
     }
 }

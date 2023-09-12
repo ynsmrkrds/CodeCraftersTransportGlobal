@@ -3,6 +3,8 @@ using MediatR;
 using TransportGlobal.Application.Helpers;
 using TransportGlobal.Domain.Constants;
 using TransportGlobal.Domain.Entities.TransportContextEntities;
+using TransportGlobal.Domain.Enums.TransportContextEnums;
+using TransportGlobal.Domain.Enums.TransporterContextEnums;
 using TransportGlobal.Domain.Exceptions;
 using TransportGlobal.Domain.Repositories.TransportContextRepositories;
 
@@ -11,12 +13,10 @@ namespace TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandAgreeTr
     public class AgreeTransportContractCommandHandler : IRequestHandler<AgreeTransportContractCommandRequest, AgreeTransportContractCommandResponse>
     {
         private readonly ITransportContractRepository _transportContractRepository;
-        private readonly IMapper _mapper;
 
-        public AgreeTransportContractCommandHandler(ITransportContractRepository transportContractRepository, IMapper mapper)
+        public AgreeTransportContractCommandHandler(ITransportContractRepository transportContractRepository)
         {
             _transportContractRepository = transportContractRepository;
-            _mapper = mapper;
         }
 
         public Task<AgreeTransportContractCommandResponse> Handle(AgreeTransportContractCommandRequest request, CancellationToken cancellationToken)
@@ -30,6 +30,8 @@ namespace TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandAgreeTr
             if (_transportContractRepository.IsThereAgreedContract(transportContractEntity.TransportRequestID)) return Task.FromResult(new AgreeTransportContractCommandResponse(ResponseConstants.CannotMakeContractAgreement));
 
             transportContractEntity.IsAgreed = true;
+            transportContractEntity.TransportRequest!.StatusType = TransportRequestStatusType.InProcess;
+            transportContractEntity.Vehicle!.Status = VehicleStatusType.AtWork;
             _transportContractRepository.Update(transportContractEntity);
 
             int effectedRows = _transportContractRepository.SaveChanges();

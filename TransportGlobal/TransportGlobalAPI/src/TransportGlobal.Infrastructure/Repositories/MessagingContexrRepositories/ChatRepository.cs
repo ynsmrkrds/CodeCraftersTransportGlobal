@@ -27,7 +27,8 @@ namespace TransportGlobal.Infrastructure.Repositories.MessagingContexrRepositori
 
         public bool IsExists(int senderUserID, int receiverUserID)
         {
-            return _context.Chats
+            return GetAll()
+                .Where(x => x.IsDeleted == false)
                 .Any(x => x.SenderUserID == senderUserID && x.ReceiverUserID == receiverUserID);
         }
 
@@ -46,7 +47,8 @@ namespace TransportGlobal.Infrastructure.Repositories.MessagingContexrRepositori
 
         public ChatEntity? GetByTransportRequestID(int transportRequestID, int senderUserID)
         {
-            return _context.Chats
+            return GetAll()
+                .Where(x => x.IsDeleted == false)
                 .FirstOrDefault(x => x.TransportRequestID == transportRequestID && x.SenderUserID == senderUserID);
         }
     }

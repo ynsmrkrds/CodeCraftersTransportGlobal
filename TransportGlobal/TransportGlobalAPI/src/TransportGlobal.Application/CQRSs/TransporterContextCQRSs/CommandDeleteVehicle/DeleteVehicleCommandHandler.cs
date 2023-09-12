@@ -35,15 +35,11 @@ namespace TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandDelet
                 foreach (EmployeeEntity employee in vehicleEntity.Employees)
                 {
                     employee.VehicleID = null;
-                    _employeeRepository.Update(employee);
                 }
-
-                // TODO: Test sürecinde kodun gerekli olup olmadığına bakılacak
-                int updateEffectedRows = _employeeRepository.SaveChanges();
-                if (updateEffectedRows == 0) return Task.FromResult(new DeleteVehicleCommandResponse(ResponseConstants.DeleteFailed));
             }
 
-            _vehicleRepository.Delete(vehicleEntity);
+            vehicleEntity.IsDeleted = true;
+            _vehicleRepository.Update(vehicleEntity);
 
             int effectedRows = _vehicleRepository.SaveChanges();
             if (effectedRows == 0) return Task.FromResult(new DeleteVehicleCommandResponse(ResponseConstants.DeleteFailed));

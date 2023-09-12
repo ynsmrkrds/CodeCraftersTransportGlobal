@@ -10,14 +10,11 @@ namespace TransportGlobal.Application.ViewModels.TransporterContextViewModels
 
         public VehicleStatusType Status { get; set; }
 
-        public bool IsDeleted { get; set; }
-
-        public VehicleViewModel(int id, DateTime createdDate, string identificationNumber, VehicleType type, VehicleStatusType status, bool isDeleted) : base(id, createdDate)
+        public VehicleViewModel(int id, DateTime createdDate, bool isDeleted, string identificationNumber, VehicleType type, VehicleStatusType status) : base(id, createdDate, isDeleted)
         {
             IdentificationNumber = identificationNumber;
             Type = type;
             Status = status;
-            IsDeleted = isDeleted;
         }
     }
 }

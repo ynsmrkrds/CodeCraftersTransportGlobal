@@ -15,7 +15,7 @@ namespace TransportGlobal.Application.ViewModels.TransportContextViewModels
 
         public double Price { get; set; }
 
-        public TransportContractViewModel(int id, DateTime createdDate, UserViewModel user, CompanyViewModel company, TransportRequestViewModel transportRequest, VehicleViewModel vehicle, double price) : base(id, createdDate)
+        public TransportContractViewModel(int id, DateTime createdDate, bool isDeleted, UserViewModel user, CompanyViewModel company, TransportRequestViewModel transportRequest, VehicleViewModel vehicle, double price) : base(id, createdDate, isDeleted)
         {
             User = user;
             Company = company;

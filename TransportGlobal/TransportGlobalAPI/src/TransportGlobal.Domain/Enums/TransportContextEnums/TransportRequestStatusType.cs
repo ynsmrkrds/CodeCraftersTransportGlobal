@@ -1,10 +1,8 @@
 ﻿namespace TransportGlobal.Domain.Enums.TransportContextEnums
 {
-    public enum StatusType
+    public enum TransportRequestStatusType
     {
         Pending,
-        DealDone,
-        Cancelled,
         InProcess,
         Done
     }
