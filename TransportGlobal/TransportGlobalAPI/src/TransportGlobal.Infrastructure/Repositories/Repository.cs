@@ -41,7 +41,7 @@ namespace TransportGlobal.Infrastructure.Repositories
             return _context.Set<T>().FirstOrDefault(expression);
         }
 
-        public T? GetByID(int id)
+        public virtual T? GetByID(int id)
         {
             return _context.Set<T>().Where(x => x.ID == id).FirstOrDefault();
         }
@@ -137,7 +137,7 @@ namespace TransportGlobal.Infrastructure.Repositories
             return expression == null ? _context.Set<T>().Count() : _context.Set<T>().Count(expression);
         }
 
-        public IQueryable<T> GetAll()
+        public virtual IQueryable<T> GetAll()
         {
             return _context.Set<T>().AsNoTracking().AsQueryable();
         }
