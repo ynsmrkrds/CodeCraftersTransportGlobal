@@ -55,5 +55,7 @@ namespace TransportGlobal.Domain.Constants
         public static readonly ResponseConstantModel CannotCreateChatForYourself = new(false, "You cannot create a chat for yourself!");
 
         public static readonly ResponseConstantModel CannotCreateChatForSameUser = new(false, "New chat cannot be created for the same user!");
+
+        public static readonly ResponseConstantModel CannotReview = new(false, "You can not review!");
     }
 }

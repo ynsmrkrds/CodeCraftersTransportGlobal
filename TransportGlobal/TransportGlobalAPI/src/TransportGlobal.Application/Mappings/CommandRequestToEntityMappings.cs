@@ -9,11 +9,13 @@ using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandCreateVeh
 using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandUpdateCompany;
 using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandUpdateEmployee;
 using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandUpdateVehicle;
+using TransportGlobal.Application.CQRSs.ReviewContextCQRSs.CommandCreateReview;
 using TransportGlobal.Application.CQRSs.UserContextCQRSs.CommandCreateUser;
 using TransportGlobal.Application.CQRSs.UserContextCQRSs.CommandUpdateUser;
 using TransportGlobal.Domain.Entities.MessagingContextEntities;
 using TransportGlobal.Domain.Entities.TransportContextEntities;
 using TransportGlobal.Domain.Entities.TransporterContextEntities;
+using TransportGlobal.Domain.Entities.ReviewContextEntities;
 using TransportGlobal.Domain.Entities.UserContextEntities;
 using TransportGlobal.Domain.Enums.MessagingContextEnums;
 using TransportGlobal.Domain.Enums.TransportContextEnums;
@@ -63,6 +65,10 @@ namespace TransportGlobal.Application.Mappings
             #region Messaging Bounded Context Mappings
             CreateMap<CreateMessageCommandRequest, MessageEntity>()
                 .ConstructUsing(src => new MessageEntity(src.ChatID, MessageContentType.Text, src.Content, DateTime.Now));
+            #endregion
+
+            #region Review Bounded Context Mappings
+            CreateMap<CreateReviewCommandRequest, ReviewEntity>();
             #endregion
         }
     }

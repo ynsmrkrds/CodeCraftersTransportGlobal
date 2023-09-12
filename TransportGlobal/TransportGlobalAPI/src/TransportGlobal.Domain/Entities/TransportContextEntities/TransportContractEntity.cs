@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using TransportGlobal.Domain.Entities.ReviewContextEntities;
 using TransportGlobal.Domain.Entities.TransporterContextEntities;
 using TransportGlobal.Domain.Entities.UserContextEntities;
 using TransportGlobal.Domain.SeedWorks;
@@ -30,6 +31,8 @@ namespace TransportGlobal.Domain.Entities.TransportContextEntities
         public double Price { get; set; }
 
         public bool IsAgreed { get; set; }
+
+        public ReviewEntity? Review { get; set; }
 
         public TransportContractEntity(int userID, int companyID, int transportRequestID, int vehicleID, double price, bool isAgreed)
         {

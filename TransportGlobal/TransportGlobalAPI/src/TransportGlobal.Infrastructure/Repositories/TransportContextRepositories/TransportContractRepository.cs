@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TransportGlobal.Domain.Entities.TransportContextEntities;
+using TransportGlobal.Domain.Enums.TransportContextEnums;
+using TransportGlobal.Domain.Enums.UserContextEnums;
 using TransportGlobal.Domain.Repositories.TransportContextRepositories;
 using TransportGlobal.Infrastructure.Context;
 
@@ -47,6 +49,20 @@ namespace TransportGlobal.Infrastructure.Repositories.TransportContextRepositori
             return _context.TransportContracts
                 .Where(x => x.TransportRequestID == transportRequestID)
                 .Any(x => x.IsAgreed);
+        }
+
+        public bool? IsOwner(int id, int userID)
+        {
+            return GetByID(id)?.UserID == userID;
+        }
+
+        public bool? CanReview(int id)
+        {
+            return _context.TransportContracts
+                .Include(x => x.TransportRequest)
+                .FirstOrDefault(x => x.ID == id)
+                ?.TransportRequest
+                ?.StatusType == StatusType.Done;
         }
     }
 }

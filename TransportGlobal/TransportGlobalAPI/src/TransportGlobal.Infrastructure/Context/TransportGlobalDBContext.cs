@@ -3,6 +3,7 @@ using System.Reflection;
 using TransportGlobal.Domain.Entities.MessagingContextEntities;
 using TransportGlobal.Domain.Entities.TransportContextEntities;
 using TransportGlobal.Domain.Entities.TransporterContextEntities;
+using TransportGlobal.Domain.Entities.ReviewContextEntities;
 using TransportGlobal.Domain.Entities.UserContextEntities;
 
 namespace TransportGlobal.Infrastructure.Context
@@ -32,6 +33,10 @@ namespace TransportGlobal.Infrastructure.Context
         public DbSet<ChatEntity> Chats { get; set; }
 
         public DbSet<MessageEntity> Messages { get; set; }
+        #endregion
+
+        #region Review Bounded Context DbSets 
+        public DbSet<ReviewEntity> Reviews { get; set; }
         #endregion
 
         public TransportGlobalDBContext(DbContextOptions<TransportGlobalDBContext> options) : base(options)
@@ -120,6 +125,14 @@ namespace TransportGlobal.Infrastructure.Context
               .WithOne(x => x.Chat)
               .HasForeignKey(x => x.ChatID)
               .OnDelete(DeleteBehavior.Cascade);
+            #endregion
+
+            #region Review Bounded Context Configurations
+            modelBuilder.Entity<ReviewEntity>()
+              .HasOne(x => x.TransportContract)
+              .WithOne(x => x.Review)
+              .HasForeignKey<ReviewEntity>(x => x.TransportContractID)
+              .OnDelete(DeleteBehavior.NoAction);
             #endregion
 
             base.OnModelCreating(modelBuilder);

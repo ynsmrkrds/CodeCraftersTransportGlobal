@@ -2,10 +2,12 @@
 using TransportGlobal.Application.ViewModels.MessagingContextViewModels;
 using TransportGlobal.Application.ViewModels.TransportContextViewModels;
 using TransportGlobal.Application.ViewModels.TransporterContextViewModels;
+using TransportGlobal.Application.ViewModels.ReviewContextViewModels;
 using TransportGlobal.Application.ViewModels.UserContextViewModels;
 using TransportGlobal.Domain.Entities.MessagingContextEntities;
 using TransportGlobal.Domain.Entities.TransportContextEntities;
 using TransportGlobal.Domain.Entities.TransporterContextEntities;
+using TransportGlobal.Domain.Entities.ReviewContextEntities;
 using TransportGlobal.Domain.Entities.UserContextEntities;
 
 namespace EventManagement.Application.Mappings
@@ -36,6 +38,10 @@ namespace EventManagement.Application.Mappings
             CreateMap<ChatEntity, ChatViewModel>();
 
             CreateMap<MessageEntity, MessageViewModel>();
+            #endregion
+
+            #region Review Bounded Context Mappings
+            CreateMap<ReviewEntity, ReviewViewModel>();
             #endregion
         }
     }

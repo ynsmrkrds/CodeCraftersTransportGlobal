@@ -15,5 +15,7 @@
         public const string NotFoundChat = "There is no such chat in the system!";
         public const string ChatDoesntBelongToUser = "Chat does note belong to the user!";
         public const string MessageContentInvalid = "Message content type and content do not match!";
+        public const string NotFoundReview = "No such review is registered in the system!";
+        public const string ReviewScoreOutOfRange = "The review score should be between 1 and 5!";
     }
 }
