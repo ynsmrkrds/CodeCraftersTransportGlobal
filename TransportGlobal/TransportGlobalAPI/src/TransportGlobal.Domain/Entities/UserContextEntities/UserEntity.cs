@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TransportGlobal.Domain.Entities.MessagingContextEntities;
 using TransportGlobal.Domain.Entities.TransportContextEntities;
 using TransportGlobal.Domain.Entities.TransporterContextEntities;
 using TransportGlobal.Domain.Enums.UserContextEnums;
@@ -24,6 +25,10 @@ namespace TransportGlobal.Domain.Entities.UserContextEntities
         public ICollection<CompanyEntity> Companies { get; set; } = new List<CompanyEntity>();
 
         public ICollection<TransportContractEntity> TransportContracts { get; set; } = new List<TransportContractEntity>();
+
+        public ICollection<ChatEntity> SenderUserChats { get; set; } = new List<ChatEntity>();
+
+        public ICollection<ChatEntity> ReceiverUserChats { get; set; } = new List<ChatEntity>();
 
         public UserEntity(string name, string surname, string email, string passwordHash, UserType type)
         {

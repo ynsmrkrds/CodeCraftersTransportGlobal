@@ -22,6 +22,68 @@ namespace TransportGlobal.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("TransportGlobal.Domain.Entities.MessagingContextEntities.ChatEntity", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ReceiverUserID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SenderUserID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TransportRequestID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ReceiverUserID");
+
+                    b.HasIndex("SenderUserID");
+
+                    b.HasIndex("TransportRequestID");
+
+                    b.ToTable("Chats");
+                });
+
+            modelBuilder.Entity("TransportGlobal.Domain.Entities.MessagingContextEntities.MessageEntity", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("ChatID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ContentType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("SendingDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ChatID");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("TransportGlobal.Domain.Entities.TransportContextEntities.TransportContractEntity", b =>
                 {
                     b.Property<int>("ID")
@@ -267,6 +329,44 @@ namespace TransportGlobal.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("TransportGlobal.Domain.Entities.MessagingContextEntities.ChatEntity", b =>
+                {
+                    b.HasOne("TransportGlobal.Domain.Entities.UserContextEntities.UserEntity", "ReceiverUser")
+                        .WithMany("ReceiverUserChats")
+                        .HasForeignKey("ReceiverUserID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TransportGlobal.Domain.Entities.UserContextEntities.UserEntity", "SenderUser")
+                        .WithMany("SenderUserChats")
+                        .HasForeignKey("SenderUserID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TransportGlobal.Domain.Entities.TransportContextEntities.TransportRequestEntity", "TransportRequest")
+                        .WithMany("Chats")
+                        .HasForeignKey("TransportRequestID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ReceiverUser");
+
+                    b.Navigation("SenderUser");
+
+                    b.Navigation("TransportRequest");
+                });
+
+            modelBuilder.Entity("TransportGlobal.Domain.Entities.MessagingContextEntities.MessageEntity", b =>
+                {
+                    b.HasOne("TransportGlobal.Domain.Entities.MessagingContextEntities.ChatEntity", "Chat")
+                        .WithMany("Messages")
+                        .HasForeignKey("ChatID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chat");
+                });
+
             modelBuilder.Entity("TransportGlobal.Domain.Entities.TransportContextEntities.TransportContractEntity", b =>
                 {
                     b.HasOne("TransportGlobal.Domain.Entities.TransporterContextEntities.CompanyEntity", "Company")
@@ -342,8 +442,15 @@ namespace TransportGlobal.Infrastructure.Migrations
                     b.Navigation("Company");
                 });
 
+            modelBuilder.Entity("TransportGlobal.Domain.Entities.MessagingContextEntities.ChatEntity", b =>
+                {
+                    b.Navigation("Messages");
+                });
+
             modelBuilder.Entity("TransportGlobal.Domain.Entities.TransportContextEntities.TransportRequestEntity", b =>
                 {
+                    b.Navigation("Chats");
+
                     b.Navigation("TransportContracts");
                 });
 
@@ -366,6 +473,10 @@ namespace TransportGlobal.Infrastructure.Migrations
             modelBuilder.Entity("TransportGlobal.Domain.Entities.UserContextEntities.UserEntity", b =>
                 {
                     b.Navigation("Companies");
+
+                    b.Navigation("ReceiverUserChats");
+
+                    b.Navigation("SenderUserChats");
 
                     b.Navigation("TransportContracts");
                 });

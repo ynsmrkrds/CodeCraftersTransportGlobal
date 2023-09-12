@@ -51,5 +51,9 @@ namespace TransportGlobal.Domain.Constants
         public static readonly ResponseConstantModel CannotMakeContractAgreement = new(false, "Since a contract has been made for this transport request, no further contract can be made!");
 
         public static readonly ResponseConstantModel NotTransportContractOwner = new(false, "The transport request does not belong to the user!");
+
+        public static readonly ResponseConstantModel CannotCreateChatForYourself = new(false, "You cannot create a chat for yourself!");
+
+        public static readonly ResponseConstantModel CannotCreateChatForSameUser = new(false, "New chat cannot be created for the same user!");
     }
 }
