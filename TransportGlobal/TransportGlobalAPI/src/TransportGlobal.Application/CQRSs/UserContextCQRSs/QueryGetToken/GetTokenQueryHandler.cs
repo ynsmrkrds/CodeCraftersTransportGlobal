@@ -20,11 +20,11 @@ namespace TransportGlobal.Application.CQRSs.UserContextCQRSs.QueryGetToken
             string passwordHash = EncryptionHelper.Encrypt(request.Password);
 
             UserEntity? userEntity = _userRepository.ValidateUser(request.Email, passwordHash);
-            if (userEntity == null) return Task.FromResult(new GetTokenQueryResponse(ResponseConstants.EmailOrPasswordIncorrect, null));
+            if (userEntity == null) return Task.FromResult(new GetTokenQueryResponse(ResponseConstants.EmailOrPasswordIncorrect));
 
             string token = TokenHelper.Instance().CreateToken(userEntity);
 
-            return Task.FromResult(new GetTokenQueryResponse(ResponseConstants.LoginSuccessful, token));
+            return Task.FromResult(new GetTokenQueryResponse(token));
         }
     }
 }

@@ -30,7 +30,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> Get(int id)
         {
             GetTransportRequestQueryResponse queryResponse = await _mediator.Send(new GetTransportRequestQueryRequest(id));
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, queryResponse.TransportRequest));
+            return CreateActionResult(queryResponse.TransportRequest);
         }
 
         [HttpGet]
@@ -39,7 +39,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> GetPendings(int page, int size)
         {
             GetPendingTransportRequestsQueryResponse queryResponse = await _mediator.Send(new GetPendingTransportRequestsQueryRequest(new PaginationModel(page, size)));
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, queryResponse.TransportRequests));
+            return CreateActionResult(queryResponse.TransportRequests);
         }
 
         [HttpGet]
@@ -48,7 +48,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> GetOwn(int page, int size)
         {
             GetOwnTransportRequestsQueryResponse queryResponse = await _mediator.Send(new GetOwnTransportRequestsQueryRequest(new PaginationModel(page, size)));
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, queryResponse.TransportRequests));
+            return CreateActionResult(queryResponse.TransportRequests);
         }
 
         [HttpPost]
@@ -56,9 +56,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> Create([FromBody] CreateTransportRequestCommandRequest request)
         {
             CreateTransportRequestCommandResponse commandResponse = await _mediator.Send(request);
-            if (commandResponse.IsSuccessful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, commandResponse.Message));
-
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse.Message));
+            return CreateActionResult(commandResponse.Response);
         }
 
         [HttpPut]
@@ -66,9 +64,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> Update([FromBody] UpdateTransportRequestCommandRequest request)
         {
             UpdateTransportRequestCommandResponse commandResponse = await _mediator.Send(request);
-            if (commandResponse.IsSuccessful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, commandResponse.Message));
-
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse.Message));
+            return CreateActionResult(commandResponse.Response);
         }
 
         [HttpPut]
@@ -77,9 +73,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> Complete([FromBody] CompleteTransportRequestCommandRequest request)
         {
             CompleteTransportRequestCommandResponse commandResponse = await _mediator.Send(request);
-            if (commandResponse.IsSuccessful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, commandResponse.Message));
-
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse.Message));
+            return CreateActionResult(commandResponse.Response);
         }
 
         [HttpDelete]
@@ -88,9 +82,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             DeleteTransportRequestCommandResponse commandResponse = await _mediator.Send(new DeleteTransportRequestCommandRequest(id));
-            if (commandResponse.IsSuccessful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, commandResponse.Message));
-
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse.Message));
+            return CreateActionResult(commandResponse.Response);
         }
 
     }

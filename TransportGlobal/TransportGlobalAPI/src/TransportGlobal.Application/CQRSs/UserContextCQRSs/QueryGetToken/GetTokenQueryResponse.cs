@@ -1,20 +1,24 @@
-﻿using TransportGlobal.Domain.Models;
+﻿using System.Text.Json.Serialization;
+using TransportGlobal.Domain.Models;
 
 namespace TransportGlobal.Application.CQRSs.UserContextCQRSs.QueryGetToken
 {
     public class GetTokenQueryResponse
     {
-        public string Message { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? Token { get; private set; }
 
-        public bool IsSuccesful { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public ResponseConstantModel? Response { get; private set; }
 
-        public string? Token { get; set; }
-
-        public GetTokenQueryResponse(ResponseConstantModel responseConstant, string? token = null)
+        public GetTokenQueryResponse(string token)
         {
-            Message = responseConstant.Message;
-            IsSuccesful = responseConstant.IsSuccessful;
             Token = token;
+        }
+
+        public GetTokenQueryResponse(ResponseConstantModel response)
+        {
+            Response = response;
         }
     }
 }

@@ -1,8 +1,10 @@
-﻿namespace TransportGlobal.Domain.Exceptions
+﻿using TransportGlobal.Domain.Models;
+
+namespace TransportGlobal.Domain.Exceptions
 {
-    public class NotFoundException : Exception
+    public class NotFoundException : BaseException
     {
-        public NotFoundException(string message) : base(message)
+        public NotFoundException(ExceptionConstantModel exceptionConstant) : base(exceptionConstant)
         {
         }
     }
