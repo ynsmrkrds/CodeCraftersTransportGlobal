@@ -7,13 +7,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TransportGlobalAPI", "Trans
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EF319BF0-AEEE-4016-82D3-4E35506D97BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportGlobal.API", "TransportGlobalAPI\src\TransportGlobal.API\TransportGlobal.API.csproj", "{C9F9B4B5-B9F3-4713-8180-EF78850077CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransportGlobal.API", "TransportGlobalAPI\src\TransportGlobal.API\TransportGlobal.API.csproj", "{C9F9B4B5-B9F3-4713-8180-EF78850077CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportGlobal.Domain", "TransportGlobalAPI\src\TransportGlobal.Domain\TransportGlobal.Domain.csproj", "{1353B416-81BD-4AB4-BF1D-F1B2332B85A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransportGlobal.Domain", "TransportGlobalAPI\src\TransportGlobal.Domain\TransportGlobal.Domain.csproj", "{1353B416-81BD-4AB4-BF1D-F1B2332B85A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportGlobal.Application", "TransportGlobalAPI\src\TransportGlobal.Application\TransportGlobal.Application.csproj", "{75056DF4-EA80-4F93-90CB-31BD0B4D982F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransportGlobal.Application", "TransportGlobalAPI\src\TransportGlobal.Application\TransportGlobal.Application.csproj", "{75056DF4-EA80-4F93-90CB-31BD0B4D982F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportGlobal.Infrastructure", "TransportGlobalAPI\src\TransportGlobal.Infrastructure\TransportGlobal.Infrastructure.csproj", "{3E515A44-1981-44EA-ADCE-8EED998EC0D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransportGlobal.Infrastructure", "TransportGlobalAPI\src\TransportGlobal.Infrastructure\TransportGlobal.Infrastructure.csproj", "{3E515A44-1981-44EA-ADCE-8EED998EC0D8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TransportGlobalWeb", "TransportGlobalWeb", "{21E3CDB9-7BC9-42AF-A791-1B13A0B3C96B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D2FF42FC-D870-448F-9AB4-8DCF8D66319A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportGlobalWeb.UI", "TransportGlobalWeb\src\TransportGlobalWeb.UI\TransportGlobalWeb.UI.csproj", "{45609570-F511-4FF0-A5DC-6F997AFEACEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +43,10 @@ Global
 		{3E515A44-1981-44EA-ADCE-8EED998EC0D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E515A44-1981-44EA-ADCE-8EED998EC0D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E515A44-1981-44EA-ADCE-8EED998EC0D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45609570-F511-4FF0-A5DC-6F997AFEACEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45609570-F511-4FF0-A5DC-6F997AFEACEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45609570-F511-4FF0-A5DC-6F997AFEACEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45609570-F511-4FF0-A5DC-6F997AFEACEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,6 +57,8 @@ Global
 		{1353B416-81BD-4AB4-BF1D-F1B2332B85A0} = {EF319BF0-AEEE-4016-82D3-4E35506D97BB}
 		{75056DF4-EA80-4F93-90CB-31BD0B4D982F} = {EF319BF0-AEEE-4016-82D3-4E35506D97BB}
 		{3E515A44-1981-44EA-ADCE-8EED998EC0D8} = {EF319BF0-AEEE-4016-82D3-4E35506D97BB}
+		{D2FF42FC-D870-448F-9AB4-8DCF8D66319A} = {21E3CDB9-7BC9-42AF-A791-1B13A0B3C96B}
+		{45609570-F511-4FF0-A5DC-6F997AFEACEE} = {D2FF42FC-D870-448F-9AB4-8DCF8D66319A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19BD1F96-504D-4319-BC7E-5CC6F100F27F}
