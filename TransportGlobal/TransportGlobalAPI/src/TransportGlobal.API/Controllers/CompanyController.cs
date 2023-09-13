@@ -27,7 +27,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> Get(int id)
         {
             GetCompanyQueryResponse queryResponse = await _mediator.Send(new GetCompanyQueryRequest(id));
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, queryResponse.Company));
+            return CreateActionResult(queryResponse.Company);
         }
 
         [HttpGet]
@@ -36,7 +36,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> GetOwnCompany()
         {
             GetOwnCompanyQueryResponse queryResponse = await _mediator.Send(new GetOwnCompanyQueryRequest());
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, queryResponse.Company));
+            return CreateActionResult(queryResponse.Company);
         }
 
         [HttpPost]
@@ -44,9 +44,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> Create([FromBody] CreateCompanyCommandRequest request)
         {
             CreateCompanyCommandResponse commandResponse = await _mediator.Send(request);
-            if (commandResponse.IsSuccessful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, commandResponse.Message));
-
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse.Message));
+            return CreateActionResult(commandResponse.Response);
         }
 
         [HttpPut]
@@ -54,9 +52,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> Update([FromBody] UpdateCompanyCommandRequest request)
         {
             UpdateCompanyCommandResponse commandResponse = await _mediator.Send(request);
-            if (commandResponse.IsSuccessful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, commandResponse.Message));
-
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse.Message));
+            return CreateActionResult(commandResponse.Response);
         }
 
         [HttpDelete]
@@ -65,9 +61,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             DeleteCompanyCommandResponse commandResponse = await _mediator.Send(new DeleteCompanyCommandRequest(id));
-            if (commandResponse.IsSuccessful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, commandResponse.Message));
-
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse.Message));
+            return CreateActionResult(commandResponse.Response);
         }
     }
 }

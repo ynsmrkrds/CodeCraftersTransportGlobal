@@ -1,15 +1,9 @@
 ﻿namespace TransportGlobal.Domain.Models
 {
-    public class ResponseConstantModel
+    public class ResponseConstantModel : BaseConstantModel
     {
-        public bool IsSuccessful { get; set; }
-
-        public string Message { get; set; }
-
-        public ResponseConstantModel(bool isSuccessful, string message)
+        public ResponseConstantModel(bool isSuccessful, string message) : base(isSuccessful, message)
         {
-            IsSuccessful = isSuccessful;
-            Message = message;
         }
     }
 }

@@ -24,7 +24,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> Get(int page, int size)
         {
             GetOwnChatsQueryResponse queryResponse = await _mediator.Send(new GetOwnChatsQueryRequest(new PaginationModel(page, size)));
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, queryResponse.Chats));
+            return CreateActionResult(queryResponse.Chats);
         }
     }
 }

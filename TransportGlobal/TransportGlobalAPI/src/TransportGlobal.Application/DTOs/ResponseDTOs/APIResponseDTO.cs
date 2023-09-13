@@ -1,18 +1,22 @@
 ﻿using System.Net;
 using System.Text.Json.Serialization;
+using TransportGlobal.Domain.Models;
 
 namespace TransportGlobal.Application.DTOs.ResponseDTOs
 {
     public class APIResponseDTO
     {
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public object? Data { get; set; }
-
         [JsonIgnore]
-        public HttpStatusCode StatusCode { get; set; }
+        public HttpStatusCode StatusCode { get; private set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public List<string>? Messages { get; set; }
+        public object? Data { get; private set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public ResponseConstantModel? Response { get; private set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public List<ExceptionConstantModel>? Errors { get; private set; }
 
         public APIResponseDTO(HttpStatusCode statusCode, object data)
         {
@@ -20,16 +24,22 @@ namespace TransportGlobal.Application.DTOs.ResponseDTOs
             Data = data;
         }
 
-        public APIResponseDTO(HttpStatusCode statusCode, List<string> messages)
+        public APIResponseDTO(HttpStatusCode statusCode, ResponseConstantModel response)
         {
             StatusCode = statusCode;
-            Messages = messages;
+            Response = response;
         }
 
-        public APIResponseDTO(HttpStatusCode statusCode, string message)
+        public APIResponseDTO(HttpStatusCode statusCode, List<ExceptionConstantModel> errors)
         {
             StatusCode = statusCode;
-            Messages = new List<string>() { message };
+            Errors = errors;
+        }
+
+        public APIResponseDTO(HttpStatusCode statusCode, ExceptionConstantModel error)
+        {
+            StatusCode = statusCode;
+            Errors = new List<ExceptionConstantModel>() { error };
         }
     }
 }
