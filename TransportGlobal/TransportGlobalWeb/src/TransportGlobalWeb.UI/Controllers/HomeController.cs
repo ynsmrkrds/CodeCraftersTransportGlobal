@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using TransportGlobalWeb.UI.Models;
+using TransportGlobalWeb.UI.Models.ViewModels;
 
 namespace TransportGlobalWeb.UI.Controllers
 {

@@ -21,6 +21,11 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 // Extend services with api layer services
 builder.Services.AddAPIServices(builder.Configuration);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials().WithOrigins("https://localhost:7123"));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -31,6 +36,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowAll");
 
 // Dictate to use custom exception handler
 //app.UseCustomException();
