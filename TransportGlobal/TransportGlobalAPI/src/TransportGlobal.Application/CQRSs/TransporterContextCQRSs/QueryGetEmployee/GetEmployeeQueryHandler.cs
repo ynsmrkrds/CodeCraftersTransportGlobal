@@ -22,7 +22,7 @@ namespace EventManagement.Application.CQRSs.LocationContextCQRSs.QueryGetAllLoca
 
         public Task<GetEmployeeQueryResponse> Handle(GetEmployeeQueryRequest request, CancellationToken cancellationToken)
         {
-            EmployeeEntity employeeEntity = _employeRepository.GetByID(request.ID) ?? throw new ClientSideException(ResponseConstants.NotVehicleOwner.Message);
+            EmployeeEntity employeeEntity = _employeRepository.GetByID(request.ID) ?? throw new ClientSideException(ExceptionConstants.NotFoundEmployee);
 
             EmployeeViewModel employeeViewModel = _mapper.Map<EmployeeEntity, EmployeeViewModel>(employeeEntity);
 

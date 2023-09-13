@@ -5,6 +5,7 @@ using System.Text.Json;
 using TransportGlobal.Application.DTOs.ResponseDTOs;
 using TransportGlobal.Domain.Constants;
 using TransportGlobal.Domain.Exceptions;
+using TransportGlobal.Domain.Models;
 
 namespace TransportGlobal.API.Extensions.Handlers
 {
@@ -28,15 +29,15 @@ namespace TransportGlobal.API.Extensions.Handlers
                         _ => HttpStatusCode.InternalServerError,
                     };
 
-                    string errorMessage = statusCode switch
+                    ExceptionConstantModel exceptionConstant = statusCode switch
                     {
                         HttpStatusCode.InternalServerError => ExceptionConstants.ServerSideException,
-                        _ => exceptionFeature.Error.Message
+                        _ => exceptionFeature.Error is not ClientSideException clientSideException ? ExceptionConstants.ServerSideException : new ExceptionConstantModel(clientSideException.Message)
                     };
 
                     context.Response.StatusCode = (int)statusCode;
 
-                    APIResponseDTO response = new(statusCode, errorMessage);
+                    APIResponseDTO response = new(statusCode, exceptionConstant);
 
                     await context.Response.WriteAsync(JsonSerializer.Serialize(response));
                 });

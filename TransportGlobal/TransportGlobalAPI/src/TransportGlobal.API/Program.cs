@@ -33,7 +33,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Dictate to use custom exception handler
-//app.UseCustomException();
+app.UseCustomException();
 
 app.UseAuthorization();
 

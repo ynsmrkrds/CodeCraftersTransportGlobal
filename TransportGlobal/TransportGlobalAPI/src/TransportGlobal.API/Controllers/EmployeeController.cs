@@ -29,7 +29,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> Get(int id)
         {
             GetEmployeeQueryResponse queryResponse = await _mediator.Send(new GetEmployeeQueryRequest(id));
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, queryResponse.Employee));
+            return CreateActionResult(queryResponse.Employee);
         }
 
         [HttpGet]
@@ -38,7 +38,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> GetOwnEmployees(int page, int size)
         {
             GetOwnEmployeesQueryResponse queryResponse = await _mediator.Send(new GetOwnEmployeesQueryRequest(new PaginationModel(page, size)));
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, queryResponse.Employees));
+            return CreateActionResult(queryResponse.Employees);
         }
 
         [HttpGet]
@@ -47,7 +47,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> GetVehicleEmployees(int vehicleID, int page, int size)
         {
             GetVehicleEmployeesQueryResponse queryResponse = await _mediator.Send(new GetVehicleEmployeesQueryRequest(vehicleID, new PaginationModel(page, size)));
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, queryResponse.Employees));
+            return CreateActionResult(queryResponse.Employees);
         }
 
         [HttpPost]
@@ -55,9 +55,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> Create([FromBody] CreateEmployeeCommandRequest request)
         {
             CreateEmployeeCommandResponse commandResponse = await _mediator.Send(request);
-            if (commandResponse.IsSuccessful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, commandResponse.Message));
-
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse.Message));
+            return CreateActionResult(commandResponse.Response);
         }
 
         [HttpPut]
@@ -65,9 +63,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> Update([FromBody] UpdateEmployeeCommandRequest request)
         {
             UpdateEmployeeCommandResponse commandResponse = await _mediator.Send(request);
-            if (commandResponse.IsSuccessful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, commandResponse.Message));
-
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse.Message));
+            return CreateActionResult(commandResponse.Response);
         }
 
         [HttpDelete]
@@ -76,9 +72,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             DeleteEmployeeCommandResponse commandResponse = await _mediator.Send(new DeleteEmployeeCommandRequest(id));
-            if (commandResponse.IsSuccessful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, commandResponse.Message));
-
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse.Message));
+            return CreateActionResult(commandResponse.Response);
         }
     }
 }

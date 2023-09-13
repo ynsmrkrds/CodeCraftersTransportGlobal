@@ -1,8 +1,10 @@
-﻿namespace TransportGlobal.Domain.Exceptions
+﻿using TransportGlobal.Domain.Models;
+
+namespace TransportGlobal.Domain.Exceptions
 {
-    public class ClientSideException : Exception
+    public class ClientSideException : BaseException
     {
-        public ClientSideException(string message) : base(message)
+        public ClientSideException(ExceptionConstantModel exceptionConstant) : base(exceptionConstant)
         {
         }
     }
