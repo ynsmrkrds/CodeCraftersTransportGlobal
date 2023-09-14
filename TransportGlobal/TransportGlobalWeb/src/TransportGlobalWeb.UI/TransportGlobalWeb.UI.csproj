@@ -16,7 +16,6 @@
     <Folder Include="Models\RequestModels\TransporterContextRequestModels\Employee\" />
     <Folder Include="Models\RequestModels\TransporterContextRequestModels\Vehicle\" />
     <Folder Include="Models\ResponseModels\TransporterResponseModels\Employee\" />
-    <Folder Include="Models\ResponseModels\TransporterResponseModels\Vehicle\" />
   </ItemGroup>
 
 </Project>

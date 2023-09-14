@@ -9,7 +9,7 @@ namespace TransportGlobalWeb.UI.Controllers
     public class BaseController : Controller
     {
         [NonAction]
-        public IActionResult CreateActionResult<T>(ApiResponseModel<T>? apiResponse, Func<IActionResult>? onData, object? model = null, string? actionName = null) where T : BaseResponseModel
+        public IActionResult CreateActionResult<T>(ApiResponseModel<T>? apiResponse, Func<IActionResult>? onData, object? model = null, string? actionName = null, string? controllerName = null) where T : BaseResponseModel
         {
             IActionResult actionResult;
 
@@ -35,26 +35,26 @@ namespace TransportGlobalWeb.UI.Controllers
             return actionResult;
         }
 
-        public IActionResult ReturnWithResponseConstant(ResponseConstantModel responseConstant, object? model = null, string? actionName = null)
+        public IActionResult ReturnWithResponseConstant(ResponseConstantModel responseConstant, object? model = null, string? actionName = null, string? controllerName = null)
         {
             ViewBag.ResponseConstant = responseConstant;
-            if (actionName != null) return RedirectToAction(actionName, model);
+            if (actionName != null) return RedirectToAction(actionName, controllerName, model);
 
             return View(model);
         }
 
-        public IActionResult ReturnWithError(ExceptionConstantModel exception, object? model = null, string? actionName = null)
+        public IActionResult ReturnWithError(ExceptionConstantModel exception, object? model = null, string? actionName = null, string? controllerName = null)
         {
             ViewBag.Error = exception.Message;
-            if (actionName != null) return RedirectToAction(actionName, model);
+            if (actionName != null) return RedirectToAction(actionName, controllerName, model);
 
             return View(model);
         }
 
-        public IActionResult ReturnWithError(List<ExceptionConstantModel> exceptions, object? model, string? actionName = null)
+        public IActionResult ReturnWithError(List<ExceptionConstantModel> exceptions, object? model, string? actionName = null, string? controllerName = null)
         {
             ViewBag.Error = string.Join(Environment.NewLine, exceptions.Select(x => x.Message));
-            if (actionName != null) return RedirectToAction(actionName, model);
+            if (actionName != null) return RedirectToAction(actionName, controllerName, model);
 
             return View(model);
         }
