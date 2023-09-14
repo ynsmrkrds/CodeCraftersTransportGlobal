@@ -40,7 +40,7 @@ app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 
 // Dictate to use custom exception handler
-app.UseCustomException();
+//app.UseCustomException();
 
 app.UseAuthorization();
 

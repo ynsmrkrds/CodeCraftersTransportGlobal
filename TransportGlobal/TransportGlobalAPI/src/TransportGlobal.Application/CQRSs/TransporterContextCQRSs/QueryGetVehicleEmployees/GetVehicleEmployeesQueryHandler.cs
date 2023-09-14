@@ -2,7 +2,6 @@
 using MediatR;
 using TransportGlobal.Application.ViewModels.TransporterContextViewModels;
 using TransportGlobal.Domain.Entities.TransporterContextEntities;
-using TransportGlobal.Domain.ObjectExtensions;
 using TransportGlobal.Domain.Repositories.TransporterContextRepositories;
 
 namespace TransportGlobal.Application.CQRSs.TransporterContextCQRSs.QueryGetVehicleEmployees
@@ -20,11 +19,11 @@ namespace TransportGlobal.Application.CQRSs.TransporterContextCQRSs.QueryGetVehi
 
         public Task<GetVehicleEmployeesQueryResponse> Handle(GetVehicleEmployeesQueryRequest request, CancellationToken cancellationToken)
         {
-            List<EmployeeEntity> employees = _employeeRepository.GetAllByVehicleID(request.VehicleID).WithPagination(request.Pagination).ToList();
+            IEnumerable<EmployeeEntity> employees = _employeeRepository.GetAllByVehicleID(request.VehicleID);
 
-            List<EmployeeViewModel> viewModels = _mapper.Map<List<EmployeeEntity>, List<EmployeeViewModel>>(employees);
+            IEnumerable<EmployeeViewModel> viewModels = _mapper.Map<IEnumerable<EmployeeViewModel>>(employees);
 
-            return Task.FromResult(new GetVehicleEmployeesQueryResponse(viewModels));
+            return Task.FromResult(new GetVehicleEmployeesQueryResponse(viewModels, request.Pagination));
         }
     }
 }

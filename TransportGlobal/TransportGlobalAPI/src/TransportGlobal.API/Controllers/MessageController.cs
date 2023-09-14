@@ -25,7 +25,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> GetMessagesByChatID(int chatID, int page, int size)
         {
             GetMessagesByChatIDQueryResponse queryResponse = await _mediator.Send(new GetMessagesByChatIDQueryRequest(chatID, new PaginationModel(page, size)));
-            return CreateActionResult(queryResponse.Messages);
+            return CreateActionResult(queryResponse);
         }
 
         [HttpPost]

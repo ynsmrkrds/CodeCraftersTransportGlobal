@@ -38,7 +38,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> GetOwnEmployees(int page, int size)
         {
             GetOwnEmployeesQueryResponse queryResponse = await _mediator.Send(new GetOwnEmployeesQueryRequest(new PaginationModel(page, size)));
-            return CreateActionResult(queryResponse.Employees);
+            return CreateActionResult(queryResponse);
         }
 
         [HttpGet]
@@ -47,7 +47,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> GetVehicleEmployees(int vehicleID, int page, int size)
         {
             GetVehicleEmployeesQueryResponse queryResponse = await _mediator.Send(new GetVehicleEmployeesQueryRequest(vehicleID, new PaginationModel(page, size)));
-            return CreateActionResult(queryResponse.Employees);
+            return CreateActionResult(queryResponse);
         }
 
         [HttpPost]

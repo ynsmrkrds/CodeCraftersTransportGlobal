@@ -39,7 +39,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> GetPendings(int page, int size)
         {
             GetPendingTransportRequestsQueryResponse queryResponse = await _mediator.Send(new GetPendingTransportRequestsQueryRequest(new PaginationModel(page, size)));
-            return CreateActionResult(queryResponse.TransportRequests);
+            return CreateActionResult(queryResponse);
         }
 
         [HttpGet]
@@ -48,7 +48,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> GetOwn(int page, int size)
         {
             GetOwnTransportRequestsQueryResponse queryResponse = await _mediator.Send(new GetOwnTransportRequestsQueryRequest(new PaginationModel(page, size)));
-            return CreateActionResult(queryResponse.TransportRequests);
+            return CreateActionResult(queryResponse);
         }
 
         [HttpPost]

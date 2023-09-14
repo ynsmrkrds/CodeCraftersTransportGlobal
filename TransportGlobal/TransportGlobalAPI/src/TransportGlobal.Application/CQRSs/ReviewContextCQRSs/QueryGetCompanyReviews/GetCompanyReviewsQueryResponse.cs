@@ -1,14 +1,13 @@
-﻿using TransportGlobal.Application.ViewModels.ReviewContextViewModels;
+﻿using TransportGlobal.Application.DTOs.CQRSDTOs;
+using TransportGlobal.Application.ViewModels.ReviewContextViewModels;
+using TransportGlobal.Domain.Models;
 
 namespace TransportGlobal.Application.CQRSs.ReviewContextCQRSs.QueryGetCompanyReviews
 {
-    public class GetCompanyReviewsQueryResponse
+    public class GetCompanyReviewsQueryResponse : BaseQueryListResponseDTO<ReviewViewModel>
     {
-        public ICollection<ReviewViewModel> Reviews { get; set; }
-
-        public GetCompanyReviewsQueryResponse(ICollection<ReviewViewModel> reviews)
+        public GetCompanyReviewsQueryResponse(IEnumerable<ReviewViewModel> list, PaginationModel paginationModel) : base(list, paginationModel)
         {
-            Reviews = reviews;
         }
     }
 }

@@ -1,14 +1,13 @@
-﻿using TransportGlobal.Application.ViewModels.MessagingContextViewModels;
+﻿using TransportGlobal.Application.DTOs.CQRSDTOs;
+using TransportGlobal.Application.ViewModels.MessagingContextViewModels;
+using TransportGlobal.Domain.Models;
 
 namespace TransportGlobal.Application.CQRSs.MessagingContextCQRSs.QueryGetMessagesByChatID
 {
-    public class GetMessagesByChatIDQueryResponse
+    public class GetMessagesByChatIDQueryResponse : BaseQueryListResponseDTO<MessageViewModel>
     {
-        public List<MessageViewModel> Messages { get; set; }
-
-        public GetMessagesByChatIDQueryResponse(List<MessageViewModel> messages)
+        public GetMessagesByChatIDQueryResponse(IEnumerable<MessageViewModel> list, PaginationModel paginationModel) : base(list, paginationModel)
         {
-            Messages = messages;
         }
     }
 }
