@@ -1,6 +1,6 @@
 ﻿using TransportGlobalWeb.UI.Enums.UserContextEnums;
 
-namespace TransportGlobalWeb.UI.Models.RequestModels
+namespace TransportGlobalWeb.UI.Models.RequestModels.UserContextRequestModels.User
 {
     public class RegisterRequestModel
     {

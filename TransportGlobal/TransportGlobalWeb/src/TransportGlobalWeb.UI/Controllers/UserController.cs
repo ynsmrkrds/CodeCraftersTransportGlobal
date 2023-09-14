@@ -1,24 +1,25 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TransportGlobalWeb.UI.ApiClients;
+using TransportGlobalWeb.UI.ApiClients.UserContextApiClients;
 using TransportGlobalWeb.UI.Enums;
 using TransportGlobalWeb.UI.Enums.UserContextEnums;
 using TransportGlobalWeb.UI.Extensions.Attributes;
 using TransportGlobalWeb.UI.Helpers;
 using TransportGlobalWeb.UI.Models.ConstantModels;
 using TransportGlobalWeb.UI.Models.CookieModels;
-using TransportGlobalWeb.UI.Models.RequestModels;
+using TransportGlobalWeb.UI.Models.RequestModels.UserContextRequestModels.User;
 using TransportGlobalWeb.UI.Models.ResponseModels;
+using TransportGlobalWeb.UI.Models.ResponseModels.UserResponseModels.User;
 
 namespace TransportGlobalWeb.UI.Controllers
 {
     public class UserController : BaseController
     {
-        private readonly UserContextClient _userContextClient;
+        private readonly UserClient _userClient;
 
-        public UserController(UserContextClient userContextClient)
+        public UserController(UserClient userClient)
         {
-            _userContextClient = userContextClient;
+            _userClient = userClient;
         }
 
         [AllowAnonymous]
@@ -31,7 +32,7 @@ namespace TransportGlobalWeb.UI.Controllers
         [HttpPost]
         public IActionResult Login(LoginRequestModel loginRequestModel)
         {
-            ApiResponseModel<LoginResponseModel>? apiResponse = _userContextClient.Login(loginRequestModel);
+            ApiResponseModel<LoginResponseModel>? apiResponse = _userClient.Login(loginRequestModel);
 
             IActionResult onData()
             {
@@ -60,14 +61,14 @@ namespace TransportGlobalWeb.UI.Controllers
         [HttpPost]
         public IActionResult Register(RegisterRequestModel registerRequestModel)
         {
-            ApiResponseModel<NonDataResponseModel>? apiResponse = _userContextClient.Register(registerRequestModel);
+            ApiResponseModel<NonDataResponseModel>? apiResponse = _userClient.Register(registerRequestModel);
 
             return CreateActionResult(apiResponse, null);
         }
 
         public IActionResult Profile()
         {
-            ApiResponseModel<GetProfileResponseModel>? apiResponse = _userContextClient.GetProfile();
+            ApiResponseModel<GetProfileResponseModel>? apiResponse = _userClient.GetProfile();
 
             IActionResult onData()
             {
@@ -79,7 +80,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult UpdateProfile()
         {
-            ApiResponseModel<GetProfileResponseModel>? apiResponse = _userContextClient.GetProfile();
+            ApiResponseModel<GetProfileResponseModel>? apiResponse = _userClient.GetProfile();
 
             IActionResult onData()
             {
@@ -97,7 +98,7 @@ namespace TransportGlobalWeb.UI.Controllers
         [HttpPost]
         public IActionResult UpdateProfile(UpdateProfileRequestModel updateProfileRequestModel)
         {
-            ApiResponseModel<NonDataResponseModel>? apiResponse = _userContextClient.UpdateProfile(updateProfileRequestModel);
+            ApiResponseModel<NonDataResponseModel>? apiResponse = _userClient.UpdateProfile(updateProfileRequestModel);
 
             return CreateActionResult(apiResponse, null, updateProfileRequestModel);
         }
@@ -110,7 +111,7 @@ namespace TransportGlobalWeb.UI.Controllers
         [HttpPost]
         public IActionResult UpdatePassword(UpdatePasswordRequestModel updatePasswordRequestModel)
         {
-            ApiResponseModel<NonDataResponseModel>? apiResponse = _userContextClient.UpdatePassword(updatePasswordRequestModel);
+            ApiResponseModel<NonDataResponseModel>? apiResponse = _userClient.UpdatePassword(updatePasswordRequestModel);
 
             return CreateActionResult(apiResponse, null);
         }

@@ -1,6 +1,14 @@
 ﻿@using TransportGlobalWeb.UI.Enums;
+@using TransportGlobalWeb.UI.Enums.UserContextEnums;
 @using TransportGlobalWeb.UI.Helpers;
 @using TransportGlobalWeb.UI.Models.ConstantModels;
+@using TransportGlobalWeb.UI.Models.CookieModels;
+
+@{
+    string? userCookieJson = CookieHelper.GetCookie(CookieKey.User);
+    UserCookieModel? userCookieModel = userCookieJson == null ? null : BaseCookieModel.FromJson<UserCookieModel>(userCookieJson);
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +24,7 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    @if(CookieHelper.GetCookie(CookieKey.User) == null)
+                    @if (userCookieModel == null)
                     {
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
@@ -39,6 +47,12 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Profile">Profile</a>
                             </li>
+                            @if (userCookieModel!.UserType == UserType.Shipper)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Company" asp-action="GetOwnCompany">Company</a>
+                                </li>
+                            }
                         </ul>
                     }
                 </div>

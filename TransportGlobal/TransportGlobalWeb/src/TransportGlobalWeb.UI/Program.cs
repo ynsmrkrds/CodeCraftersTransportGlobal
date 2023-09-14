@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Options;
-using TransportGlobalWeb.UI.ApiClients;
+using TransportGlobalWeb.UI.ApiClients.TransporterContextApiClients;
+using TransportGlobalWeb.UI.ApiClients.UserContextApiClients;
 using TransportGlobalWeb.UI.Helpers;
 using TransportGlobalWeb.UI.Models.ConfigurationModels;
 
@@ -8,9 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.Configure<ApiEnpointsConfigurationModel>(builder.Configuration.GetSection("ApiEndpoints"));
-builder.Services.AddSingleton(serviceProvider => serviceProvider.GetRequiredService<IOptions<ApiEnpointsConfigurationModel>>().Value);
-builder.Services.AddSingleton<UserContextClient>();
+builder.Services.Configure<ApiEndpointsConfigurationModel>(builder.Configuration.GetSection("ApiEndpoints"));
+builder.Services.AddSingleton(serviceProvider => serviceProvider.GetRequiredService<IOptions<ApiEndpointsConfigurationModel>>().Value);
+builder.Services.AddSingleton<UserClient>();
+builder.Services.AddSingleton<CompanyClient>();
 
 builder.Services.AddHttpContextAccessor();
 
