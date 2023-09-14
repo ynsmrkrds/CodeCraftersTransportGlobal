@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TransportGlobalWeb", "Trans
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D2FF42FC-D870-448F-9AB4-8DCF8D66319A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportGlobalWeb.UI", "TransportGlobalWeb\src\TransportGlobalWeb.UI\TransportGlobalWeb.UI.csproj", "{45609570-F511-4FF0-A5DC-6F997AFEACEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransportGlobalWeb.UI", "TransportGlobalWeb\src\TransportGlobalWeb.UI\TransportGlobalWeb.UI.csproj", "{45609570-F511-4FF0-A5DC-6F997AFEACEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

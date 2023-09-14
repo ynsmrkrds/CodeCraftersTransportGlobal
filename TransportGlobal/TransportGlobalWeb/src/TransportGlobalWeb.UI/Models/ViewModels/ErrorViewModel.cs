@@ -1,4 +1,4 @@
-namespace TransportGlobalWeb.UI.Models
+namespace TransportGlobalWeb.UI.Models.ViewModels
 {
     public class ErrorViewModel
     {

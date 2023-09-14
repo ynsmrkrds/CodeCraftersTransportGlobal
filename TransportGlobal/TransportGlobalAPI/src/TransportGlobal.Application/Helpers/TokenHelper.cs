@@ -60,7 +60,7 @@ namespace TransportGlobal.Application.Helpers
                 audience: tokenConfiguration.Audience,
                 claims: claims,
                 signingCredentials: credentials,
-                expires: DateTime.Now.AddMinutes(Convert.ToInt32(tokenConfiguration.DurationInMinutes))
+                expires: DateTime.UtcNow.AddMinutes(Convert.ToInt32(tokenConfiguration.DurationInMinutes))
             );
 
 

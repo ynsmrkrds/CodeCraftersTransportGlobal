@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using TransportGlobalWeb.UI.Models;
+using TransportGlobalWeb.UI.Enums;
+using TransportGlobalWeb.UI.Helpers;
+using TransportGlobalWeb.UI.Models.ViewModels;
 
 namespace TransportGlobalWeb.UI.Controllers
 {
@@ -15,7 +17,10 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            bool isTokenExist = CookieHelper.GetCookie(CookieKey.User) != null;
+            if (isTokenExist) return View();
+
+            return RedirectToAction("Login", "User");
         }
 
         public IActionResult Privacy()

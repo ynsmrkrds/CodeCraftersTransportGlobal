@@ -21,7 +21,7 @@ namespace TransportGlobal.API.Controllers
         }
 
         [HttpGet]
-        [Route("getProfile")]
+        [Route("profile")]
         [Authority(UserType.Customer, UserType.Shipper)]
         public async Task<IActionResult> GetProfile()
         {
