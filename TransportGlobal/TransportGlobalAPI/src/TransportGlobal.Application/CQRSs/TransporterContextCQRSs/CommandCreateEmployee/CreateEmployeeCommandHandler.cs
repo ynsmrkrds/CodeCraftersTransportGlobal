@@ -34,14 +34,16 @@ namespace TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandCreat
 
             if (_employeeRepository.IsExistsWithSameEmail(request.Email)) return Task.FromResult(new CreateEmployeeCommandResponse(ResponseConstants.ExistsEmployeeWithSameEmail));
 
-            VehicleEntity vehicleEntity = _vehicleRepository.GetByID((int)request.VehicleID!) ?? throw new ClientSideException(ExceptionConstants.NotFoundVehicle);
-            if (vehicleEntity.IsDeleted) throw new ClientSideException(ExceptionConstants.NotFoundVehicle);
+            if (request.VehicleID != null)
+            {
+                VehicleEntity vehicleEntity = _vehicleRepository.GetByID((int)request.VehicleID!) ?? throw new ClientSideException(ExceptionConstants.NotFoundVehicle);
+                if (vehicleEntity.IsDeleted) throw new ClientSideException(ExceptionConstants.NotFoundVehicle);
+                _vehicleRepository.DetachEntity(vehicleEntity);
 
-            _vehicleRepository.DetachEntity(vehicleEntity);
+                if (_vehicleRepository.IsVehicleAtWork((int)request.VehicleID) == true) return Task.FromResult(new CreateEmployeeCommandResponse(ResponseConstants.EmployeeCannotAssignToVehicle));
 
-            if (request.VehicleID != null && _vehicleRepository.IsVehicleAtWork((int)request.VehicleID) == true) return Task.FromResult(new CreateEmployeeCommandResponse(ResponseConstants.EmployeeCannotAssignToVehicle));
-
-            if (request.VehicleID != null && _vehicleRepository.IsOwner((int)request.VehicleID, userID) == false) return Task.FromResult(new CreateEmployeeCommandResponse(ResponseConstants.NotVehicleOwner));
+                if (_vehicleRepository.IsOwner((int)request.VehicleID, userID) == false) return Task.FromResult(new CreateEmployeeCommandResponse(ResponseConstants.NotVehicleOwner));
+            }
 
             EmployeeEntity employeeEntity = _mapper.Map<EmployeeEntity>(request);
             employeeEntity.CompanyID = userEntity.ActiveCompany!.ID;

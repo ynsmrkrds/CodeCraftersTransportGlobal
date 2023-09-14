@@ -8,7 +8,6 @@ using TransportGlobal.Domain.Entities.TransportContextEntities;
 using TransportGlobal.Domain.Entities.UserContextEntities;
 using TransportGlobal.Domain.Enums.UserContextEnums;
 using TransportGlobal.Domain.Exceptions;
-using TransportGlobal.Domain.ObjectExtensions;
 using TransportGlobal.Domain.Repositories.TransportContextRepositories;
 using TransportGlobal.Domain.Repositories.UserContextRepositories;
 
@@ -32,16 +31,16 @@ namespace TransportGlobal.Application.CQRSs.TransportContextCQRSs.QueryGetOwnTra
             int userID = TokenHelper.Instance().DecodeTokenInRequest()?.UserID ?? throw new ClientSideException(ExceptionConstants.TokenError);
             UserEntity userEntity = _userRepository.GetByID(userID) ?? throw new ClientSideException(ExceptionConstants.NotFoundUser);
 
-            List<TransportContractEntity> transportContracts = userEntity.Type switch
+            IEnumerable<TransportContractEntity> transportContracts = userEntity.Type switch
             {
-                UserType.Shipper => _transportContractRepository.GetAllByCompanyID(userEntity.ActiveCompany!.ID).WithPagination(request.Pagination).ToList(),
-                UserType.Customer => _transportContractRepository.GetAllByUserID(userID).WithPagination(request.Pagination).ToList(),
-                _ => new()
+                UserType.Shipper => _transportContractRepository.GetAllByCompanyID(userEntity.ActiveCompany!.ID),
+                UserType.Customer => _transportContractRepository.GetAllByUserID(userID),
+                _ => throw new NotImplementedException(),
             };
 
-            List<TransportContractViewModel> transportContractViewModels = _mapper.Map<List<TransportContractViewModel>>(transportContracts);
+            IEnumerable<TransportContractViewModel> transportContractViewModels = _mapper.Map<IEnumerable<TransportContractViewModel>>(transportContracts);
 
-            return Task.FromResult(new GetOwnTransportContractsQueryResponse(transportContractViewModels));
+            return Task.FromResult(new GetOwnTransportContractsQueryResponse(transportContractViewModels, request.Pagination));
         }
     }
 }

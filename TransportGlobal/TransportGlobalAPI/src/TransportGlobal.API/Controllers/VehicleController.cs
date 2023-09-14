@@ -37,7 +37,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> GetOwnVehicles(int page, int size)
         {
             GetOwnVehiclesQueryResponse queryResponse = await _mediator.Send(new GetOwnVehiclesQueryRequest(new PaginationModel(page, size)));
-            return CreateActionResult(queryResponse.Vehicles);
+            return CreateActionResult(queryResponse);
         }
 
         [HttpPost]

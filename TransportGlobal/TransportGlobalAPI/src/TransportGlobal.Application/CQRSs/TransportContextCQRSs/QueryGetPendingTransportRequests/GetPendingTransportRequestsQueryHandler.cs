@@ -20,11 +20,11 @@ namespace TransportGlobal.Application.CQRSs.TransportContextCQRSs.QueryGetPendin
 
         public Task<GetPendingTransportRequestsQueryResponse> Handle(GetPendingTransportRequestsQueryRequest request, CancellationToken cancellationToken)
         {
-            List<TransportRequestEntity> transportRequestEntities = _transportRequestRepository.GetPendingTransportRequests().WithPagination(request.Pagination).ToList();
+            IEnumerable<TransportRequestEntity> transportRequestEntities = _transportRequestRepository.GetPendingTransportRequests();
 
-            List<TransportRequestViewModel> transportRequestViewModels = _mapper.Map<List<TransportRequestViewModel>>(transportRequestEntities);
+            IEnumerable<TransportRequestViewModel> transportRequestViewModels = _mapper.Map<IEnumerable<TransportRequestViewModel>>(transportRequestEntities);
 
-            return Task.FromResult(new GetPendingTransportRequestsQueryResponse(transportRequestViewModels));
+            return Task.FromResult(new GetPendingTransportRequestsQueryResponse(transportRequestViewModels, request.Pagination));
         }
     }
 }
