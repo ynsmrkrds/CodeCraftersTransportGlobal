@@ -1,0 +1,48 @@
+﻿@using TransportGlobalWeb.UI.Enums;
+@model GetCompanyResponseModel?
+
+@if (Model == null)
+{
+    <div>
+        <a asp-action="CreateCompany" asp-controller="Company" class="btn btn-primary">Create Company</a>
+    </div>
+}
+else
+{
+    <h2>Company Details</h2>
+
+    <div>
+        <h4>Name</h4>
+        <p>@Model.Name</p>
+    </div>
+
+    <div>
+        <h4>Address</h4>
+        <p>@Model.Address</p>
+    </div>
+
+    <div>
+        <h4>Phone Number</h4>
+        <p>@Model.PhoneNumber</p>
+    </div>
+
+    <div>
+        <h4>Email</h4>
+        <p>@Model.Email</p>
+    </div>
+
+    <div>
+        <h4>Created Date</h4>
+        @Model.CreatedDate.ToString("dd/MM/yyyy HH:mm:ss")
+    </div>
+
+    <div class="d-flex flex-row">
+        <div>
+            <a asp-action="UpdateCompany" asp-controller="Company" class="btn btn-primary">Update Company</a>
+        </div>
+        <div style="margin: 12px;"></div>
+        <div>
+            <a asp-action="DeleteCompany" asp-controller="Company" asp-route-id=@Model.ID class="btn btn-danger">Delete Company</a>
+        </div>
+    </div>
+}

@@ -1,19 +1,24 @@
 ﻿using RestSharp;
 using TransportGlobalWeb.UI.Models.ConfigurationModels;
-using TransportGlobalWeb.UI.Models.RequestModels;
+using TransportGlobalWeb.UI.Models.ConfigurationModels.UserContextConfigurationModels;
+using TransportGlobalWeb.UI.Models.RequestModels.UserContextRequestModels.User;
 using TransportGlobalWeb.UI.Models.ResponseModels;
+using TransportGlobalWeb.UI.Models.ResponseModels.UserResponseModels.User;
 
-namespace TransportGlobalWeb.UI.ApiClients
+namespace TransportGlobalWeb.UI.ApiClients.UserContextApiClients
 {
-    public class UserContextClient : BaseApiClient
+    public class UserClient : BaseApiClient
     {
-        public UserContextClient(ApiEnpointsConfigurationModel apiEnpoints) : base(apiEnpoints)
+        private readonly UserEndpointsConfigurationModel _configurationModel;
+
+        public UserClient(ApiEndpointsConfigurationModel apiEndpoints) : base(apiEndpoints)
         {
+            _configurationModel = apiEndpoints.UserContextEndpoints!.UserEndpoints!;
         }
 
         public ApiResponseModel<LoginResponseModel>? Login(LoginRequestModel loginRequestModel)
         {
-            RestRequest request = new(apiEnpoints.UserContextEndpoints!.Login, Method.Post);
+            RestRequest request = new(_configurationModel.Login, Method.Post);
             request.AddBody(loginRequestModel, ContentType.Json);
 
             return SendRequest<LoginResponseModel>(request);
@@ -21,7 +26,7 @@ namespace TransportGlobalWeb.UI.ApiClients
 
         public ApiResponseModel<NonDataResponseModel>? Register(RegisterRequestModel registerRequestModel)
         {
-            RestRequest request = new(apiEnpoints.UserContextEndpoints!.Register, Method.Post);
+            RestRequest request = new(_configurationModel.Register, Method.Post);
             request.AddBody(registerRequestModel, ContentType.Json);
 
             return SendRequest<NonDataResponseModel>(request);
@@ -29,7 +34,7 @@ namespace TransportGlobalWeb.UI.ApiClients
 
         public ApiResponseModel<GetProfileResponseModel>? GetProfile()
         {
-            RestRequest request = new(apiEnpoints.UserContextEndpoints!.GetProfile, Method.Get);
+            RestRequest request = new(_configurationModel.GetProfile, Method.Get);
             request = AddAuthorizationHeader(request);
 
             return SendRequest<GetProfileResponseModel>(request);
@@ -37,7 +42,7 @@ namespace TransportGlobalWeb.UI.ApiClients
 
         public ApiResponseModel<NonDataResponseModel>? UpdateProfile(UpdateProfileRequestModel updateProfileRequestModel)
         {
-            RestRequest request = new(apiEnpoints.UserContextEndpoints!.UpdateProfile, Method.Put);
+            RestRequest request = new(_configurationModel.UpdateProfile, Method.Put);
             request.AddBody(updateProfileRequestModel, ContentType.Json);
             request = AddAuthorizationHeader(request);
 
@@ -46,7 +51,7 @@ namespace TransportGlobalWeb.UI.ApiClients
 
         public ApiResponseModel<NonDataResponseModel>? UpdatePassword(UpdatePasswordRequestModel updatePasswordRequestModel)
         {
-            RestRequest request = new(apiEnpoints.UserContextEndpoints!.UpdatePassword, Method.Put);
+            RestRequest request = new(_configurationModel.UpdatePassword, Method.Put);
             request.AddBody(updatePasswordRequestModel, ContentType.Json);
             request = AddAuthorizationHeader(request);
 

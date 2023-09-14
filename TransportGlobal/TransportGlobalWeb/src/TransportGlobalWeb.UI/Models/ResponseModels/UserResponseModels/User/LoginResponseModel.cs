@@ -1,4 +1,4 @@
-﻿namespace TransportGlobalWeb.UI.Models.ResponseModels
+﻿namespace TransportGlobalWeb.UI.Models.ResponseModels.UserResponseModels.User
 {
     public class LoginResponseModel : BaseResponseModel
     {

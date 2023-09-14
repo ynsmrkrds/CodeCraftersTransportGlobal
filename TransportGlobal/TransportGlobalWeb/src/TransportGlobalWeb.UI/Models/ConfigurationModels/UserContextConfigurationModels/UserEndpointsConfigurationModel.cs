@@ -1,6 +1,6 @@
-﻿namespace TransportGlobalWeb.UI.Models.ConfigurationModels
+﻿namespace TransportGlobalWeb.UI.Models.ConfigurationModels.UserContextConfigurationModels
 {
-    public class UserContextEndpointsConfigurationModel
+    public class UserEndpointsConfigurationModel
     {
         public string? Login { get; set; }
 

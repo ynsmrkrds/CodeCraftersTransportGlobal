@@ -12,16 +12,16 @@ namespace TransportGlobalWeb.UI.ApiClients
     public abstract class BaseApiClient
     {
         protected readonly RestClient _restClient;
-        protected readonly ApiEnpointsConfigurationModel apiEnpoints;
+        protected readonly ApiEndpointsConfigurationModel _apiEndpoints;
 
-        public BaseApiClient(ApiEnpointsConfigurationModel apiEnpoints)
+        public BaseApiClient(ApiEndpointsConfigurationModel apiEndpoints)
         {
             _restClient = new(new RestClientOptions()
             {
-                BaseUrl = new Uri(apiEnpoints.BaseUrl!),
+                BaseUrl = new Uri(apiEndpoints.BaseUrl!),
             });
 
-            this.apiEnpoints = apiEnpoints;
+            _apiEndpoints = apiEndpoints;
         }
 
         public ApiResponseModel<T>? SendRequest<T>(RestRequest restRequest) where T : BaseResponseModel
