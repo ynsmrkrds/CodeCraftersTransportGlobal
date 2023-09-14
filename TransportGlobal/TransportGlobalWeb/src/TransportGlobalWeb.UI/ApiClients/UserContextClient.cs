@@ -19,13 +19,38 @@ namespace TransportGlobalWeb.UI.ApiClients
             return SendRequest<LoginResponseModel>(request);
         }
 
-        public List<string>? Register(RegisterRequestModel registerRequestModel)
+        public ApiResponseModel<NonDataResponseModel>? Register(RegisterRequestModel registerRequestModel)
         {
             RestRequest request = new(apiEnpoints.UserContextEndpoints!.Register, Method.Post);
             request.AddBody(registerRequestModel, ContentType.Json);
 
-            ApiResponseModel<NonDataResponseModel>? apiResponse = SendRequest<NonDataResponseModel>(request);
-            return apiResponse?.Messages;
+            return SendRequest<NonDataResponseModel>(request);
+        }
+
+        public ApiResponseModel<GetProfileResponseModel>? GetProfile()
+        {
+            RestRequest request = new(apiEnpoints.UserContextEndpoints!.GetProfile, Method.Get);
+            request = AddAuthorizationHeader(request);
+
+            return SendRequest<GetProfileResponseModel>(request);
+        }
+
+        public ApiResponseModel<NonDataResponseModel>? UpdateProfile(UpdateProfileRequestModel updateProfileRequestModel)
+        {
+            RestRequest request = new(apiEnpoints.UserContextEndpoints!.UpdateProfile, Method.Put);
+            request.AddBody(updateProfileRequestModel, ContentType.Json);
+            request = AddAuthorizationHeader(request);
+
+            return SendRequest<NonDataResponseModel>(request);
+        }
+
+        public ApiResponseModel<NonDataResponseModel>? UpdatePassword(UpdatePasswordRequestModel updatePasswordRequestModel)
+        {
+            RestRequest request = new(apiEnpoints.UserContextEndpoints!.UpdatePassword, Method.Put);
+            request.AddBody(updatePasswordRequestModel, ContentType.Json);
+            request = AddAuthorizationHeader(request);
+
+            return SendRequest<NonDataResponseModel>(request);
         }
     }
 }

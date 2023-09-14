@@ -1,15 +1,20 @@
-﻿namespace TransportGlobalWeb.UI.Models.ResponseModels
+﻿using TransportGlobalWeb.UI.Models.ConstantModels;
+
+namespace TransportGlobalWeb.UI.Models.ResponseModels
 {
     public class ApiResponseModel<T> where T : BaseResponseModel
     {
-        public T? Data { get; set; }
+        public T? Data { get; private set; }
 
-        public List<string>? Messages { get; set; }
+        public ResponseConstantModel? Response { get; private set; }
 
-        public ApiResponseModel(T? data, List<string>? messages = null)
+        public List<ExceptionConstantModel>? Errors { get; private set; }
+
+        public ApiResponseModel(T? data, ResponseConstantModel? response = null, List<ExceptionConstantModel>? errors = null)
         {
             Data = data;
-            Messages = messages;
+            Response = response;
+            Errors = errors;
         }
     }
 }

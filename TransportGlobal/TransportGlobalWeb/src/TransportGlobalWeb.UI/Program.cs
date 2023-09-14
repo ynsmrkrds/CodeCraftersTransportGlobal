@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Options;
 using TransportGlobalWeb.UI.ApiClients;
+using TransportGlobalWeb.UI.Helpers;
 using TransportGlobalWeb.UI.Models.ConfigurationModels;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +12,11 @@ builder.Services.Configure<ApiEnpointsConfigurationModel>(builder.Configuration.
 builder.Services.AddSingleton(serviceProvider => serviceProvider.GetRequiredService<IOptions<ApiEnpointsConfigurationModel>>().Value);
 builder.Services.AddSingleton<UserContextClient>();
 
+builder.Services.AddHttpContextAccessor();
+
 var app = builder.Build();
+
+CookieHelper.Initialize(app.Services.GetService<IHttpContextAccessor>()!);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -30,6 +35,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=User}/{action=Login}");
+    pattern: "{controller=Home}/{action=Index}");
 
 app.Run();

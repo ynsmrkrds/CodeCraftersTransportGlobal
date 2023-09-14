@@ -1,12 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TransportGlobalWeb.UI.ApiClients;
+using TransportGlobalWeb.UI.Enums;
+using TransportGlobalWeb.UI.Enums.UserContextEnums;
+using TransportGlobalWeb.UI.Extensions.Attributes;
+using TransportGlobalWeb.UI.Helpers;
+using TransportGlobalWeb.UI.Models.ConstantModels;
+using TransportGlobalWeb.UI.Models.CookieModels;
 using TransportGlobalWeb.UI.Models.RequestModels;
 using TransportGlobalWeb.UI.Models.ResponseModels;
 
 namespace TransportGlobalWeb.UI.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         private readonly UserContextClient _userContextClient;
 
@@ -15,52 +21,98 @@ namespace TransportGlobalWeb.UI.Controllers
             _userContextClient = userContextClient;
         }
 
-        // Login işlemi için
+        [AllowAnonymous]
         public IActionResult Login()
         {
-            // Giriş ekranının view'ını döndür
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult Login(LoginRequestModel loginRequestModel)
         {
             ApiResponseModel<LoginResponseModel>? apiResponse = _userContextClient.Login(loginRequestModel);
-            if (apiResponse?.Data == null)
+
+            IActionResult onData()
             {
-                return ReturnWithMessage(apiResponse?.Messages);
-            }
-            else
-            {
-                LoginResponseModel loginResponse = JsonConvert.DeserializeObject<LoginResponseModel>(apiResponse.Data!.ToString()!)!;
-                // cache login response
+                string token = apiResponse!.Data!.Token;
+                DateTime tokenExpiryDate = TokenHelper.GetTokenExpiryDate(token);
+                UserType userType = TokenHelper.GetUserType(token);
+
+                UserCookieModel userCookie = new(token, userType);
+
+                bool isSuccess = CookieHelper.SetCookie(CookieKey.User, userCookie.ToJson(), tokenExpiryDate);
+                if (isSuccess == false) return ReturnWithError(new ExceptionConstantModel("An error occurred in the login process!"));
 
                 return RedirectToAction("index", "home");
             }
+
+            return CreateActionResult(apiResponse, onData);
         }
 
-        // Kayıt işlemi için
+        [AllowAnonymous]
         public IActionResult Register()
         {
-            // Kayıt ekranının view'ını döndür
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult Register(RegisterRequestModel registerRequestModel)
+        {
+            ApiResponseModel<NonDataResponseModel>? apiResponse = _userContextClient.Register(registerRequestModel);
+
+            return CreateActionResult(apiResponse, null);
+        }
+
+        public IActionResult Profile()
+        {
+            ApiResponseModel<GetProfileResponseModel>? apiResponse = _userContextClient.GetProfile();
+
+            IActionResult onData()
+            {
+                return View(apiResponse!.Data!);
+            }
+
+            return CreateActionResult(apiResponse, onData);
+        }
+
+        public IActionResult UpdateProfile()
+        {
+            ApiResponseModel<GetProfileResponseModel>? apiResponse = _userContextClient.GetProfile();
+
+            IActionResult onData()
+            {
+                UpdateProfileRequestModel requestModel = new()
+                {
+                    Name = apiResponse!.Data!.Name,
+                    Surname = apiResponse!.Data!.Surname
+                };
+                return View(requestModel);
+            }
+
+            return CreateActionResult(apiResponse, onData);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateProfile(UpdateProfileRequestModel updateProfileRequestModel)
+        {
+            ApiResponseModel<NonDataResponseModel>? apiResponse = _userContextClient.UpdateProfile(updateProfileRequestModel);
+
+            return CreateActionResult(apiResponse, null, updateProfileRequestModel);
+        }
+
+        public IActionResult UpdatePassword()
+        {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Register(RegisterRequestModel registerRequestModel)
+        public IActionResult UpdatePassword(UpdatePasswordRequestModel updatePasswordRequestModel)
         {
-            // Yeni kullanıcıyı kaydet
-            // Başarılıysa giriş yapılmasını sağla ve yönlendirme yap
-            // Hata varsa hata mesajını göster
+            ApiResponseModel<NonDataResponseModel>? apiResponse = _userContextClient.UpdatePassword(updatePasswordRequestModel);
 
-            List<string>? messages = _userContextClient.Register(registerRequestModel);
-            return ReturnWithMessage(messages);
-        }
-
-        private IActionResult ReturnWithMessage(List<string>? messages)
-        {
-            ViewBag.Message = string.Join(Environment.NewLine, messages ?? new List<string>() { "An unknown error occurred!" });
-            return View();
+            return CreateActionResult(apiResponse, null);
         }
     }
 }

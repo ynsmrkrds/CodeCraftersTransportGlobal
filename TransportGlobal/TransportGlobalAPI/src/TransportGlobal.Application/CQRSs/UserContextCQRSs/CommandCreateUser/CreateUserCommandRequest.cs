@@ -10,6 +10,7 @@ namespace TransportGlobal.Application.CQRSs.UserContextCQRSs.CommandCreateUser
 
         public string Surname { get; set; }
 
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")]
         public string Email { get; set; }
 
         [StringLength(50, MinimumLength = 6)]
