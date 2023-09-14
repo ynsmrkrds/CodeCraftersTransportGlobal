@@ -26,7 +26,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> GetCompanyReview(int companyID, int page, int size)
         {
             GetCompanyReviewsQueryResponse queryResponse = await _mediator.Send(new GetCompanyReviewsQueryRequest(companyID, new PaginationModel(page, size)));
-            return CreateActionResult(queryResponse.Reviews);
+            return CreateActionResult(queryResponse);
         }
 
         [HttpPost]

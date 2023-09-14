@@ -1,14 +1,13 @@
-﻿using TransportGlobal.Application.ViewModels.TransporterContextViewModels;
+﻿using TransportGlobal.Application.DTOs.CQRSDTOs;
+using TransportGlobal.Application.ViewModels.TransporterContextViewModels;
+using TransportGlobal.Domain.Models;
 
 namespace TransportGlobal.Application.CQRSs.TransporterContextCQRSs.QueryGetOwnVehicles
 {
-    public class GetOwnVehiclesQueryResponse
+    public class GetOwnVehiclesQueryResponse : BaseQueryListResponseDTO<VehicleViewModel>
     {
-        public ICollection<VehicleViewModel> Vehicles { get; set; }
-
-        public GetOwnVehiclesQueryResponse(ICollection<VehicleViewModel> vehicles)
+        public GetOwnVehiclesQueryResponse(IEnumerable<VehicleViewModel> list, PaginationModel paginationModel) : base(list, paginationModel)
         {
-            Vehicles = vehicles;
         }
     }
 }

@@ -2,7 +2,6 @@
 using MediatR;
 using TransportGlobal.Application.ViewModels.ReviewContextViewModels;
 using TransportGlobal.Domain.Entities.ReviewContextEntities;
-using TransportGlobal.Domain.ObjectExtensions;
 using TransportGlobal.Domain.Repositories.ReviewContextRepositories;
 
 namespace TransportGlobal.Application.CQRSs.ReviewContextCQRSs.QueryGetCompanyReviews
@@ -20,11 +19,11 @@ namespace TransportGlobal.Application.CQRSs.ReviewContextCQRSs.QueryGetCompanyRe
 
         public Task<GetCompanyReviewsQueryResponse> Handle(GetCompanyReviewsQueryRequest request, CancellationToken cancellationToken)
         {
-            List<ReviewEntity> reviews = _reviewRepository.GetReviewsByCompanyID(request.CompanyID).WithPagination(request.Pagination).ToList();
+            IEnumerable<ReviewEntity> reviews = _reviewRepository.GetReviewsByCompanyID(request.CompanyID);
 
-            List<ReviewViewModel> viewModels = _mapper.Map<List<ReviewViewModel>>(reviews);
+            IEnumerable<ReviewViewModel> viewModels = _mapper.Map<IEnumerable<ReviewViewModel>>(reviews);
 
-            return Task.FromResult(new GetCompanyReviewsQueryResponse(viewModels));
+            return Task.FromResult(new GetCompanyReviewsQueryResponse(viewModels, request.Pagination));
         }
     }
 }

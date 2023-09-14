@@ -29,11 +29,11 @@ namespace TransportGlobal.Application.CQRSs.TransporterContextCQRSs.QueryGetOwnE
 
             CompanyEntity companyEntity = _companyRepository.GetCompanyByUserID(userID) ?? throw new ClientSideException(ExceptionConstants.NotFoundCompany);
 
-            List<EmployeeEntity> employees = _employeeRepository.GetAllByCompanyID(companyEntity.ID).WithPagination(request.Pagination).ToList();
+            IEnumerable<EmployeeEntity> employees = _employeeRepository.GetAllByCompanyID(companyEntity.ID);
 
-            List<EmployeeViewModel> viewModels = _mapper.Map<List<EmployeeEntity>, List<EmployeeViewModel>>(employees);
+            IEnumerable<EmployeeViewModel> viewModels = _mapper.Map<IEnumerable<EmployeeViewModel>>(employees);
 
-            return Task.FromResult(new GetOwnEmployeesQueryResponse(viewModels));
+            return Task.FromResult(new GetOwnEmployeesQueryResponse(viewModels, request.Pagination));
         }
     }
 }
