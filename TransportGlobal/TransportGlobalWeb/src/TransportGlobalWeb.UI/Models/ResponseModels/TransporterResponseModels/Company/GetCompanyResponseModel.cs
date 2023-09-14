@@ -14,7 +14,9 @@
 
         public string Email { get; set; }
 
-        public GetCompanyResponseModel(int id, DateTime createdDate, string name, string address, string phoneNumber, string email)
+        public bool IsDeleted { get; set; }
+
+        public GetCompanyResponseModel(int id, DateTime createdDate, string name, string address, string phoneNumber, string email, bool isDeleted)
         {
             ID = id;
             CreatedDate = createdDate;
@@ -22,6 +24,7 @@
             Address = address;
             PhoneNumber = phoneNumber;
             Email = email;
+            IsDeleted = isDeleted;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿@model GetCompanyResponseModel?
+﻿@using TransportGlobalWeb.UI.Enums;
+@model GetCompanyResponseModel?
 
 @if (Model == null)
 {
@@ -34,15 +35,14 @@ else
         <h4>Created Date</h4>
         @Model.CreatedDate.ToString("dd/MM/yyyy HH:mm:ss")
     </div>
+
     <div class="d-flex flex-row">
         <div>
             <a asp-action="UpdateCompany" asp-controller="Company" class="btn btn-primary">Update Company</a>
         </div>
         <div style="margin: 12px;"></div>
-
         <div>
             <a asp-action="DeleteCompany" asp-controller="Company" asp-route-id=@Model.ID class="btn btn-danger">Delete Company</a>
         </div>
     </div>
-
 }

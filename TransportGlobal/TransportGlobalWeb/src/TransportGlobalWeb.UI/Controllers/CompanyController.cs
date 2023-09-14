@@ -27,6 +27,18 @@ namespace TransportGlobalWeb.UI.Controllers
             return CreateActionResult(apiResponse, onData);
         }
 
+        public IActionResult GetCompanyByID(int id)
+        {
+            ApiResponseModel<GetCompanyResponseModel>? apiResponse = _companyClient.GetCompanyByID(id);
+
+            IActionResult onData()
+            {
+                return View(apiResponse!.Data!);
+            }
+
+            return CreateActionResult(apiResponse, onData);
+        }
+
         public IActionResult CreateCompany()
         {
             return View();
