@@ -2,10 +2,6 @@
 {
     public class GetCompanyResponseModel : BaseResponseModel
     {
-        public int ID { get; set; }
-
-        public DateTime CreatedDate { get; set; }
-
         public string Name { get; set; }
 
         public string Address { get; set; }
@@ -16,10 +12,8 @@
 
         public bool IsDeleted { get; set; }
 
-        public GetCompanyResponseModel(int id, DateTime createdDate, string name, string address, string phoneNumber, string email, bool isDeleted)
+        public GetCompanyResponseModel(int id, DateTime createdDate, string name, string address, string phoneNumber, string email, bool isDeleted) : base(id, createdDate)
         {
-            ID = id;
-            CreatedDate = createdDate;
             Name = name;
             Address = address;
             PhoneNumber = phoneNumber;

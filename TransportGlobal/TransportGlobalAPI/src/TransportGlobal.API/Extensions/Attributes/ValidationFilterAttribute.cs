@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net;
 using TransportGlobal.Application.DTOs.ResponseDTOs;
+using TransportGlobal.Domain.Models;
 
 namespace TransportGlobal.API.Extensions.Attributes
 {
@@ -11,7 +12,7 @@ namespace TransportGlobal.API.Extensions.Attributes
         {
             if (!context.ModelState.IsValid)
             {
-                Dictionary<string, string> errorResponse = new();
+                List<ExceptionConstantModel> exceptions = new();
                 foreach (var item in context.ModelState)
                 {
                     if (item.Value.Errors.Any())
@@ -20,11 +21,11 @@ namespace TransportGlobal.API.Extensions.Attributes
                             .Select(error => error.ErrorMessage)
                             .ToArray();
 
-                        errorResponse.Add(item.Key, errorMessages.Last());
+                        exceptions.Add(new ExceptionConstantModel(errorMessages.Last()));
                     }
-                }
+                }               
 
-                context.Result = new BadRequestObjectResult(new APIResponseDTO(HttpStatusCode.BadRequest, errorResponse.Values.ToList()));
+                context.Result = new BadRequestObjectResult(new APIResponseDTO(HttpStatusCode.BadRequest, exceptions));
             }
         }
     }

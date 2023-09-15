@@ -1,0 +1,42 @@
+﻿@using TransportGlobalWeb.UI.Enums.TransporterContextEnums;
+@model CreateEmployeeRequestModel
+
+<h1>Create Employee</h1>
+
+<form asp-action="CreateEmployee" method="post">
+    <div class="form-group">
+        <label asp-for="VehicleID">Vehicle</label>
+        <select asp-for="VehicleID" class="form-control">
+            <option value=@(Model.VehicleID == null ? 0 : Model.VehicleID)>Select Vehicle</option>
+            @foreach (VehicleResponseModel vehicleItem in (ViewData["Vehicles"]! as List<VehicleResponseModel>)!)
+            {
+                <option value="@vehicleItem.ID">@vehicleItem.IdentificationNumber</option>
+            }
+        </select>
+        <span asp-validation-for="VehicleID" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Name">Name</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Surname">Surname</label>
+        <input asp-for="Surname" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Email">Email</label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Title">Employee Title</label>
+        <select asp-for="Title" class="form-control">
+            @foreach (EmployeeTitle employeeTitle in Enum.GetValues<EmployeeTitle>())
+            {
+                <option value="@employeeTitle">@employeeTitle</option>
+            }
+        </select>
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

@@ -1,6 +1,9 @@
 ﻿namespace TransportGlobalWeb.UI.Models.ResponseModels
 {
-    public class NonDataResponseModel : BaseResponseModel
+    public abstract class NonDataResponseModel : BaseResponseModel
     {
+        protected NonDataResponseModel() : base(0, DateTime.Now)
+        {
+        }
     }
 }

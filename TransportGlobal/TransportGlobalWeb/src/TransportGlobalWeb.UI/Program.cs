@@ -13,6 +13,8 @@ builder.Services.Configure<ApiEndpointsConfigurationModel>(builder.Configuration
 builder.Services.AddSingleton(serviceProvider => serviceProvider.GetRequiredService<IOptions<ApiEndpointsConfigurationModel>>().Value);
 builder.Services.AddSingleton<UserClient>();
 builder.Services.AddSingleton<CompanyClient>();
+builder.Services.AddSingleton<VehicleClient>();
+builder.Services.AddSingleton<EmployeeClient>();
 
 builder.Services.AddHttpContextAccessor();
 

@@ -1,0 +1,25 @@
+﻿@using TransportGlobalWeb.UI.Enums.TransporterContextEnums;
+@model CreateVehicleRequestModel
+
+<h1>Create Vehicle</h1>
+
+<form asp-action="CreateVehicle" method="post">
+    <div class="form-group">
+        <label asp-for="IdentificationNumber">Identification Number</label>
+        <input asp-for="IdentificationNumber" class="form-control" />
+        <span asp-validation-for="IdentificationNumber" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Type">Vehicle Type</label>
+        <select asp-for="Type" class="form-control">
+            @foreach (VehicleType vehicleType in Enum.GetValues<VehicleType>())
+            {
+                <option value="@vehicleType">@vehicleType</option>
+            }
+        </select>
+        <span asp-validation-for="Type" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

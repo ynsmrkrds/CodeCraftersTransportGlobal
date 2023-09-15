@@ -1,4 +1,5 @@
-﻿@model RegisterRequestModel
+﻿@using TransportGlobalWeb.UI.Enums.UserContextEnums;
+@model RegisterRequestModel
 
 <h2>Sign Up</h2>
 
@@ -18,9 +19,12 @@
     <div class="form-group">
         <label asp-for="Type">User Type</label>
         <select asp-for="Type" class="form-control">
-            <option value="Customer">Customer</option>
-            <option value="Shipper">Shipper</option>
+            @foreach (UserType userType in Enum.GetValues<UserType>())
+            {
+                <option value="@userType">@userType</option>
+            }
         </select>
+        <span asp-validation-for="Type" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Password">Password</label>

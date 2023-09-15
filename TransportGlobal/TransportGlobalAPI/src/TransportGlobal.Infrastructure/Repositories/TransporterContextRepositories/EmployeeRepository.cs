@@ -21,6 +21,7 @@ namespace TransportGlobal.Infrastructure.Repositories.TransporterContextReposito
         {
             return GetAll()
                 .Where(x => x.CompanyID == companyID)
+                .Where(x => x.IsDeleted == false)
                 .AsEnumerable();
         }
 
@@ -28,6 +29,7 @@ namespace TransportGlobal.Infrastructure.Repositories.TransporterContextReposito
         {
             return GetAll()
                 .Where(x => x.VehicleID == vehicleID)
+                .Where(x => x.IsDeleted == false)
                 .AsEnumerable();
         }
     }
