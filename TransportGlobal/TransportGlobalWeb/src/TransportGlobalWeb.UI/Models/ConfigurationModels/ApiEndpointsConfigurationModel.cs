@@ -7,7 +7,7 @@ namespace TransportGlobalWeb.UI.Models.ConfigurationModels
     {
         public string? BaseUrl { get; set; }
 
-        public string? PageSize { get; set; }
+        public int? PageSize { get; set; }
 
         public UserContextEndpointsConfigurationModel? UserContextEndpoints { get; set; }
 

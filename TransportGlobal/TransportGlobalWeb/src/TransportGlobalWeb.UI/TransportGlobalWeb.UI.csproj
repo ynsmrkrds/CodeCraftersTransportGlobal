@@ -12,10 +12,4 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.21.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\RequestModels\TransporterContextRequestModels\Employee\" />
-    <Folder Include="Models\RequestModels\TransporterContextRequestModels\Vehicle\" />
-    <Folder Include="Models\ResponseModels\TransporterResponseModels\Employee\" />
-  </ItemGroup>
-
 </Project>

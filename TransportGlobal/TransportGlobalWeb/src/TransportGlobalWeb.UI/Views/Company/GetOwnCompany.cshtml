@@ -1,5 +1,4 @@
-﻿@using TransportGlobalWeb.UI.Enums;
-@model GetCompanyResponseModel?
+﻿@model GetCompanyResponseModel?
 
 @if (Model == null)
 {
@@ -43,6 +42,16 @@ else
         <div style="margin: 12px;"></div>
         <div>
             <a asp-action="DeleteCompany" asp-controller="Company" asp-route-id=@Model.ID class="btn btn-danger">Delete Company</a>
+        </div>
+    </div>
+    <div style="margin: 12px;"></div>
+    <div class="d-flex flex-row">
+        <div>
+            <a asp-action="GetOwnVehicles" asp-controller="Vehicle" class="btn btn-primary">Vehicles</a>
+        </div>
+        <div style="margin: 12px;"></div>
+        <div>
+            <a asp-action="GetOwnEmployees" asp-controller="Employee" class="btn btn-primary">Employees</a>
         </div>
     </div>
 }

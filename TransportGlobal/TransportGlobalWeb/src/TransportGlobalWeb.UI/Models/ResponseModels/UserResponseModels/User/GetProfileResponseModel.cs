@@ -4,10 +4,6 @@ namespace TransportGlobalWeb.UI.Models.ResponseModels.UserResponseModels.User
 {
     public class GetProfileResponseModel : BaseResponseModel
     {
-        public int ID { get; set; }
-
-        public DateTime CreatedDate { get; set; }
-
         public string Name { get; set; }
 
         public string Surname { get; set; }
@@ -16,10 +12,8 @@ namespace TransportGlobalWeb.UI.Models.ResponseModels.UserResponseModels.User
 
         public UserType Type { get; set; }
 
-        public GetProfileResponseModel(int id, DateTime createdDate, string name, string surname, string email, UserType type)
+        public GetProfileResponseModel(int id, DateTime createdDate, string name, string surname, string email, UserType type) : base(id, createdDate)
         {
-            ID = id;
-            CreatedDate = createdDate;
             Name = name;
             Surname = surname;
             Email = email;
