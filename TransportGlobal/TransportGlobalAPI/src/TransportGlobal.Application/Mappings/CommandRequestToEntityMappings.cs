@@ -59,7 +59,7 @@ namespace TransportGlobal.Application.Mappings
             CreateMap<UpdateTransportRequestCommandRequest, TransportRequestEntity>();
 
             CreateMap<CreateTransportContractCommandRequest, TransportContractEntity>()
-                .ConstructUsing(src => new TransportContractEntity(0, 0, src.TransportRequestID, src.VehicleID, src.Price, false));
+                .ConstructUsing(src => new TransportContractEntity(0, 0, src.TransportRequestID, src.VehicleID, src.Price, TransportContractStatusType.Pending));
             #endregion
 
             #region Messaging Bounded Context Mappings

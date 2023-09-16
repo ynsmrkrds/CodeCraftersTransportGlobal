@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TransportGlobalWeb.UI.ApiClients.TransporterContextApiClients;
-using TransportGlobalWeb.UI.Models.RequestModels.TransporterContextRequestModels.Company;
 using TransportGlobalWeb.UI.Models.RequestModels.TransporterContextRequestModels.Vehicle;
 using TransportGlobalWeb.UI.Models.ResponseModels;
-using TransportGlobalWeb.UI.Models.ResponseModels.TransporterResponseModels.Company;
 using TransportGlobalWeb.UI.Models.ResponseModels.TransporterResponseModels.Vehicle;
 
 namespace TransportGlobalWeb.UI.Controllers

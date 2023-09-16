@@ -1,0 +1,53 @@
+﻿@using TransportGlobalWeb.UI.Enums.TransportContextEnums;
+@using TransportGlobalWeb.UI.Enums;
+@using TransportGlobalWeb.UI.Enums.UserContextEnums;
+@using TransportGlobalWeb.UI.Helpers;
+@using TransportGlobalWeb.UI.Models.CookieModels;
+@model GetTransportContractResponseModel
+
+@{
+    string? userCookieJson = CookieHelper.GetCookie(CookieKey.User);
+    UserCookieModel? userCookieModel = userCookieJson == null ? null : BaseCookieModel.FromJson<UserCookieModel>(userCookieJson);
+}
+
+<h2>Transport Contract Details</h2>
+
+<div>
+    <h4>Price</h4>
+    <p>@Model.Price</p>
+</div>
+
+<div>
+    <h4>Status</h4>
+    <p>@Model.Status</p>
+</div>
+
+<div>
+    <h4>Created Date</h4>
+    <p>@Model.CreatedDate.ToString("dd/MM/yyyy HH:mm:ss")</p>
+</div>
+
+@if(userCookieModel!.UserType == UserType.Customer && Model.Status == TransportContractStatusType.Pending)
+{
+    <div>
+        <a asp-action="AgreeTransportContract" asp-controller="TransportContract" asp-route-id=@Model.TransportRequest.ID class="btn btn-primary">Agree Contract</a>
+    </div>
+}
+
+<div style="margin: 12px;"></div>
+
+<div class="d-flex flex-row">
+    <div>
+        <a asp-action="GetVehicleByID" asp-controller="Vehicle" asp-route-id=@Model.Vehicle.ID class="btn btn-primary">Vehicle Detail</a>
+    </div>
+    <div style="margin: 12px;"></div>
+    <div>
+        <a asp-action="GetCompanyByID" asp-controller="Company" asp-route-id=@Model.Company.ID class="btn btn-primary">Company Detail</a>
+    </div>
+    <div style="margin: 12px;"></div>
+    <div>
+        <a asp-action="GetTransportRequestByID" asp-controller="TransportRequest" asp-route-id=@Model.TransportRequest.ID class="btn btn-primary">Transport Request Detail</a>
+    </div>
+</div>
+
+
