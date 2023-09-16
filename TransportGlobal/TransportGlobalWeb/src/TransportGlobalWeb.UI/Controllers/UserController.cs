@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using TransportGlobalWeb.UI.ApiClients.UserContextApiClients;
 using TransportGlobalWeb.UI.Enums;
 using TransportGlobalWeb.UI.Enums.UserContextEnums;
-using TransportGlobalWeb.UI.Extensions.Attributes;
 using TransportGlobalWeb.UI.Helpers;
 using TransportGlobalWeb.UI.Models.ConstantModels;
 using TransportGlobalWeb.UI.Models.CookieModels;
@@ -45,7 +44,7 @@ namespace TransportGlobalWeb.UI.Controllers
                 bool isSuccess = CookieHelper.SetCookie(CookieKey.User, userCookie.ToJson(), tokenExpiryDate);
                 if (isSuccess == false) return ReturnWithError(new ExceptionConstantModel("An error occurred in the login process!"));
 
-                return RedirectToAction("index", "home");
+                return RedirectToAction("Index", "TransportRequest");
             }
 
             return CreateActionResult(apiResponse, onData);

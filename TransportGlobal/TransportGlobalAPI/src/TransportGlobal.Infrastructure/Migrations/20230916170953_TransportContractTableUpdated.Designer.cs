@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransportGlobal.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using TransportGlobal.Infrastructure.Context;
 namespace TransportGlobal.Infrastructure.Migrations
 {
     [DbContext(typeof(TransportGlobalDBContext))]
-    partial class TransportGlobalDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230916170953_TransportContractTableUpdated")]
+    partial class TransportContractTableUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,22 +83,12 @@ namespace TransportGlobal.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ReceiverUserID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SenderUserID")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("SendingDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("ID");
 
                     b.HasIndex("ChatID");
-
-                    b.HasIndex("ReceiverUserID");
-
-                    b.HasIndex("SenderUserID");
 
                     b.ToTable("Messages");
                 });
@@ -422,23 +415,7 @@ namespace TransportGlobal.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("TransportGlobal.Domain.Entities.UserContextEntities.UserEntity", "ReceiverUser")
-                        .WithMany("ReceivedMessages")
-                        .HasForeignKey("ReceiverUserID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("TransportGlobal.Domain.Entities.UserContextEntities.UserEntity", "SenderUser")
-                        .WithMany("SentMessages")
-                        .HasForeignKey("SenderUserID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("Chat");
-
-                    b.Navigation("ReceiverUser");
-
-                    b.Navigation("SenderUser");
                 });
 
             modelBuilder.Entity("TransportGlobal.Domain.Entities.ReviewContextEntities.ReviewEntity", b =>
@@ -564,13 +541,9 @@ namespace TransportGlobal.Infrastructure.Migrations
                 {
                     b.Navigation("Companies");
 
-                    b.Navigation("ReceivedMessages");
-
                     b.Navigation("ReceiverUserChats");
 
                     b.Navigation("SenderUserChats");
-
-                    b.Navigation("SentMessages");
 
                     b.Navigation("TransportContracts");
                 });

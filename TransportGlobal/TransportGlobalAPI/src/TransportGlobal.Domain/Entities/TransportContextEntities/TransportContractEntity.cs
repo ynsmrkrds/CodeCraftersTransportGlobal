@@ -2,6 +2,7 @@
 using TransportGlobal.Domain.Entities.ReviewContextEntities;
 using TransportGlobal.Domain.Entities.TransporterContextEntities;
 using TransportGlobal.Domain.Entities.UserContextEntities;
+using TransportGlobal.Domain.Enums.TransportContextEnums;
 using TransportGlobal.Domain.SeedWorks;
 
 namespace TransportGlobal.Domain.Entities.TransportContextEntities
@@ -30,18 +31,18 @@ namespace TransportGlobal.Domain.Entities.TransportContextEntities
 
         public double Price { get; set; }
 
-        public bool IsAgreed { get; set; }
+        public TransportContractStatusType Status { get; set; }
 
         public ReviewEntity? Review { get; set; }
 
-        public TransportContractEntity(int userID, int companyID, int transportRequestID, int vehicleID, double price, bool isAgreed)
+        public TransportContractEntity(int userID, int companyID, int transportRequestID, int vehicleID, double price, TransportContractStatusType status)
         {
             UserID = userID;
             CompanyID = companyID;
             TransportRequestID = transportRequestID;
             VehicleID = vehicleID;
             Price = price;
-            IsAgreed = isAgreed;
+            Status = status;
         }
     }
 }

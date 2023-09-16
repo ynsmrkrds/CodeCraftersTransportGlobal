@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Options;
+using TransportGlobalWeb.UI.ApiClients.TransportContextApiClients;
 using TransportGlobalWeb.UI.ApiClients.MessagingContextApiClients;
 using TransportGlobalWeb.UI.ApiClients.TransporterContextApiClients;
 using TransportGlobalWeb.UI.ApiClients.UserContextApiClients;
@@ -16,6 +17,8 @@ builder.Services.AddSingleton<UserClient>();
 builder.Services.AddSingleton<CompanyClient>();
 builder.Services.AddSingleton<VehicleClient>();
 builder.Services.AddSingleton<EmployeeClient>();
+builder.Services.AddSingleton<TransportRequestClient>();
+builder.Services.AddSingleton<TransportContractClient>();
 builder.Services.AddSingleton<ChatClient>();
 builder.Services.AddSingleton<MessageClient>();
 
@@ -42,6 +45,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}");
+    pattern: "{controller=TransportRequest}/{action=Index}");
 
 app.Run();
