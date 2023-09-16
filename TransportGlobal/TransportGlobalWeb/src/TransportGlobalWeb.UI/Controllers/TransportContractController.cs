@@ -73,7 +73,7 @@ namespace TransportGlobalWeb.UI.Controllers
         public IActionResult AgreeTransportContract(int id)
         {
             ApiResponseModel<NonDataResponseModel>? apiResponse = _transportContractClient.AgreeTransportContract(new AgreeTransportContractRequestModel() { ID = id});
-            return CreateActionResult(apiResponse, null, actionName: "GetTransportContractByID", controllerName: "TransportContract");
+            return CreateActionResult(apiResponse, null, actionName: "GetTransportContractByID", controllerName: "TransportContract", routeValues: new { id });
         }
 
         private void AddOwnVehiclesListToView()
