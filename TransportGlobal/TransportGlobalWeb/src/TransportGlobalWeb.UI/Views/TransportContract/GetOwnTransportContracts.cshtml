@@ -1,0 +1,47 @@
+﻿@using TransportGlobalWeb.UI.Models.ConfigurationModels;
+@model GetOwnTransportContractResponseModel
+@inject ApiEndpointsConfigurationModel ApiEndpoints
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h1>Own Transport Contract List</h1>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Transport Type</th>
+            <th>Loading Address</th>
+            <th>Delivery Address</th>
+            <th>Price</th>
+            <th>Status Type</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var transportContract in Model.List)
+        {
+            <tr>
+                <td>@transportContract.TransportRequest.TransportType</td>
+                <td>@transportContract.TransportRequest.LoadingAddress</td>
+                <td>@transportContract.TransportRequest.DeliveryAddress</td>
+                <td>@transportContract.Price</td>
+                <td>@transportContract.TransportRequest.StatusType</td>
+                <td>
+                    <a asp-action="GetTransportContractByID" asp-controller="TransportContract" asp-route-id=@transportContract.ID class="btn btn-primary">Detail</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination justify-content-center">
+        @for (int i = 1; i <= Math.Ceiling((double)(Model.TotalCount / (double)ApiEndpoints.PageSize!)); i++)
+        {
+            <li class="page-item @(i == ((int)ViewData["Page"]!+1) ? "active" : "")">
+                <a class="page-link" asp-action="GetOwnVehicles" asp-controller="Vehicle" asp-route-page="@(i-1)">@i</a>
+            </li>
+        }
+    </ul>
+</nav>
+

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TransportGlobal.Domain.Entities.TransportContextEntities;
 using TransportGlobal.Domain.Enums.TransportContextEnums;
+using TransportGlobal.Domain.Enums.TransporterContextEnums;
 using TransportGlobal.Domain.Enums.UserContextEnums;
 using TransportGlobal.Domain.Repositories.TransportContextRepositories;
 using TransportGlobal.Infrastructure.Context;
@@ -33,6 +34,7 @@ namespace TransportGlobal.Infrastructure.Repositories.TransportContextRepositori
         {
             return GetAll()
                 .Where(x => x.UserID == userID)
+                .Where(x => x.Status == TransportContractStatusType.Agreed)
                 .AsEnumerable();
         }
 
@@ -40,6 +42,7 @@ namespace TransportGlobal.Infrastructure.Repositories.TransportContextRepositori
         {
             return GetAll()
                 .Where(x => x.CompanyID == companyID)
+                .Where(x => x.Status == TransportContractStatusType.Agreed)
                 .AsEnumerable();
         }
 
@@ -48,7 +51,7 @@ namespace TransportGlobal.Infrastructure.Repositories.TransportContextRepositori
             return GetAll()
                 .Where(x => x.TransportRequestID == transportRequestID)
                 .Where(x => x.IsDeleted == false)
-                .Any(x => x.IsAgreed);
+                .Any(x => x.Status == TransportContractStatusType.Agreed);
         }
 
         public bool? IsOwner(int id, int userID)
@@ -64,6 +67,31 @@ namespace TransportGlobal.Infrastructure.Repositories.TransportContextRepositori
                 .FirstOrDefault(x => x.ID == id)
                 ?.TransportRequest
                 ?.StatusType == TransportRequestStatusType.Done;
+        }
+
+        public int AgreeContact(int id)
+        {
+            TransportContractEntity? transportContractEntity = GetByID(id);
+            if (transportContractEntity == null) return 0;
+
+            transportContractEntity.Status = TransportContractStatusType.Agreed;
+            transportContractEntity.TransportRequest!.StatusType = TransportRequestStatusType.InProcess;
+            transportContractEntity.Vehicle!.Status = VehicleStatusType.AtWork;
+
+            transportContractEntity = Update(transportContractEntity);
+
+            List<TransportContractEntity> offeredContracts = _context.TransportContracts
+                .Where(x => x.ID != transportContractEntity.ID)
+                .Where(x => x.CompanyID == transportContractEntity.CompanyID && x.TransportRequestID == transportContractEntity.TransportRequestID)
+                .ToList();
+
+            foreach (TransportContractEntity offeredContract in offeredContracts)
+            {
+                offeredContract.Status = TransportContractStatusType.NotAgreed;
+                Update(offeredContract);
+            }
+
+            return SaveChanges();
         }
     }
 }

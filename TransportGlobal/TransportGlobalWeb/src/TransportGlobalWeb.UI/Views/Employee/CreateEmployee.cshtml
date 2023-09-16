@@ -7,7 +7,7 @@
     <div class="form-group">
         <label asp-for="VehicleID">Vehicle</label>
         <select asp-for="VehicleID" class="form-control">
-            <option value=@(Model.VehicleID == null ? 0 : Model.VehicleID)>Select Vehicle</option>
+            <option value=0>Select Vehicle</option>
             @foreach (VehicleResponseModel vehicleItem in (ViewData["Vehicles"]! as List<VehicleResponseModel>)!)
             {
                 <option value="@vehicleItem.ID">@vehicleItem.IdentificationNumber</option>

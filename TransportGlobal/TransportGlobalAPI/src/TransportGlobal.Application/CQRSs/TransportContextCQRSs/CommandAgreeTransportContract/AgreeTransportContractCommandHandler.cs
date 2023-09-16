@@ -1,10 +1,7 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using TransportGlobal.Application.Helpers;
 using TransportGlobal.Domain.Constants;
 using TransportGlobal.Domain.Entities.TransportContextEntities;
-using TransportGlobal.Domain.Enums.TransportContextEnums;
-using TransportGlobal.Domain.Enums.TransporterContextEnums;
 using TransportGlobal.Domain.Exceptions;
 using TransportGlobal.Domain.Repositories.TransportContextRepositories;
 
@@ -30,12 +27,9 @@ namespace TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandAgreeTr
 
             if (_transportContractRepository.IsThereAgreedContract(transportContractEntity.TransportRequestID)) return Task.FromResult(new AgreeTransportContractCommandResponse(ResponseConstants.CannotMakeContractAgreement));
 
-            transportContractEntity.IsAgreed = true;
-            transportContractEntity.TransportRequest!.StatusType = TransportRequestStatusType.InProcess;
-            transportContractEntity.Vehicle!.Status = VehicleStatusType.AtWork;
-            _transportContractRepository.Update(transportContractEntity);
+            _transportContractRepository.DetachEntity(transportContractEntity);
 
-            int effectedRows = _transportContractRepository.SaveChanges();
+            int effectedRows = _transportContractRepository.AgreeContact(request.ID);
             if (effectedRows == 0) return Task.FromResult(new AgreeTransportContractCommandResponse(ResponseConstants.UpdateFailed));
 
             return Task.FromResult(new AgreeTransportContractCommandResponse(ResponseConstants.SuccessfullyUpdated));

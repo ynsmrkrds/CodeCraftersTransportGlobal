@@ -1,5 +1,6 @@
 ﻿using TransportGlobal.Application.ViewModels.TransporterContextViewModels;
 using TransportGlobal.Application.ViewModels.UserContextViewModels;
+using TransportGlobal.Domain.Enums.TransportContextEnums;
 
 namespace TransportGlobal.Application.ViewModels.TransportContextViewModels
 {
@@ -15,16 +16,16 @@ namespace TransportGlobal.Application.ViewModels.TransportContextViewModels
 
         public double Price { get; set; }
 
-        public bool IsAgreed { get; set; }
+        public TransportContractStatusType Status { get; set; }
 
-        public TransportContractViewModel(int id, DateTime createdDate, bool isDeleted, UserViewModel user, CompanyViewModel company, TransportRequestViewModel transportRequest, VehicleViewModel vehicle, double price, bool isAgreed) : base(id, createdDate, isDeleted)
+        public TransportContractViewModel(int id, DateTime createdDate, bool isDeleted, UserViewModel user, CompanyViewModel company, TransportRequestViewModel transportRequest, VehicleViewModel vehicle, double price, TransportContractStatusType status) : base(id, createdDate, isDeleted)
         {
             User = user;
             Company = company;
             TransportRequest = transportRequest;
             Vehicle = vehicle;
             Price = price;
-            IsAgreed = isAgreed;
+            Status = status;
         }
     }
 }

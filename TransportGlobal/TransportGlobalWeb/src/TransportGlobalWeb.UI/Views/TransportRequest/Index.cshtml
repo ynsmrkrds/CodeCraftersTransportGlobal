@@ -1,0 +1,59 @@
+﻿@using TransportGlobalWeb.UI.Enums.UserContextEnums;
+@using TransportGlobalWeb.UI.Models.ConfigurationModels;
+@model GetAllTransportRequestsResponseModel
+@inject ApiEndpointsConfigurationModel ApiEndpoints
+
+
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    @if((UserType)ViewData["UserType"]! == UserType.Customer)
+    {
+        <h1>Own Transport Request List</h1>
+        <div>
+            <a asp-action="CreateTransportRequest" asp-controller="TransportRequest" class="btn btn-primary">Create Transport Request</a>
+        </div>
+    }
+    else
+    {
+        <h1>Pending Transport Request List</h1>
+    }
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Transport Type</th>
+            <th>Transport Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var transportRequest in Model.List)
+        {
+            <tr>
+                <td>@transportRequest.TransportType</td>
+                <td>@transportRequest.TransportDate</td>
+                <td>
+                    <a asp-action="GetTransportRequestByID" asp-controller="TransportRequest" asp-route-id=@transportRequest.ID class="btn btn-primary">Detail</a>
+                    <a asp-action="UpdateTransportRequest" asp-controller="TransportRequest" asp-route-id=@transportRequest.ID class="btn btn-warning">Update</a>
+                    <a asp-action="DeleteTransportRequest" asp-controller="TransportRequest" asp-route-id=@transportRequest.ID class="btn btn-danger">Delete</a>
+                    @if ((UserType)ViewData["UserType"]! == UserType.Shipper)
+                    {
+                        <a asp-action="CreateTransportContract" asp-controller="TransportContract" asp-route-transportRequestID=@transportRequest.ID class="btn btn-warning">Create Contract</a>
+                    }                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination justify-content-center">
+        @for (int i = 1; i <= Math.Ceiling((double)(Model.TotalCount / (double)ApiEndpoints.PageSize!)); i++)
+        {
+            <li class="page-item @(i == ((int)ViewData["Page"]!+1) ? "active" : "")">
+                <a class="page-link" asp-action="Index" asp-controller="TransportRequest" asp-route-page="@(i-1)">@i</a>
+            </li>
+        }
+    </ul>
+</nav>
