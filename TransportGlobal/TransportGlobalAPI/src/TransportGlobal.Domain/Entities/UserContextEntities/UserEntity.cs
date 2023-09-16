@@ -30,6 +30,10 @@ namespace TransportGlobal.Domain.Entities.UserContextEntities
 
         public ICollection<ChatEntity> ReceiverUserChats { get; set; } = new List<ChatEntity>();
 
+        public ICollection<MessageEntity> SentMessages { get; set; } = new List<MessageEntity>();
+
+        public ICollection<MessageEntity> ReceivedMessages { get; set; } = new List<MessageEntity>();
+
         public UserEntity(string name, string surname, string email, string passwordHash, UserType type)
         {
             Name = name;

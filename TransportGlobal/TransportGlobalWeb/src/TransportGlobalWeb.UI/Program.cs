@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Options;
+using TransportGlobalWeb.UI.ApiClients.MessagingContextApiClients;
 using TransportGlobalWeb.UI.ApiClients.TransporterContextApiClients;
 using TransportGlobalWeb.UI.ApiClients.UserContextApiClients;
 using TransportGlobalWeb.UI.Helpers;
@@ -15,6 +16,8 @@ builder.Services.AddSingleton<UserClient>();
 builder.Services.AddSingleton<CompanyClient>();
 builder.Services.AddSingleton<VehicleClient>();
 builder.Services.AddSingleton<EmployeeClient>();
+builder.Services.AddSingleton<ChatClient>();
+builder.Services.AddSingleton<MessageClient>();
 
 builder.Services.AddHttpContextAccessor();
 

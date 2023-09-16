@@ -14,6 +14,8 @@ namespace TransportGlobal.Infrastructure.Repositories.MessagingContexrRepositori
         public IEnumerable<MessageEntity> GetMessagesByChatID(int chatID)
         {             
             return GetAll()
+                .Include(x => x.SenderUser)
+                .Include(x => x.ReceiverUser)
                 .Where(x => x.ChatID == chatID)
                 .OrderByDescending(x => x.CreatedDate)
                 .AsEnumerable();
