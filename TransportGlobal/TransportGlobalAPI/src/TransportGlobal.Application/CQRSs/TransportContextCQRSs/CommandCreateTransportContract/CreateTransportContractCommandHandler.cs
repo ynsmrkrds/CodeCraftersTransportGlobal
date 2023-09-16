@@ -95,8 +95,8 @@ namespace TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCreateT
                 message = "Merhaba. Size teklifimiz şudur:";
             }
 
-            _messageRepository.Add(new MessageEntity(chatEntity.ID, MessageContentType.Text, message, DateTime.Now));
-            _messageRepository.Add(new MessageEntity(chatEntity.ID, MessageContentType.Contract, transportContractID.ToString(), DateTime.Now));
+            _messageRepository.Add(new MessageEntity(chatEntity.ID, senderUserID, receiverUserID, MessageContentType.Text, message, DateTime.Now));
+            _messageRepository.Add(new MessageEntity(chatEntity.ID, senderUserID, receiverUserID, MessageContentType.Contract, transportContractID.ToString(), DateTime.Now));
 
             int createMessageEffectedRows = _messageRepository.SaveChanges();
             return createMessageEffectedRows != 0;

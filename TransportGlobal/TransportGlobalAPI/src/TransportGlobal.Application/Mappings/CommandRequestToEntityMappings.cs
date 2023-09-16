@@ -64,7 +64,7 @@ namespace TransportGlobal.Application.Mappings
 
             #region Messaging Bounded Context Mappings
             CreateMap<CreateMessageCommandRequest, MessageEntity>()
-                .ConstructUsing(src => new MessageEntity(src.ChatID, MessageContentType.Text, src.Content, DateTime.Now));
+                .ConstructUsing(src => new MessageEntity(src.ChatID, 0, 0, MessageContentType.Text, src.Content, DateTime.Now));
             #endregion
 
             #region Review Bounded Context Mappings

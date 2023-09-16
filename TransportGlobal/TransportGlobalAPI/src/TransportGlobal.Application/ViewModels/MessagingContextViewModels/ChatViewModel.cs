@@ -1,18 +1,21 @@
-﻿namespace TransportGlobal.Application.ViewModels.MessagingContextViewModels
+﻿using TransportGlobal.Application.ViewModels.TransportContextViewModels;
+using TransportGlobal.Application.ViewModels.UserContextViewModels;
+
+namespace TransportGlobal.Application.ViewModels.MessagingContextViewModels
 {
     public class ChatViewModel : BaseViewModel
     {
         public int TransportRequestID { get; set; }
 
-        public int SenderUserID { get; set; }
+        public UserViewModel SenderUser { get; set; }
 
-        public int ReceiverUserID { get; set; }
+        public UserViewModel ReceiverUser { get; set; }
 
-        public ChatViewModel(int id, DateTime createdDate, bool isDeleted, int transportRequestID, int senderUserID, int receiverUserID) : base(id, createdDate, isDeleted)
+        public ChatViewModel(int id, DateTime createdDate, bool isDeleted, int transportRequestID, UserViewModel senderUser, UserViewModel receiverUser) : base(id, createdDate, isDeleted)
         {
             TransportRequestID = transportRequestID;
-            SenderUserID = senderUserID;
-            ReceiverUserID = receiverUserID;
+            SenderUser = senderUser;
+            ReceiverUser = receiverUser;
         }
     }
 }

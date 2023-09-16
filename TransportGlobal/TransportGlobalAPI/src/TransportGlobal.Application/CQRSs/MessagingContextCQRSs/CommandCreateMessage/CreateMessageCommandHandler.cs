@@ -28,7 +28,11 @@ namespace TransportGlobal.Application.CQRSs.MessagingContextCQRSs.CommandCreateM
 
             if (_chatRepository.IsChatBelongToUser(request.ChatID, tokenModel.UserType, tokenModel.UserID) == false) throw new ClientSideException(ExceptionConstants.ChatDoesntBelongToUser);
 
+            ChatEntity chatEntity = _chatRepository.GetByID(request.ChatID) ?? throw new ClientSideException(ExceptionConstants.NotFoundChat);
+
             MessageEntity messageEntity = _mapper.Map<MessageEntity>(request);
+            messageEntity.SenderUserID = tokenModel.UserID;
+            messageEntity.ReceiverUserID = chatEntity.ReceiverUserID;
 
             _messageRepository.Add(messageEntity);
 

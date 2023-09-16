@@ -1,4 +1,5 @@
-﻿using TransportGlobal.Domain.Entities.MessagingContextEntities;
+﻿using Microsoft.EntityFrameworkCore;
+using TransportGlobal.Domain.Entities.MessagingContextEntities;
 using TransportGlobal.Domain.Enums.UserContextEnums;
 using TransportGlobal.Domain.Repositories.MessagingContextRepositories;
 using TransportGlobal.Infrastructure.Context;
@@ -13,7 +14,10 @@ namespace TransportGlobal.Infrastructure.Repositories.MessagingContexrRepositori
 
         public IEnumerable<ChatEntity> GetChatsByUserType(UserType userType, int userID)
         {
-            IQueryable<ChatEntity> chats = GetAll().OrderByDescending(x => x.CreatedDate);
+            IQueryable<ChatEntity> chats = GetAll()
+                .Include(x => x.SenderUser)
+                .Include(x => x.ReceiverUser)
+                .OrderByDescending(x => x.CreatedDate);
 
             chats = userType switch
             {
