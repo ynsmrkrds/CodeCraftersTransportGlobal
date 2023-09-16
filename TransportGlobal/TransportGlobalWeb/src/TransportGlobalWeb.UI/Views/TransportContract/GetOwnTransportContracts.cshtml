@@ -1,6 +1,16 @@
-﻿@using TransportGlobalWeb.UI.Models.ConfigurationModels;
+﻿@using TransportGlobalWeb.UI.Enums;
+@using TransportGlobalWeb.UI.Enums.TransportContextEnums;
+@using TransportGlobalWeb.UI.Enums.UserContextEnums;
+@using TransportGlobalWeb.UI.Helpers;
+@using TransportGlobalWeb.UI.Models.ConfigurationModels;
+@using TransportGlobalWeb.UI.Models.CookieModels;
 @model GetOwnTransportContractResponseModel
 @inject ApiEndpointsConfigurationModel ApiEndpoints
+
+@{
+    string? userCookieJson = CookieHelper.GetCookie(CookieKey.User);
+    UserCookieModel? userCookieModel = userCookieJson == null ? null : BaseCookieModel.FromJson<UserCookieModel>(userCookieJson);
+}
 
 <div style="display: flex; justify-content: space-between; align-items: center;">
     <h1>Own Transport Contract List</h1>
@@ -27,6 +37,14 @@
                 <td>@transportContract.Price</td>
                 <td>@transportContract.TransportRequest.StatusType</td>
                 <td>
+                    @if (userCookieModel!.UserType == UserType.Customer && transportContract.TransportRequest.StatusType == TransportRequestStatusType.InProcess)
+                    {
+                        <a asp-action="CompleteTransportRequest" asp-controller="TransportRequest" asp-route-id=@transportContract.TransportRequest.ID class="btn btn-success">Complete</a>
+                    }
+                    @if (userCookieModel!.UserType == UserType.Customer && transportContract.TransportRequest.StatusType == TransportRequestStatusType.Done)
+                    {
+                        <a asp-action="CreateReview" asp-controller="Review" asp-route-transportContractID=@transportContract.ID class="btn btn-primary">Review</a>
+                    }
                     <a asp-action="GetTransportContractByID" asp-controller="TransportContract" asp-route-id=@transportContract.ID class="btn btn-primary">Detail</a>
                 </td>
             </tr>
@@ -39,7 +57,7 @@
         @for (int i = 1; i <= Math.Ceiling((double)(Model.TotalCount / (double)ApiEndpoints.PageSize!)); i++)
         {
             <li class="page-item @(i == ((int)ViewData["Page"]!+1) ? "active" : "")">
-                <a class="page-link" asp-action="GetOwnVehicles" asp-controller="Vehicle" asp-route-page="@(i-1)">@i</a>
+                <a class="page-link" asp-action="GetOwnTrasportContracts" asp-controller="TransportContract" asp-route-page="@(i-1)">@i</a>
             </li>
         }
     </ul>

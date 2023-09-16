@@ -2,6 +2,7 @@
 using TransportGlobalWeb.UI.Models.ConfigurationModels.MessagingContextConfigurationModels;
 using TransportGlobalWeb.UI.Models.ConfigurationModels.TransporterContextConfigurationModels;
 using TransportGlobalWeb.UI.Models.ConfigurationModels.UserContextConfigurationModels;
+using TransportGlobalWeb.UI.Models.ConfigurationModels.ReviewContextConfigurationModels;
 
 namespace TransportGlobalWeb.UI.Models.ConfigurationModels
 {
@@ -18,5 +19,7 @@ namespace TransportGlobalWeb.UI.Models.ConfigurationModels
         public TransportContextEndpointsConfigurationModel? TransportContextEndpoints { get; set; }
 
         public MessagingContextEndpointsConfigurationModel? MessagingContextEndpoints { get; set; }
+
+        public ReviewContextEndpointsConfigurationModel? ReviewContextEndpoints { get; set; }
     }
 }

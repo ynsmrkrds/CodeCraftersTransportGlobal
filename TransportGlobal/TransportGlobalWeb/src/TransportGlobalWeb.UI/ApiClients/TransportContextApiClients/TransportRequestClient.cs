@@ -39,7 +39,7 @@ namespace TransportGlobalWeb.UI.ApiClients.TransportContextApiClients
             return SendRequest<GetTransportRequestResponseModel>(request);
         }
 
-        public ApiResponseModel<NonDataResponseModel>? CreateTransportRequest(CreateTransportRequestModel createTransportRequestModel)
+        public ApiResponseModel<NonDataResponseModel>? CreateTransportRequest(CreateTransportRequestRequestModel createTransportRequestModel)
         {
             RestRequest request = new(_configurationModel.CrudTransportRequest, Method.Post);
             request.AddBody(createTransportRequestModel, ContentType.Json);
@@ -52,6 +52,15 @@ namespace TransportGlobalWeb.UI.ApiClients.TransportContextApiClients
         {
             RestRequest request = new(_configurationModel.CrudTransportRequest, Method.Put);
             request.AddBody(updateTransportRequestModel, ContentType.Json);
+            request = AddAuthorizationHeader(request);
+
+            return SendRequest<NonDataResponseModel>(request);
+        }
+
+        public ApiResponseModel<NonDataResponseModel>? CompleteTransportRequest(CompleteTransportRequestRequestModel completeTransportRequestRequestModel)
+        {
+            RestRequest request = new(_configurationModel.CompleteTransportRequest, Method.Put);
+            request.AddBody(completeTransportRequestRequestModel, ContentType.Json);
             request = AddAuthorizationHeader(request);
 
             return SendRequest<NonDataResponseModel>(request);
