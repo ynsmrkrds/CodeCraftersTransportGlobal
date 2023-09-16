@@ -114,5 +114,13 @@ namespace TransportGlobalWeb.UI.Controllers
 
             return CreateActionResult(apiResponse, null);
         }
+
+        public IActionResult Logout()
+        {
+            bool isSuccess = CookieHelper.RemoveCookie(CookieKey.User);
+            if (isSuccess) return RedirectToAction("Login");
+
+            throw new Exception("An error occurred in the logout process!");
+        }
     }
 }
