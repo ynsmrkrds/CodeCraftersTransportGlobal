@@ -1,0 +1,41 @@
+﻿@using TransportGlobalWeb.UI.Models.ConfigurationModels;
+@model GetCompanyReviewsResponseModel
+@inject ApiEndpointsConfigurationModel ApiEndpoints
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h1>Company Reviews List</h1>   
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>User Name</th>
+            <th>Score</th>
+            <th>Comment</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var companyReview in Model.List)
+        {
+            <tr>
+                <td>@($"{companyReview.TransportContract.User.Name} {companyReview.TransportContract.User.Surname}")</td>
+                <td>@companyReview.Score</td>
+                <td>@companyReview.Comment</td>
+                <td>@companyReview.CreatedDate</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination justify-content-center">
+        @for (int i = 1; i <= Math.Ceiling((double)(Model.TotalCount / (double)ApiEndpoints.PageSize!)); i++)
+        {
+            <li class="page-item @(i == ((int)ViewData["Page"]!+1) ? "active" : "")">
+                <a class="page-link" asp-action="GetCompanyReviews" asp-controller="Review" asp-route-id=@((int)ViewData["CompanyID"]!) asp-route-page="@(i-1)">@i</a>
+            </li>
+        }
+    </ul>
+</nav>
+

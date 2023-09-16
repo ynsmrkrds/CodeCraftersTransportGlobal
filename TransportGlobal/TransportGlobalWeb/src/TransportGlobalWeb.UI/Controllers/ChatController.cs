@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TransportGlobalWeb.UI.ApiClients.MessagingContextApiClients;
-using TransportGlobalWeb.UI.ApiClients.TransporterContextApiClients;
-using TransportGlobalWeb.UI.Models.ResponseModels.TransporterResponseModels.Company;
 using TransportGlobalWeb.UI.Models.ResponseModels;
 using TransportGlobalWeb.UI.Models.ResponseModels.MessagingResponseModels.Chat;
 

@@ -2,7 +2,7 @@
 
 namespace TransportGlobalWeb.UI.Models.RequestModels.TransportContextRequestModels.TransportRequest
 {
-    public class CreateTransportRequestModel
+    public class CreateTransportRequestRequestModel
     {
         public TransportType TransportType { get; set; }
 

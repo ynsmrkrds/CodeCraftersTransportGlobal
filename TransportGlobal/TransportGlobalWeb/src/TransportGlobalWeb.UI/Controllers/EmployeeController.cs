@@ -46,6 +46,7 @@ namespace TransportGlobalWeb.UI.Controllers
             }
 
             ViewData["Page"] = page;
+            ViewData["VehicleID"] = id;
 
             return CreateActionResult(apiResponse, onData);
         }

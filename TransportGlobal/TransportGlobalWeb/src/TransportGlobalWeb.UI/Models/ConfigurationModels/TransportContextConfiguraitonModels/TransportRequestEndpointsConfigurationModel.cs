@@ -7,5 +7,7 @@
         public string? GetOwnTransportRequest { get; set; }
 
         public string? GetPendingTransportRequests { get; set; }
+
+        public string? CompleteTransportRequest { get; set; }
     }
 }

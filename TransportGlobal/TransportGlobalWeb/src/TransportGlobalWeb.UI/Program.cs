@@ -5,6 +5,7 @@ using TransportGlobalWeb.UI.ApiClients.TransporterContextApiClients;
 using TransportGlobalWeb.UI.ApiClients.UserContextApiClients;
 using TransportGlobalWeb.UI.Helpers;
 using TransportGlobalWeb.UI.Models.ConfigurationModels;
+using TransportGlobalWeb.UI.ApiClients.ReviewContextApiClients;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Services.AddSingleton<TransportRequestClient>();
 builder.Services.AddSingleton<TransportContractClient>();
 builder.Services.AddSingleton<ChatClient>();
 builder.Services.AddSingleton<MessageClient>();
+builder.Services.AddSingleton<ReviewClient>();
 
 builder.Services.AddHttpContextAccessor();
 

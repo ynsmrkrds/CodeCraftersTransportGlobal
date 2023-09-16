@@ -80,7 +80,7 @@ namespace TransportGlobalWeb.UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateTransportRequest(CreateTransportRequestModel createTransportRequestModel)
+        public IActionResult CreateTransportRequest(CreateTransportRequestRequestModel createTransportRequestModel)
         {
             ApiResponseModel<NonDataResponseModel>? apiResponse = _transportRequestClient.CreateTransportRequest(createTransportRequestModel);
 
@@ -112,7 +112,13 @@ namespace TransportGlobalWeb.UI.Controllers
         public IActionResult UpdateTransportRequest(UpdateTransportRequestModel updateTransportRequestModel)
         {
             ApiResponseModel<NonDataResponseModel>? apiResponse = _transportRequestClient.UpdateTransportRequest(updateTransportRequestModel);
-            return CreateActionResult(apiResponse, null, updateTransportRequestModel);
+            return CreateActionResult(apiResponse, null, model: updateTransportRequestModel);
+        }
+
+        public IActionResult CompleteTransportRequest(int id)
+        {
+            ApiResponseModel<NonDataResponseModel>? apiResponse = _transportRequestClient.CompleteTransportRequest(new CompleteTransportRequestRequestModel() { ID = id});
+            return CreateActionResult(apiResponse, null, actionName: "GetOwnTransportContracts", controllerName: "TransportContract");
         }
 
         public IActionResult DeleteTransportRequest(int id)
