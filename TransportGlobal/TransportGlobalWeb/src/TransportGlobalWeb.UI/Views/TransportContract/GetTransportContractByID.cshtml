@@ -30,7 +30,7 @@
 @if(userCookieModel!.UserType == UserType.Customer && Model.Status == TransportContractStatusType.Pending)
 {
     <div>
-        <a asp-action="AgreeTransportContract" asp-controller="TransportContract" asp-route-id=@Model.TransportRequest.ID class="btn btn-primary">Agree Contract</a>
+        <a asp-action="AgreeTransportContract" asp-controller="TransportContract" asp-route-id=@Model.ID class="btn btn-primary">Agree Contract</a>
     </div>
 }
 
