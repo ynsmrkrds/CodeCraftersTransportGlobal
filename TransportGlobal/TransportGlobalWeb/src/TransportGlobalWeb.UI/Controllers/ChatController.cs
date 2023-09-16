@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TransportGlobalWeb.UI.ApiClients.MessagingContextApiClients;
 using TransportGlobalWeb.UI.Models.ResponseModels;
-using TransportGlobalWeb.UI.Models.ResponseModels.MessagingResponseModels.Chat;
+using TransportGlobalWeb.UI.Models.ViewModels.MessagingContextViewModels;
 
 namespace TransportGlobalWeb.UI.Controllers
 {
@@ -16,7 +16,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult GetOwnChats(int page = 0)
         {
-            ApiResponseModel<GetOwnChatsResponseModel>? apiResponse = _chatClient.GetOwnChats(page);
+            ApiResponseModel<ListResponseModel<ChatViewModel>>? apiResponse = _chatClient.GetOwnChats(page);
 
             IActionResult onData()
             {

@@ -3,7 +3,7 @@ using TransportGlobalWeb.UI.Models.ConfigurationModels;
 using TransportGlobalWeb.UI.Models.ConfigurationModels.TransporterContextConfigurationModels;
 using TransportGlobalWeb.UI.Models.RequestModels.TransporterContextRequestModels.Company;
 using TransportGlobalWeb.UI.Models.ResponseModels;
-using TransportGlobalWeb.UI.Models.ResponseModels.TransporterResponseModels.Company;
+using TransportGlobalWeb.UI.Models.ViewModels.TransporterContextViewModels;
 
 namespace TransportGlobalWeb.UI.ApiClients.TransporterContextApiClients
 {
@@ -16,20 +16,20 @@ namespace TransportGlobalWeb.UI.ApiClients.TransporterContextApiClients
             _configurationModel = apiEnpoints!.TransporterContextEndpoints!.CompanyEndpoints!;
         }
 
-        public ApiResponseModel<GetCompanyResponseModel>? GetOwnCompany()
+        public ApiResponseModel<CompanyViewModel>? GetOwnCompany()
         {
             RestRequest request = new(_configurationModel.GetOwnCompany, Method.Get);
             request = AddAuthorizationHeader(request);
 
-            return SendRequest<GetCompanyResponseModel>(request);
+            return SendRequest<CompanyViewModel>(request);
         }
 
-        public ApiResponseModel<GetCompanyResponseModel>? GetCompanyByID(int id)
+        public ApiResponseModel<CompanyViewModel>? GetCompanyByID(int id)
         {
             RestRequest request = new($"{_configurationModel.CrudCompany}/{id}", Method.Get);
             request = AddAuthorizationHeader(request);
 
-            return SendRequest<GetCompanyResponseModel>(request);
+            return SendRequest<CompanyViewModel>(request);
         }
 
         public ApiResponseModel<NonDataResponseModel>? CreateCompany(CreateCompanyRequestModel createCompanyRequestModel)

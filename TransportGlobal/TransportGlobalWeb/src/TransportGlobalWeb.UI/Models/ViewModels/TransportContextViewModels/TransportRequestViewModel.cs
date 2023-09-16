@@ -1,8 +1,8 @@
 ﻿using TransportGlobalWeb.UI.Enums.TransportContextEnums;
 
-namespace TransportGlobalWeb.UI.Models.ResponseModels.TransportResponseModels.TransportRequest
+namespace TransportGlobalWeb.UI.Models.ViewModels.TransportContextViewModels
 {
-    public class GetTransportRequestResponseModel : BaseResponseModel
+    public class TransportRequestViewModel : BaseViewModel
     {
         public int UserID { get; set; }
 
@@ -20,7 +20,7 @@ namespace TransportGlobalWeb.UI.Models.ResponseModels.TransportResponseModels.Tr
 
         public TransportRequestStatusType StatusType { get; set; }
 
-        public GetTransportRequestResponseModel(int id, DateTime createdDate, int userID, TransportType transportType, double weight, double volume, DateTime transportDate, string loadingAddress, string deliveryAddress, TransportRequestStatusType statusType) : base(id, createdDate)
+        public TransportRequestViewModel(int id, DateTime createdDate, bool isDeleted, int userID, TransportType transportType, double weight, double volume, DateTime transportDate, string loadingAddress, string deliveryAddress, TransportRequestStatusType statusType) : base(id, createdDate, isDeleted)
         {
             UserID = userID;
             TransportType = transportType;

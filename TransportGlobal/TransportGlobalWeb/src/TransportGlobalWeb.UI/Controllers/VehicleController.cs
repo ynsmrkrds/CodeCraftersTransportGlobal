@@ -2,7 +2,7 @@
 using TransportGlobalWeb.UI.ApiClients.TransporterContextApiClients;
 using TransportGlobalWeb.UI.Models.RequestModels.TransporterContextRequestModels.Vehicle;
 using TransportGlobalWeb.UI.Models.ResponseModels;
-using TransportGlobalWeb.UI.Models.ResponseModels.TransporterResponseModels.Vehicle;
+using TransportGlobalWeb.UI.Models.ViewModels.TransporterContextViewModels;
 
 namespace TransportGlobalWeb.UI.Controllers
 {
@@ -17,7 +17,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult GetOwnVehicles(int page = 0)
         {
-            ApiResponseModel<GetOwnVehiclesResponseModel>? apiResponse = _vehicleClient.GetOwnVehicles(page);
+            ApiResponseModel<ListResponseModel<VehicleViewModel>>? apiResponse = _vehicleClient.GetOwnVehicles(page);
 
             IActionResult onData()
             {
@@ -31,7 +31,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult GetVehicleByID(int id)
         {
-            ApiResponseModel<VehicleResponseModel>? apiResponse = _vehicleClient.GetVehicleByID(id);
+            ApiResponseModel<VehicleViewModel>? apiResponse = _vehicleClient.GetVehicleByID(id);
 
             IActionResult onData()
             {
@@ -55,7 +55,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult UpdateVehicle(int id)
         {
-            ApiResponseModel<VehicleResponseModel>? apiResponse = _vehicleClient.GetVehicleByID(id);
+            ApiResponseModel<VehicleViewModel>? apiResponse = _vehicleClient.GetVehicleByID(id);
 
             IActionResult onData()
             {

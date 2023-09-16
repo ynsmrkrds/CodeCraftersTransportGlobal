@@ -2,7 +2,7 @@
 using TransportGlobalWeb.UI.ApiClients.TransporterContextApiClients;
 using TransportGlobalWeb.UI.Models.RequestModels.TransporterContextRequestModels.Company;
 using TransportGlobalWeb.UI.Models.ResponseModels;
-using TransportGlobalWeb.UI.Models.ResponseModels.TransporterResponseModels.Company;
+using TransportGlobalWeb.UI.Models.ViewModels.TransporterContextViewModels;
 
 namespace TransportGlobalWeb.UI.Controllers
 {
@@ -17,7 +17,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult GetOwnCompany()
         {
-            ApiResponseModel<GetCompanyResponseModel>? apiResponse = _companyClient.GetOwnCompany();
+            ApiResponseModel<CompanyViewModel>? apiResponse = _companyClient.GetOwnCompany();
 
             IActionResult onData()
             {
@@ -29,7 +29,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult GetCompanyByID(int id)
         {
-            ApiResponseModel<GetCompanyResponseModel>? apiResponse = _companyClient.GetCompanyByID(id);
+            ApiResponseModel<CompanyViewModel>? apiResponse = _companyClient.GetCompanyByID(id);
 
             IActionResult onData()
             {
@@ -53,7 +53,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult UpdateCompany()
         {
-            ApiResponseModel<GetCompanyResponseModel>? apiResponse = _companyClient.GetOwnCompany();
+            ApiResponseModel<CompanyViewModel>? apiResponse = _companyClient.GetOwnCompany();
 
             IActionResult onData()
             {

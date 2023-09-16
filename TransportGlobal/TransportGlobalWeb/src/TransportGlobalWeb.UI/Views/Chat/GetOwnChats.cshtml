@@ -1,10 +1,9 @@
-﻿@using TransportGlobalWeb.UI.Enums.UserContextEnums;
-@using TransportGlobalWeb.UI.Enums;
+﻿@using TransportGlobalWeb.UI.Enums;
+@using TransportGlobalWeb.UI.Enums.UserContextEnums;
 @using TransportGlobalWeb.UI.Helpers;
-@using TransportGlobalWeb.UI.Models.ConfigurationModels;
 @using TransportGlobalWeb.UI.Models.CookieModels;
-@using TransportGlobalWeb.UI.Models.ResponseModels.TransporterResponseModels.Employee;
-@model GetOwnChatsResponseModel
+@using TransportGlobalWeb.UI.Models.ViewModels.MessagingContextViewModels;
+@model ListResponseModel<ChatViewModel>
 @inject ApiEndpointsConfigurationModel ApiEndpoints
 
 @{

@@ -3,6 +3,7 @@ using RestSharp;
 using System.Net;
 using TransportGlobalWeb.UI.Enums;
 using TransportGlobalWeb.UI.Helpers;
+using TransportGlobalWeb.UI.Models;
 using TransportGlobalWeb.UI.Models.ConfigurationModels;
 using TransportGlobalWeb.UI.Models.CookieModels;
 using TransportGlobalWeb.UI.Models.ResponseModels;
@@ -24,7 +25,7 @@ namespace TransportGlobalWeb.UI.ApiClients
             _apiEndpoints = apiEndpoints;
         }
 
-        public ApiResponseModel<T>? SendRequest<T>(RestRequest restRequest) where T : BaseResponseModel
+        public ApiResponseModel<T>? SendRequest<T>(RestRequest restRequest) where T : IApiData
         {
             RestResponse response = _restClient.Execute(restRequest);
             if (response.StatusCode != HttpStatusCode.OK && response.StatusCode != HttpStatusCode.BadRequest) return null;

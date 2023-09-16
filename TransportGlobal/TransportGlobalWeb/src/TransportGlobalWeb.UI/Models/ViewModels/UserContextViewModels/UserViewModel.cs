@@ -1,8 +1,8 @@
 ﻿using TransportGlobalWeb.UI.Enums.UserContextEnums;
 
-namespace TransportGlobalWeb.UI.Models.ResponseModels.UserResponseModels.User
+namespace TransportGlobalWeb.UI.Models.ViewModels.UserContextViewModels
 {
-    public class GetProfileResponseModel : BaseResponseModel
+    public class UserViewModel : BaseViewModel
     {
         public string Name { get; set; }
 
@@ -12,7 +12,7 @@ namespace TransportGlobalWeb.UI.Models.ResponseModels.UserResponseModels.User
 
         public UserType Type { get; set; }
 
-        public GetProfileResponseModel(int id, DateTime createdDate, string name, string surname, string email, UserType type) : base(id, createdDate)
+        public UserViewModel(int id, DateTime createdDate, bool isDeleted, string name, string surname, string email, UserType type) : base(id, createdDate, isDeleted)
         {
             Name = name;
             Surname = surname;

@@ -9,6 +9,7 @@ using TransportGlobalWeb.UI.Models.CookieModels;
 using TransportGlobalWeb.UI.Models.RequestModels.UserContextRequestModels.User;
 using TransportGlobalWeb.UI.Models.ResponseModels;
 using TransportGlobalWeb.UI.Models.ResponseModels.UserResponseModels.User;
+using TransportGlobalWeb.UI.Models.ViewModels.UserContextViewModels;
 
 namespace TransportGlobalWeb.UI.Controllers
 {
@@ -67,7 +68,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult Profile()
         {
-            ApiResponseModel<GetProfileResponseModel>? apiResponse = _userClient.GetProfile();
+            ApiResponseModel<UserViewModel>? apiResponse = _userClient.GetProfile();
 
             IActionResult onData()
             {
@@ -79,7 +80,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult UpdateProfile()
         {
-            ApiResponseModel<GetProfileResponseModel>? apiResponse = _userClient.GetProfile();
+            ApiResponseModel<UserViewModel>? apiResponse = _userClient.GetProfile();
 
             IActionResult onData()
             {

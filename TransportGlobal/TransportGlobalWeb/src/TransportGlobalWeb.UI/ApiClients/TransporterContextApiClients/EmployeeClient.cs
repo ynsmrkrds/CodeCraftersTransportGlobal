@@ -3,7 +3,7 @@ using TransportGlobalWeb.UI.Models.ConfigurationModels;
 using TransportGlobalWeb.UI.Models.ConfigurationModels.TransporterContextConfigurationModels;
 using TransportGlobalWeb.UI.Models.RequestModels.TransporterContextRequestModels.Employee;
 using TransportGlobalWeb.UI.Models.ResponseModels;
-using TransportGlobalWeb.UI.Models.ResponseModels.TransporterResponseModels.Employee;
+using TransportGlobalWeb.UI.Models.ViewModels.TransporterContextViewModels;
 
 namespace TransportGlobalWeb.UI.ApiClients.TransporterContextApiClients
 {
@@ -16,28 +16,28 @@ namespace TransportGlobalWeb.UI.ApiClients.TransporterContextApiClients
             _configurationModel = apiEndpoints!.TransporterContextEndpoints!.EmployeeEndpoints!;
         }
 
-        public ApiResponseModel<GetOwnEmployeesResponseModel>? GetOwnEmployees(int page)
+        public ApiResponseModel<ListResponseModel<EmployeeViewModel>>? GetOwnEmployees(int page)
         {
             RestRequest request = new($"{_configurationModel.GetOwnEmployees}/{page}/{_apiEndpoints.PageSize}", Method.Get);
             request = AddAuthorizationHeader(request);
 
-            return SendRequest<GetOwnEmployeesResponseModel>(request);
+            return SendRequest<ListResponseModel<EmployeeViewModel>>(request);
         }
 
-        public ApiResponseModel<GetVehicleEmployeesResponseModel>? GetVehicleEmployees(int vehicleID, int page)
+        public ApiResponseModel<ListResponseModel<EmployeeViewModel>>? GetVehicleEmployees(int vehicleID, int page)
         {
             RestRequest request = new($"{_configurationModel.GetVehicleEmployees}/{vehicleID}/{page}/{_apiEndpoints.PageSize}", Method.Get);
             request = AddAuthorizationHeader(request);
 
-            return SendRequest<GetVehicleEmployeesResponseModel>(request);
+            return SendRequest<ListResponseModel<EmployeeViewModel>>(request);
         }
 
-        public ApiResponseModel<GetEmployeeResponseModel>? GetEmployeeByID(int id)
+        public ApiResponseModel<EmployeeViewModel>? GetEmployeeByID(int id)
         {
             RestRequest request = new($"{_configurationModel.CrudEmployee}/{id}", Method.Get);
             request = AddAuthorizationHeader(request);
 
-            return SendRequest<GetEmployeeResponseModel>(request);
+            return SendRequest<EmployeeViewModel>(request);
         }
 
         public ApiResponseModel<NonDataResponseModel>? CreateEmployee(CreateEmployeeRequestModel createEmployeeRequestModel)

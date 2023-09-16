@@ -1,10 +1,10 @@
-﻿@using TransportGlobalWeb.UI.Enums;
-@using TransportGlobalWeb.UI.Enums.TransportContextEnums;
+﻿@using TransportGlobalWeb.UI.Enums.TransportContextEnums;
 @using TransportGlobalWeb.UI.Enums.UserContextEnums;
+@using TransportGlobalWeb.UI.Enums;
 @using TransportGlobalWeb.UI.Helpers;
-@using TransportGlobalWeb.UI.Models.ConfigurationModels;
 @using TransportGlobalWeb.UI.Models.CookieModels;
-@model GetOwnTransportContractResponseModel
+@using TransportGlobalWeb.UI.Models.ViewModels.TransportContextViewModels;
+@model ListResponseModel<TransportContractViewModel>
 @inject ApiEndpointsConfigurationModel ApiEndpoints
 
 @{

@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using RestSharp;
+﻿using RestSharp;
 using TransportGlobalWeb.UI.Models.ConfigurationModels;
 using TransportGlobalWeb.UI.Models.ConfigurationModels.ReviewContextConfigurationModels;
 using TransportGlobalWeb.UI.Models.RequestModels.ReviewContextRequestModels.Review;
-using TransportGlobalWeb.UI.Models.RequestModels.TransportContextRequestModels.TransportContract;
 using TransportGlobalWeb.UI.Models.ResponseModels;
-using TransportGlobalWeb.UI.Models.ResponseModels.ReviewResponseModels.Review;
+using TransportGlobalWeb.UI.Models.ViewModels.ReviewContextViewModels;
 
 namespace TransportGlobalWeb.UI.ApiClients.ReviewContextApiClients
 {
@@ -18,12 +16,12 @@ namespace TransportGlobalWeb.UI.ApiClients.ReviewContextApiClients
             _configurationModel = apiEndpoints.ReviewContextEndpoints!.ReviewEndpoints!;
         }
 
-        public ApiResponseModel<GetCompanyReviewsResponseModel>? GetCompanyReviews(int companyID, int page)
+        public ApiResponseModel<ListResponseModel<ReviewViewModel>>? GetCompanyReviews(int companyID, int page)
         {
             RestRequest request = new($"{_configurationModel.GetCompanyReviews}/{companyID}/{page}/{_apiEndpoints.PageSize}", Method.Get);
             request = AddAuthorizationHeader(request);
 
-            return SendRequest<GetCompanyReviewsResponseModel>(request);
+            return SendRequest<ListResponseModel<ReviewViewModel>>(request);
         }
 
         public ApiResponseModel<NonDataResponseModel>? CreateReview(CreateReviewRequestModel createReviewRequestModel)
