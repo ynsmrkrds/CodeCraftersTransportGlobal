@@ -21,7 +21,7 @@ namespace TransportGlobal.Application.CQRSs.TransporterContextCQRSs.QueryGetVehi
 
         public Task<GetVehicleQueryResponse> Handle(GetVehicleQueryRequest request, CancellationToken cancellationToken)
         {
-            VehicleEntity vehicleEntity = _vehicleRepository.GetByID(request.ID) ?? throw new ClientSideException(ResponseConstants.NotVehicleOwner.Message);
+            VehicleEntity vehicleEntity = _vehicleRepository.GetByID(request.ID) ?? throw new ClientSideException(ExceptionConstants.NotFoundVehicle);
 
             VehicleViewModel vehicleViewModel = _mapper.Map<VehicleEntity, VehicleViewModel>(vehicleEntity);
 

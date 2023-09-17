@@ -6,7 +6,6 @@ using TransportGlobal.Domain.Constants;
 using TransportGlobal.Domain.Entities.MessagingContextEntities;
 using TransportGlobal.Domain.Exceptions;
 using TransportGlobal.Domain.Models;
-using TransportGlobal.Domain.ObjectExtensions;
 using TransportGlobal.Domain.Repositories.MessagingContextRepositories;
 
 namespace TransportGlobal.Application.CQRSs.MessagingContextCQRSs.QueryGetMessagesByChatID
@@ -30,11 +29,11 @@ namespace TransportGlobal.Application.CQRSs.MessagingContextCQRSs.QueryGetMessag
 
             if (_chatRepository.IsChatBelongToUser(request.ChatID, tokenModel.UserType, tokenModel.UserID) == false) throw new ClientSideException(ExceptionConstants.ChatDoesntBelongToUser);
 
-            List<MessageEntity> messages = _messageRepository.GetMessagesByChatID(request.ChatID).WithPagination(request.Pagination).ToList();
+            IEnumerable<MessageEntity> messages = _messageRepository.GetMessagesByChatID(request.ChatID);
 
-            List<MessageViewModel> messagesViewModels = _mapper.Map<List<MessageViewModel>>(messages);
+            IEnumerable<MessageViewModel> messagesViewModels = _mapper.Map<IEnumerable<MessageViewModel>>(messages);
 
-            return Task.FromResult(new GetMessagesByChatIDQueryResponse(messagesViewModels));
+            return Task.FromResult(new GetMessagesByChatIDQueryResponse(messagesViewModels, request.Pagination));
         }
     }
 }

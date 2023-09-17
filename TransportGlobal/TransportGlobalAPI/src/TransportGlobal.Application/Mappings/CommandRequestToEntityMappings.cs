@@ -46,10 +46,10 @@ namespace TransportGlobal.Application.Mappings
             CreateMap<UpdateVehicleCommandRequest, VehicleEntity>();
 
             CreateMap<CreateEmployeeCommandRequest, EmployeeEntity>()
-                 .ConstructUsing(src => new EmployeeEntity(0, src.VehicleID ?? null, src.Name, src.Surname, src.Email, src.Title, false));
+                 .ConstructUsing(src => new EmployeeEntity(0, src.VehicleID ?? null, src.Name, src.Surname, src.Email, src.Title));
 
             CreateMap<UpdateEmployeeCommandRequest, EmployeeEntity>()
-                 .ConstructUsing(src => new EmployeeEntity(0, src.VehicleID ?? null, src.Name, src.Surname, src.Email, src.Title, false));
+                 .ConstructUsing(src => new EmployeeEntity(0, src.VehicleID ?? null, src.Name, src.Surname, src.Email, src.Title));
             #endregion
 
             #region Transport Bounded Context Mappings
@@ -59,12 +59,12 @@ namespace TransportGlobal.Application.Mappings
             CreateMap<UpdateTransportRequestCommandRequest, TransportRequestEntity>();
 
             CreateMap<CreateTransportContractCommandRequest, TransportContractEntity>()
-                .ConstructUsing(src => new TransportContractEntity(0, 0, src.TransportRequestID, src.VehicleID, src.Price, false));
+                .ConstructUsing(src => new TransportContractEntity(0, 0, src.TransportRequestID, src.VehicleID, src.Price, TransportContractStatusType.Pending));
             #endregion
 
             #region Messaging Bounded Context Mappings
             CreateMap<CreateMessageCommandRequest, MessageEntity>()
-                .ConstructUsing(src => new MessageEntity(src.ChatID, MessageContentType.Text, src.Content, DateTime.Now));
+                .ConstructUsing(src => new MessageEntity(src.ChatID, 0, 0, MessageContentType.Text, src.Content, DateTime.Now));
             #endregion
 
             #region Review Bounded Context Mappings

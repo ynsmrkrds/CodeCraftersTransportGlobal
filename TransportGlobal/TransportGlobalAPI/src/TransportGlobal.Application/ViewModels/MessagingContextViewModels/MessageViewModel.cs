@@ -1,4 +1,6 @@
-﻿using TransportGlobal.Domain.Enums.MessagingContextEnums;
+﻿using TransportGlobal.Application.ViewModels.UserContextViewModels;
+using TransportGlobal.Domain.Entities.UserContextEntities;
+using TransportGlobal.Domain.Enums.MessagingContextEnums;
 
 namespace TransportGlobal.Application.ViewModels.MessagingContextViewModels
 {
@@ -6,15 +8,21 @@ namespace TransportGlobal.Application.ViewModels.MessagingContextViewModels
     {
         public int ChatID { get; set; }
 
+        public UserViewModel SenderUser { get; set; }
+
+        public UserViewModel ReceiverUser { get; set; }
+
         public MessageContentType ContentType { get; set; }
 
         public string Content { get; set; }
 
         public DateTime SendingDate { get; set; }
 
-        public MessageViewModel(int id, DateTime createdDate, bool isDeleted, int chatID, MessageContentType contentType, string content, DateTime sendingDate) : base(id, createdDate, isDeleted)
+        public MessageViewModel(int id, DateTime createdDate, bool isDeleted, int chatID, UserViewModel senderUser, UserViewModel receiverUser, MessageContentType contentType, string content, DateTime sendingDate) : base(id, createdDate, isDeleted)
         {
             ChatID = chatID;
+            SenderUser = senderUser;
+            ReceiverUser = receiverUser;
             ContentType = contentType;
             Content = content;
             SendingDate = sendingDate;

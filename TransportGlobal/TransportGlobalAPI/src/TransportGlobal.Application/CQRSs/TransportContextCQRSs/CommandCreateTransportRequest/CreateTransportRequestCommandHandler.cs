@@ -22,6 +22,8 @@ namespace TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCreateT
 
         public Task<CreateTransportRequestCommandResponse> Handle(CreateTransportRequestCommandRequest request, CancellationToken cancellationToken)
         {
+            if (request.TransportDate.CompareTo(DateTime.Now) < 0) return Task.FromResult(new CreateTransportRequestCommandResponse(ResponseConstants.TransportDateEarlier));
+
             TokenModel tokenModel = TokenHelper.Instance().DecodeTokenInRequest() ?? throw new ClientSideException(ExceptionConstants.TokenError);
 
             TransportRequestEntity transportRequestEntity = _mapper.Map<TransportRequestEntity>(request);

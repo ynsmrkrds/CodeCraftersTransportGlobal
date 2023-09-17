@@ -25,7 +25,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> GetMessagesByChatID(int chatID, int page, int size)
         {
             GetMessagesByChatIDQueryResponse queryResponse = await _mediator.Send(new GetMessagesByChatIDQueryRequest(chatID, new PaginationModel(page, size)));
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, queryResponse.Messages));
+            return CreateActionResult(queryResponse);
         }
 
         [HttpPost]
@@ -33,9 +33,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> Create([FromBody] CreateMessageCommandRequest request)
         {
             CreateMessageCommandResponse commandResponse = await _mediator.Send(request);
-            if (commandResponse.IsSuccessful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, commandResponse.Message));
-
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse.Message));
+            return CreateActionResult(commandResponse.Response);
         }
     }
 }

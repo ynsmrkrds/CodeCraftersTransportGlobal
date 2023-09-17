@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using TransportGlobal.Application.DTOs.ResponseDTOs;
+using TransportGlobal.Domain.Models;
 
 namespace TransportGlobal.API.Controllers
 {
@@ -11,11 +12,21 @@ namespace TransportGlobal.API.Controllers
     public class BaseController : ControllerBase
     {
         [NonAction]
-        public IActionResult CreateActionResult(APIResponseDTO response)
+        public IActionResult CreateActionResult<T>(T response)
         {
-            return new ObjectResult(response.StatusCode == HttpStatusCode.NoContent ? null : response)
+            HttpStatusCode statusCode = HttpStatusCode.OK;
+
+            if (response!.GetType() == typeof(ResponseConstantModel))
             {
-                StatusCode = (int)response.StatusCode
+                return new ObjectResult(new APIResponseDTO(statusCode, (response as ResponseConstantModel)!))
+                {
+                    StatusCode = (int)statusCode
+                };
+            }
+
+            return new ObjectResult(new APIResponseDTO(statusCode, response!))
+            {
+                StatusCode = (int)statusCode
             };
         }
     }

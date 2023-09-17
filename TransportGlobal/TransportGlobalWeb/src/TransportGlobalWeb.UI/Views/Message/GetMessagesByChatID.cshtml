@@ -1,0 +1,72 @@
+﻿@using TransportGlobalWeb.UI.Enums;
+@using TransportGlobalWeb.UI.Enums.MessagingContextEnums;
+@using TransportGlobalWeb.UI.Enums.UserContextEnums;
+@using TransportGlobalWeb.UI.Helpers;
+@using TransportGlobalWeb.UI.Models.CookieModels;
+@using TransportGlobalWeb.UI.Models.ViewModels.MessagingContextViewModels;
+@model ListResponseModel<MessageViewModel>
+@inject ApiEndpointsConfigurationModel ApiEndpoints
+
+@{
+    string? userCookieJson = CookieHelper.GetCookie(CookieKey.User);
+    UserCookieModel? userCookieModel = userCookieJson == null ? null : BaseCookieModel.FromJson<UserCookieModel>(userCookieJson);
+}
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h1>Messages List</h1>
+    <div class="d-flex flex-row">
+        @if (userCookieModel!.UserType == UserType.Shipper)
+        {
+            <div>
+                <a asp-action="CreateTransportContract" asp-controller="TransportContract" asp-route-transportRequestID=@((int)ViewData["TransportRequestID"]!) class="btn btn-primary">Create Transport Contract</a>
+            </div>
+        }
+        <div style="margin: 12px;"></div>
+        <div>
+            <a asp-action="CreateMessage" asp-controller="Message" asp-route-chatID=@((int)ViewData["ChatID"]!) class="btn btn-primary">Send Message</a>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Sender</th>
+            <th>Content</th>
+            <th>Sending Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model.List != null)
+        {
+            @foreach (var message in Model.List)
+            {
+                <tr>
+                    <td>@($"{message.SenderUser.Name} {message.SenderUser.Surname}")</td>
+                    @if (message.ContentType == MessageContentType.Contract)
+                    {
+                        <td>
+                            <a asp-action="GetTransportContractByID" asp-controller="TransportContract" asp-route-id=@(int.Parse(message.Content)) class="btn btn-primary">Show Contract</a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>@(message.Content)</td>
+                    }
+                    <td>@(message.SendingDate.ToString("dd/MM/yyyy HH:mm:ss"))</td>
+                </tr>
+            }
+        }        
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination justify-content-center">
+        @for (int i = 1; i <= Math.Ceiling((double)(Model.TotalCount / (double)ApiEndpoints.PageSize!)); i++)
+        {
+            <li class="page-item @(i == ((int)ViewData["Page"]!+1) ? "active" : "")">
+                <a class="page-link" asp-action="GetMessagesByChatID" asp-controller="Message" asp-route-id=@((int)ViewData["ChatID"]!) asp-route-transportRequestID=@((int)ViewData["TransportRequestID"]!) asp-route-page="@(i-1)">@i</a>
+            </li>
+        }
+    </ul>
+</nav>

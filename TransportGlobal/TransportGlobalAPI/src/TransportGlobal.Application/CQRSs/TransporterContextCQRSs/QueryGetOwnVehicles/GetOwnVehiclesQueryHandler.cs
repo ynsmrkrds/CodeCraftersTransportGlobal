@@ -5,7 +5,6 @@ using TransportGlobal.Application.ViewModels.TransporterContextViewModels;
 using TransportGlobal.Domain.Constants;
 using TransportGlobal.Domain.Entities.TransporterContextEntities;
 using TransportGlobal.Domain.Exceptions;
-using TransportGlobal.Domain.ObjectExtensions;
 using TransportGlobal.Domain.Repositories.TransporterContextRepositories;
 
 namespace TransportGlobal.Application.CQRSs.TransporterContextCQRSs.QueryGetOwnVehicles
@@ -30,11 +29,11 @@ namespace TransportGlobal.Application.CQRSs.TransporterContextCQRSs.QueryGetOwnV
 
             CompanyEntity companyEntity = _companyRepository.GetCompanyByUserID(userID) ?? throw new ClientSideException(ExceptionConstants.NotFoundCompany);
 
-            List<VehicleEntity> vehicles = _vehicleRepository.GetAllByCompanyID(companyEntity.ID).WithPagination(request.Pagination).ToList();
+            IEnumerable<VehicleEntity> vehicles = _vehicleRepository.GetAllByCompanyID(companyEntity.ID);
 
-            List<VehicleViewModel> viewModels = _mapper.Map<List<VehicleEntity>, List<VehicleViewModel>>(vehicles);
+            IEnumerable<VehicleViewModel> viewModels = _mapper.Map<IEnumerable<VehicleViewModel>>(vehicles);
 
-            return Task.FromResult(new GetOwnVehiclesQueryResponse(viewModels));
+            return Task.FromResult(new GetOwnVehiclesQueryResponse(viewModels, request.Pagination));
         }
     }
 }

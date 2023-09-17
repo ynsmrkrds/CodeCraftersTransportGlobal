@@ -1,0 +1,56 @@
+﻿@using TransportGlobalWeb.UI.Enums;
+@using TransportGlobalWeb.UI.Enums.UserContextEnums;
+@using TransportGlobalWeb.UI.Helpers;
+@using TransportGlobalWeb.UI.Models.CookieModels;
+@using TransportGlobalWeb.UI.Models.ViewModels.MessagingContextViewModels;
+@model ListResponseModel<ChatViewModel>
+@inject ApiEndpointsConfigurationModel ApiEndpoints
+
+@{
+    string? userCookieJson = CookieHelper.GetCookie(CookieKey.User);
+    UserCookieModel? userCookieModel = userCookieJson == null ? null : BaseCookieModel.FromJson<UserCookieModel>(userCookieJson);
+}
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h1>Own Chats List</h1>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Chats</th>
+            <th>Transport Request</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var chat in Model.List)
+        {
+            <tr>
+                @if (userCookieModel!.UserType == UserType.Shipper)
+                {
+                    <td>@($"{chat.ReceiverUser.Name} {chat.ReceiverUser.Surname}")</td>
+                }
+                else
+                {
+                    <td>@($"{chat.SenderUser.Name} {chat.SenderUser.Surname}")</td>
+                }
+                <td>@($"{chat.TransportRequest.TransportType} - {chat.TransportRequest.TransportDate.ToString("dd/MM/yyyy")}")</td>
+                <td>
+                    <a asp-action="GetMessagesByChatID" asp-controller="Message" asp-route-id=@chat.ID asp-route-transportRequestID=@chat.TransportRequest.ID class="btn btn-primary">Show Messages</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination justify-content-center">
+        @for (int i = 1; i <= Math.Ceiling((double)(Model.TotalCount / (double)ApiEndpoints.PageSize!)); i++)
+        {
+            <li class="page-item @(i == ((int)ViewData["Page"]!+1) ? "active" : "")">
+                <a class="page-link" asp-action="GetOwnChats" asp-controller="Chat" asp-route-page="@(i-1)">@i</a>
+            </li>
+        }
+    </ul>
+</nav>

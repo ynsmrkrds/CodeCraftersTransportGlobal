@@ -14,5 +14,7 @@ namespace TransportGlobal.Domain.Repositories.TransportContextRepositories
         bool? IsOwner(int id, int userID);
 
         bool? CanReview(int id);
+
+        int AgreeContact(int id);
     }
 }

@@ -1,0 +1,40 @@
+﻿@using TransportGlobalWeb.UI.Models.ViewModels.TransporterContextViewModels;
+@model VehicleViewModel
+
+<h2>Vehicle Details</h2>
+
+<div>
+    <h4>Identification Number</h4>
+    <p>@Model.IdentificationNumber</p>
+</div>
+
+<div>
+    <h4>Type</h4>
+    <p>@Model.Type</p>
+</div>
+
+<div>
+    <h4>Status</h4>
+    <p>@Model.Status</p>
+</div>
+
+<div>
+    <h4>Created Date</h4>
+    <p>@Model.CreatedDate.ToString("dd/MM/yyyy HH:mm:ss")</p>
+</div>
+
+<div>
+    <h4>Status</h4>
+    @if (Model.IsDeleted)
+    {
+        <p>Deleted</p>
+    }
+    else
+    {
+        <p>Active</p>
+    }
+</div>
+
+<div>
+    <a asp-action="GetVehicleEmployees" asp-controller="Employee" asp-route-id=@Model.ID class="btn btn-primary">Employees</a>
+</div>

@@ -1,0 +1,28 @@
+﻿@using TransportGlobalWeb.UI.Models.RequestModels.TransportContextRequestModels.TransportContract;
+@using TransportGlobalWeb.UI.Models.ViewModels.TransporterContextViewModels;
+@model CreateTransportContractRequestModel
+
+<h1>Create Transport Contract</h1>
+
+<form asp-action="CreateTransportContract" method="post">
+    <div class="form-group">
+        <input type="hidden" asp-for="TransportRequestID" value=@((int)ViewData["TransportRequestID"]!) />
+    </div>
+    <div class="form-group">
+        <label asp-for="VehicleID">Vehicle</label>
+        <select asp-for="VehicleID" class="form-control">
+            <option value=0>Select Vehicle</option>
+            @foreach (VehicleViewModel vehicleItem in (ViewData["Vehicles"]! as List<VehicleViewModel>)!)
+            {
+                <option value="@vehicleItem.ID">@vehicleItem.IdentificationNumber</option>
+            }
+        </select>
+        <span asp-validation-for="VehicleID" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price">Price</label>
+        <input asp-for="Price" class="form-control" type="number" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

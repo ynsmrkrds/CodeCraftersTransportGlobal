@@ -1,0 +1,33 @@
+﻿@using TransportGlobalWeb.UI.Enums.TransporterContextEnums;
+@using TransportGlobalWeb.UI.Models.RequestModels.TransporterContextRequestModels.Vehicle;
+@model UpdateVehicleRequestModel
+
+<h1>Update Vehicle</h1>
+
+<form asp-action="UpdateVehicle" method="post">
+    <div class="form-group">
+        <input type="hidden" asp-for="ID" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Status">Vehicle Type</label>
+        <select asp-for="Status" class="form-control">
+            @foreach (VehicleStatusType vehicleStatusType in Enum.GetValues<VehicleStatusType>())
+            {
+                if (vehicleStatusType == VehicleStatusType.AtWork) continue;
+                if (vehicleStatusType == Model.Status)
+                {
+                    <option value="@vehicleStatusType" selected>@vehicleStatusType</option>
+                }
+                else
+                {
+                    <option value="@vehicleStatusType">@vehicleStatusType</option>
+                }
+            }
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
+

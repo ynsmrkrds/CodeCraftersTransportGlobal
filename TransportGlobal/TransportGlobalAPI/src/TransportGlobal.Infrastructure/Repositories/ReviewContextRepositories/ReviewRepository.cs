@@ -13,10 +13,10 @@ namespace TransportGlobal.Infrastructure.Repositories.ReviewContextRepositories
 
         public IEnumerable<ReviewEntity> GetReviewsByCompanyID(int companyID)
         {
-            return _context.TransportContracts
-                .Include(x => x.Review)
-                .Where(x => x.CompanyID == companyID && x.Review != null)
-                .Select(x => x.Review!)
+            return GetAll()
+                .Include(x => x.TransportContract)
+                .ThenInclude(x => x!.User)
+                .Where(x => x.TransportContract != null & x.TransportContract!.CompanyID == companyID)
                 .AsEnumerable();
         }
     }

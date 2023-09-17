@@ -5,6 +5,7 @@ using TransportGlobal.Domain.Entities.ReviewContextEntities;
 using TransportGlobal.Domain.Entities.TransportContextEntities;
 using TransportGlobal.Domain.Entities.TransporterContextEntities;
 using TransportGlobal.Domain.Entities.UserContextEntities;
+using TransportGlobal.Infrastructure.Seeds.UserContextSeeds;
 
 namespace TransportGlobal.Infrastructure.Context
 {
@@ -71,6 +72,18 @@ namespace TransportGlobal.Infrastructure.Context
                .WithOne(x => x.ReceiverUser)
                .HasForeignKey(x => x.ReceiverUserID)
                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<UserEntity>()
+             .HasMany(x => x.SentMessages)
+             .WithOne(x => x.SenderUser)
+             .HasForeignKey(x => x.SenderUserID)
+             .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<UserEntity>()
+                .HasMany(x => x.ReceivedMessages)
+                .WithOne(x => x.ReceiverUser)
+                .HasForeignKey(x => x.ReceiverUserID)
+                .OnDelete(DeleteBehavior.NoAction);
             #endregion
 
             #region Transporter Bounded Context Configurations

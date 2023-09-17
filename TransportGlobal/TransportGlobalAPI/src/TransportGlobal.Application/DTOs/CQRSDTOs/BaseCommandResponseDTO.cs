@@ -4,14 +4,11 @@ namespace TransportGlobal.Application.DTOs.CQRSDTOs
 {
     public abstract class BaseCommandResponseDTO
     {
-        public bool IsSuccessful { get; set; }
+        public ResponseConstantModel Response { get; private set; }
 
-        public string Message { get; set; }
-
-        protected BaseCommandResponseDTO(ResponseConstantModel response)
+        public BaseCommandResponseDTO(ResponseConstantModel response)
         {
-            IsSuccessful = response.IsSuccessful;
-            Message = response.Message;
+            Response = response;
         }
     }
 }

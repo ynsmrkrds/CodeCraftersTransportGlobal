@@ -39,6 +39,8 @@ namespace TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCreateT
 
         public Task<CreateTransportContractCommandResponse> Handle(CreateTransportContractCommandRequest request, CancellationToken cancellationToken)
         {
+            if (_vehicleRepository.CanVehicleWork(request.VehicleID) == false) return Task.FromResult(new CreateTransportContractCommandResponse(ResponseConstants.VehicleCanNotWork));
+
             int userID = TokenHelper.Instance().DecodeTokenInRequest()?.UserID ?? throw new ClientSideException(ExceptionConstants.TokenError);
             UserEntity userEntity = _userRepository.GetByID(userID) ?? throw new ClientSideException(ExceptionConstants.NotFoundUser);
 
@@ -48,6 +50,7 @@ namespace TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCreateT
 
             VehicleEntity vehicleEntity = _vehicleRepository.GetByID(request.VehicleID) ?? throw new ClientSideException(ExceptionConstants.NotFoundVehicle);
             if (vehicleEntity.IsDeleted) throw new ClientSideException(ExceptionConstants.NotFoundVehicle);
+            
             _vehicleRepository.DetachEntity(vehicleEntity);
 
             if (_transportContractRepository.IsThereAgreedContract(request.TransportRequestID)) return Task.FromResult(new CreateTransportContractCommandResponse(ResponseConstants.CannotMakeContractAgreement));
@@ -81,7 +84,7 @@ namespace TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCreateT
             if (_chatRepository.IsExists(transportRequestID, senderUserID, receiverUserID))
             {
                 chatEntity = _chatRepository.GetByTransportRequestID(transportRequestID, senderUserID) ?? throw new ClientSideException(ExceptionConstants.NotFoundChat);
-                message = "Size yeni teklifimiz şudur:";
+                message = "Our new offer to you is this:";
             }
             else
             {
@@ -92,11 +95,11 @@ namespace TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCreateT
                 int effectedRows = _chatRepository.SaveChanges();
                 if (effectedRows == 0) return false;
 
-                message = "Merhaba. Size teklifimiz şudur:";
+                message = "Hello. Here's what we're offering you:";
             }
 
-            _messageRepository.Add(new MessageEntity(chatEntity.ID, MessageContentType.Text, message, DateTime.Now));
-            _messageRepository.Add(new MessageEntity(chatEntity.ID, MessageContentType.Contract, transportContractID.ToString(), DateTime.Now));
+            _messageRepository.Add(new MessageEntity(chatEntity.ID, senderUserID, receiverUserID, MessageContentType.Text, message, DateTime.Now));
+            _messageRepository.Add(new MessageEntity(chatEntity.ID, senderUserID, receiverUserID, MessageContentType.Contract, transportContractID.ToString(), DateTime.Now));
 
             int createMessageEffectedRows = _messageRepository.SaveChanges();
             return createMessageEffectedRows != 0;

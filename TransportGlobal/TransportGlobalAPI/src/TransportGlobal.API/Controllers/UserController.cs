@@ -1,14 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 using TransportGlobal.API.Extensions.Attributes;
 using TransportGlobal.Application.CQRSs.UserContextCQRSs.CommandCreateUser;
 using TransportGlobal.Application.CQRSs.UserContextCQRSs.CommandUpdatePassword;
 using TransportGlobal.Application.CQRSs.UserContextCQRSs.CommandUpdateUser;
 using TransportGlobal.Application.CQRSs.UserContextCQRSs.QueryGetProfile;
 using TransportGlobal.Application.CQRSs.UserContextCQRSs.QueryGetToken;
-using TransportGlobal.Application.DTOs.ResponseDTOs;
 using TransportGlobal.Domain.Enums.UserContextEnums;
 
 namespace TransportGlobal.API.Controllers
@@ -23,12 +21,12 @@ namespace TransportGlobal.API.Controllers
         }
 
         [HttpGet]
-        [Route("getProfile")]
+        [Route("profile")]
         [Authority(UserType.Customer, UserType.Shipper)]
         public async Task<IActionResult> GetProfile()
         {
             GetProfileQueryResponse queryResponse = await _mediator.Send(new GetProfileQueryRequest());
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, queryResponse.Profile));
+            return CreateActionResult(queryResponse.Profile);
         }
 
         [HttpPost]
@@ -37,9 +35,9 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> Login([FromBody] GetTokenQueryRequest request)
         {
             GetTokenQueryResponse commandResponse = await _mediator.Send(request);
-            if (commandResponse.IsSuccesful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, commandResponse.Message));
+            if (commandResponse.Response != null) return CreateActionResult(commandResponse.Response);
 
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse));
+            return CreateActionResult(commandResponse);
         }
 
         [HttpPost]
@@ -48,9 +46,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> Register([FromBody] CreateUserCommandRequest request)
         {
             CreateUserCommandResponse commandResponse = await _mediator.Send(request);
-            if (commandResponse.IsSuccessful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, commandResponse.Message));
-
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse.Message));
+            return CreateActionResult(commandResponse.Response);
         }
 
         [HttpPut]
@@ -59,9 +55,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateUserCommandRequest request)
         {
             UpdateUserCommandResponse commandResponse = await _mediator.Send(request);
-            if (commandResponse.IsSuccessful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, commandResponse.Message));
-
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse.Message));
+            return CreateActionResult(commandResponse.Response);
         }
 
         [HttpPut]
@@ -70,9 +64,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordCommandRequest request)
         {
             UpdatePasswordCommandResponse commandResponse = await _mediator.Send(request);
-            if (commandResponse.IsSuccessful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, commandResponse.Message));
-
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse.Message));
+            return CreateActionResult(commandResponse.Response);
         }
     }
 }

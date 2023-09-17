@@ -26,7 +26,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> GetCompanyReview(int companyID, int page, int size)
         {
             GetCompanyReviewsQueryResponse queryResponse = await _mediator.Send(new GetCompanyReviewsQueryRequest(companyID, new PaginationModel(page, size)));
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, queryResponse.Reviews));
+            return CreateActionResult(queryResponse);
         }
 
         [HttpPost]
@@ -34,9 +34,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> Create([FromBody] CreateReviewCommandRequest request)
         {
             CreateReviewCommandResponse commandResponse = await _mediator.Send(request);
-            if (commandResponse.IsSuccessful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, commandResponse.Message));
-
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse.Message));
+            return CreateActionResult(commandResponse.Response);
         }
 
         [HttpDelete]
@@ -45,9 +43,7 @@ namespace TransportGlobal.API.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             DeleteReviewCommandResponse commandResponse = await _mediator.Send(new DeleteReviewCommandRequest(id));
-            if (commandResponse.IsSuccessful == false) return CreateActionResult(new APIResponseDTO(HttpStatusCode.BadRequest, commandResponse.Message));
-
-            return CreateActionResult(new APIResponseDTO(HttpStatusCode.OK, commandResponse.Message));
+            return CreateActionResult(commandResponse.Response);
         }
     }
 }

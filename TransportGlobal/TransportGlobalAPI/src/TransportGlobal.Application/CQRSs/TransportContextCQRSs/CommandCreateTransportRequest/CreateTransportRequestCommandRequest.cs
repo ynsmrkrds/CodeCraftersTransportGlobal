@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using System.ComponentModel.DataAnnotations;
 using TransportGlobal.Domain.Enums.TransportContextEnums;
 
 namespace TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCreateTransportRequest
@@ -13,8 +14,10 @@ namespace TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCreateT
 
         public DateTime TransportDate { get; set; }
 
+        [StringLength(150, MinimumLength = 10)]
         public string LoadingAddress { get; set; }
 
+        [StringLength(150, MinimumLength = 10)]
         public string DeliveryAddress { get; set; }
 
         public CreateTransportRequestCommandRequest(TransportType transportType, double weight, double volume, DateTime transportDate, string loadingAddress, string deliveryAddress)

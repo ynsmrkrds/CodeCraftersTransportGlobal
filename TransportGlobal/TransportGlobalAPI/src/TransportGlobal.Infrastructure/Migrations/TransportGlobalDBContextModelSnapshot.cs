@@ -54,6 +54,26 @@ namespace TransportGlobal.Infrastructure.Migrations
                     b.HasIndex("TransportRequestID");
 
                     b.ToTable("Chats");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 895, DateTimeKind.Local).AddTicks(5996),
+                            IsDeleted = false,
+                            ReceiverUserID = 2,
+                            SenderUserID = 1,
+                            TransportRequestID = 2
+                        },
+                        new
+                        {
+                            ID = 2,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 895, DateTimeKind.Local).AddTicks(6052),
+                            IsDeleted = false,
+                            ReceiverUserID = 2,
+                            SenderUserID = 1,
+                            TransportRequestID = 1
+                        });
                 });
 
             modelBuilder.Entity("TransportGlobal.Domain.Entities.MessagingContextEntities.MessageEntity", b =>
@@ -80,6 +100,12 @@ namespace TransportGlobal.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("ReceiverUserID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SenderUserID")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("SendingDate")
                         .HasColumnType("datetime2");
 
@@ -87,7 +113,97 @@ namespace TransportGlobal.Infrastructure.Migrations
 
                     b.HasIndex("ChatID");
 
+                    b.HasIndex("ReceiverUserID");
+
+                    b.HasIndex("SenderUserID");
+
                     b.ToTable("Messages");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            ChatID = 1,
+                            Content = "2",
+                            ContentType = 0,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 895, DateTimeKind.Local).AddTicks(7609),
+                            IsDeleted = false,
+                            ReceiverUserID = 2,
+                            SenderUserID = 1,
+                            SendingDate = new DateTime(2023, 9, 8, 14, 51, 23, 895, DateTimeKind.Local).AddTicks(7596)
+                        },
+                        new
+                        {
+                            ID = 2,
+                            ChatID = 1,
+                            Content = "Our new offer to you is this:",
+                            ContentType = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 895, DateTimeKind.Local).AddTicks(7666),
+                            IsDeleted = false,
+                            ReceiverUserID = 2,
+                            SenderUserID = 1,
+                            SendingDate = new DateTime(2023, 9, 8, 14, 51, 22, 895, DateTimeKind.Local).AddTicks(7665)
+                        },
+                        new
+                        {
+                            ID = 3,
+                            ChatID = 1,
+                            Content = "Hello. The price is too high, 1500?",
+                            ContentType = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 895, DateTimeKind.Local).AddTicks(7671),
+                            IsDeleted = false,
+                            ReceiverUserID = 1,
+                            SenderUserID = 2,
+                            SendingDate = new DateTime(2023, 9, 8, 14, 49, 22, 895, DateTimeKind.Local).AddTicks(7670)
+                        },
+                        new
+                        {
+                            ID = 4,
+                            ChatID = 1,
+                            Content = "1",
+                            ContentType = 0,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 895, DateTimeKind.Local).AddTicks(7676),
+                            IsDeleted = false,
+                            ReceiverUserID = 2,
+                            SenderUserID = 1,
+                            SendingDate = new DateTime(2023, 9, 8, 14, 46, 23, 895, DateTimeKind.Local).AddTicks(7675)
+                        },
+                        new
+                        {
+                            ID = 5,
+                            ChatID = 1,
+                            Content = "Hello. Here's what we're offering you:",
+                            ContentType = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 895, DateTimeKind.Local).AddTicks(7680),
+                            IsDeleted = false,
+                            ReceiverUserID = 2,
+                            SenderUserID = 1,
+                            SendingDate = new DateTime(2023, 9, 8, 14, 46, 22, 895, DateTimeKind.Local).AddTicks(7679)
+                        },
+                        new
+                        {
+                            ID = 6,
+                            ChatID = 2,
+                            Content = "3",
+                            ContentType = 0,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 895, DateTimeKind.Local).AddTicks(7687),
+                            IsDeleted = false,
+                            ReceiverUserID = 2,
+                            SenderUserID = 1,
+                            SendingDate = new DateTime(2023, 9, 17, 14, 46, 23, 895, DateTimeKind.Local).AddTicks(7686)
+                        },
+                        new
+                        {
+                            ID = 7,
+                            ChatID = 2,
+                            Content = "Hello. Here's what we're offering you:",
+                            ContentType = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 895, DateTimeKind.Local).AddTicks(7691),
+                            IsDeleted = false,
+                            ReceiverUserID = 2,
+                            SenderUserID = 1,
+                            SendingDate = new DateTime(2023, 9, 17, 14, 46, 22, 895, DateTimeKind.Local).AddTicks(7690)
+                        });
                 });
 
             modelBuilder.Entity("TransportGlobal.Domain.Entities.ReviewContextEntities.ReviewEntity", b =>
@@ -121,6 +237,17 @@ namespace TransportGlobal.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Reviews");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Comment = "Great shipping service, arrived on time!",
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 895, DateTimeKind.Local).AddTicks(9110),
+                            IsDeleted = false,
+                            Score = 5,
+                            TransportContractID = 1
+                        });
                 });
 
             modelBuilder.Entity("TransportGlobal.Domain.Entities.TransportContextEntities.TransportContractEntity", b =>
@@ -137,14 +264,14 @@ namespace TransportGlobal.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsAgreed")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<int>("TransportRequestID")
                         .HasColumnType("int");
@@ -166,6 +293,44 @@ namespace TransportGlobal.Infrastructure.Migrations
                     b.HasIndex("VehicleID");
 
                     b.ToTable("TransportContracts");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            CompanyID = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(544),
+                            IsDeleted = false,
+                            Price = 2000.0,
+                            Status = 2,
+                            TransportRequestID = 2,
+                            UserID = 2,
+                            VehicleID = 2
+                        },
+                        new
+                        {
+                            ID = 2,
+                            CompanyID = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(577),
+                            IsDeleted = false,
+                            Price = 1500.0,
+                            Status = 1,
+                            TransportRequestID = 2,
+                            UserID = 2,
+                            VehicleID = 2
+                        },
+                        new
+                        {
+                            ID = 3,
+                            CompanyID = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(581),
+                            IsDeleted = false,
+                            Price = 2500.0,
+                            Status = 0,
+                            TransportRequestID = 1,
+                            UserID = 2,
+                            VehicleID = 1
+                        });
                 });
 
             modelBuilder.Entity("TransportGlobal.Domain.Entities.TransportContextEntities.TransportRequestEntity", b =>
@@ -213,6 +378,36 @@ namespace TransportGlobal.Infrastructure.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("TransportRequests");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(1917),
+                            DeliveryAddress = "456 Elm Street, Los Angeles",
+                            IsDeleted = false,
+                            LoadingAddress = "123 Main Street, New York",
+                            StatusType = 0,
+                            TransportDate = new DateTime(2023, 9, 24, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(1905),
+                            TransportType = 4,
+                            UserID = 2,
+                            Volume = 1000.0,
+                            Weight = 500.5
+                        },
+                        new
+                        {
+                            ID = 2,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(1947),
+                            DeliveryAddress = "101 Pine Road, Miami",
+                            IsDeleted = false,
+                            LoadingAddress = "789 Oak Avenue, Chicago",
+                            StatusType = 2,
+                            TransportDate = new DateTime(2023, 9, 10, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(1946),
+                            TransportType = 3,
+                            UserID = 2,
+                            Volume = 2000.0,
+                            Weight = 1000.0
+                        });
                 });
 
             modelBuilder.Entity("TransportGlobal.Domain.Entities.TransporterContextEntities.CompanyEntity", b =>
@@ -255,6 +450,19 @@ namespace TransportGlobal.Infrastructure.Migrations
                     b.HasIndex("OwnerUserID");
 
                     b.ToTable("Companies");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Address = "123 Main Street",
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(3353),
+                            Email = "info@translogistics.com",
+                            IsDeleted = false,
+                            Name = "TransLogistics, LLC",
+                            OwnerUserID = 1,
+                            PhoneNumber = "(555) 123-4567"
+                        });
                 });
 
             modelBuilder.Entity("TransportGlobal.Domain.Entities.TransporterContextEntities.EmployeeEntity", b =>
@@ -301,6 +509,128 @@ namespace TransportGlobal.Infrastructure.Migrations
                     b.HasIndex("VehicleID");
 
                     b.ToTable("Employees");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            CompanyID = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(4697),
+                            Email = "tommy.hudson@gmail.com",
+                            IsDeleted = false,
+                            Name = "Tommy",
+                            Surname = "Hudson",
+                            Title = 0,
+                            VehicleID = 1
+                        },
+                        new
+                        {
+                            ID = 2,
+                            CompanyID = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(4727),
+                            Email = "jane.smith@gmail.com",
+                            IsDeleted = false,
+                            Name = "Jane",
+                            Surname = "Smith",
+                            Title = 2,
+                            VehicleID = 1
+                        },
+                        new
+                        {
+                            ID = 3,
+                            CompanyID = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(4732),
+                            Email = "michael.johnson@gmail.com",
+                            IsDeleted = false,
+                            Name = "Michael",
+                            Surname = "Johnson",
+                            Title = 1,
+                            VehicleID = 1
+                        },
+                        new
+                        {
+                            ID = 4,
+                            CompanyID = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(4735),
+                            Email = "emily.wilson@gmail.com",
+                            IsDeleted = false,
+                            Name = "Emily",
+                            Surname = "Wilson",
+                            Title = 0,
+                            VehicleID = 2
+                        },
+                        new
+                        {
+                            ID = 5,
+                            CompanyID = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(4738),
+                            Email = "william.brown@gmail.com",
+                            IsDeleted = false,
+                            Name = "William",
+                            Surname = "Brown",
+                            Title = 2,
+                            VehicleID = 2
+                        },
+                        new
+                        {
+                            ID = 6,
+                            CompanyID = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(4746),
+                            Email = "olivia.davis@gmail.com",
+                            IsDeleted = false,
+                            Name = "Olivia",
+                            Surname = "Davis",
+                            Title = 0,
+                            VehicleID = 3
+                        },
+                        new
+                        {
+                            ID = 7,
+                            CompanyID = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(4749),
+                            Email = "james.lee@gmail.com",
+                            IsDeleted = false,
+                            Name = "James",
+                            Surname = "Lee",
+                            Title = 2,
+                            VehicleID = 3
+                        },
+                        new
+                        {
+                            ID = 8,
+                            CompanyID = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(4752),
+                            Email = "sophia.clark@gmail.com",
+                            IsDeleted = false,
+                            Name = "Sophia",
+                            Surname = "Clark",
+                            Title = 2,
+                            VehicleID = 3
+                        },
+                        new
+                        {
+                            ID = 9,
+                            CompanyID = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(4755),
+                            Email = "liam.hall@gmail.com",
+                            IsDeleted = false,
+                            Name = "Liam",
+                            Surname = "Hall",
+                            Title = 1,
+                            VehicleID = 3
+                        },
+                        new
+                        {
+                            ID = 10,
+                            CompanyID = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(4759),
+                            Email = "ava.white@gmail.com",
+                            IsDeleted = false,
+                            Name = "Ava",
+                            Surname = "White",
+                            Title = 0,
+                            VehicleID = 4
+                        });
                 });
 
             modelBuilder.Entity("TransportGlobal.Domain.Entities.TransporterContextEntities.VehicleEntity", b =>
@@ -335,6 +665,58 @@ namespace TransportGlobal.Infrastructure.Migrations
                     b.HasIndex("CompanyID");
 
                     b.ToTable("Vehicles");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            CompanyID = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(6258),
+                            IdentificationNumber = "ABC 123",
+                            IsDeleted = false,
+                            Status = 0,
+                            Type = 1
+                        },
+                        new
+                        {
+                            ID = 2,
+                            CompanyID = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(6284),
+                            IdentificationNumber = "XYZ 789",
+                            IsDeleted = false,
+                            Status = 0,
+                            Type = 0
+                        },
+                        new
+                        {
+                            ID = 3,
+                            CompanyID = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(6288),
+                            IdentificationNumber = "NY12345",
+                            IsDeleted = false,
+                            Status = 0,
+                            Type = 2
+                        },
+                        new
+                        {
+                            ID = 4,
+                            CompanyID = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(6291),
+                            IdentificationNumber = "BREL-2023",
+                            IsDeleted = false,
+                            Status = 2,
+                            Type = 3
+                        },
+                        new
+                        {
+                            ID = 5,
+                            CompanyID = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(6375),
+                            IdentificationNumber = "N387BA",
+                            IsDeleted = false,
+                            Status = 2,
+                            Type = 4
+                        });
                 });
 
             modelBuilder.Entity("TransportGlobal.Domain.Entities.UserContextEntities.UserEntity", b =>
@@ -375,6 +757,30 @@ namespace TransportGlobal.Infrastructure.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(8996),
+                            Email = "john.doe@gmail.com",
+                            IsDeleted = false,
+                            Name = "John",
+                            PasswordHash = "wEXC+zsV9xjSjrlsyqK58SjE3IasyI327aF25jotP7/98elqf/+cd+KzKDv2PSPBaeSE0/8cPOnOJYtkZ3y1Eg==",
+                            Surname = "Doe",
+                            Type = 0
+                        },
+                        new
+                        {
+                            ID = 2,
+                            CreatedDate = new DateTime(2023, 9, 17, 14, 46, 22, 896, DateTimeKind.Local).AddTicks(9052),
+                            Email = "mark.smith@gmail.com",
+                            IsDeleted = false,
+                            Name = "Mark",
+                            PasswordHash = "wEXC+zsV9xjSjrlsyqK58SjE3IasyI327aF25jotP7/98elqf/+cd+KzKDv2PSPBaeSE0/8cPOnOJYtkZ3y1Eg==",
+                            Surname = "Smith",
+                            Type = 1
+                        });
                 });
 
             modelBuilder.Entity("TransportGlobal.Domain.Entities.MessagingContextEntities.ChatEntity", b =>
@@ -412,7 +818,23 @@ namespace TransportGlobal.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("TransportGlobal.Domain.Entities.UserContextEntities.UserEntity", "ReceiverUser")
+                        .WithMany("ReceivedMessages")
+                        .HasForeignKey("ReceiverUserID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TransportGlobal.Domain.Entities.UserContextEntities.UserEntity", "SenderUser")
+                        .WithMany("SentMessages")
+                        .HasForeignKey("SenderUserID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("Chat");
+
+                    b.Navigation("ReceiverUser");
+
+                    b.Navigation("SenderUser");
                 });
 
             modelBuilder.Entity("TransportGlobal.Domain.Entities.ReviewContextEntities.ReviewEntity", b =>
@@ -538,9 +960,13 @@ namespace TransportGlobal.Infrastructure.Migrations
                 {
                     b.Navigation("Companies");
 
+                    b.Navigation("ReceivedMessages");
+
                     b.Navigation("ReceiverUserChats");
 
                     b.Navigation("SenderUserChats");
+
+                    b.Navigation("SentMessages");
 
                     b.Navigation("TransportContracts");
                 });

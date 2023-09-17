@@ -1,0 +1,49 @@
+﻿@using TransportGlobalWeb.UI.Models.ViewModels.TransporterContextViewModels;
+@model ListResponseModel<EmployeeViewModel>
+@inject ApiEndpointsConfigurationModel ApiEndpoints
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h1>Own Employees List</h1>
+    <div>
+        <a asp-action="CreateEmployee" asp-controller="Employee" class="btn btn-primary">Create Employee</a>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Title</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model.List)
+        {
+            <tr>
+                <td>@employee.Name</td>
+                <td>@employee.Surname</td>
+                <td>@employee.Email</td>
+                <td>@employee.Title</td>
+                <td>
+                    <a asp-action="GetEmployeeByID" asp-controller="Employee" asp-route-id=@employee.ID class="btn btn-primary">Detail</a>
+                    <a asp-action="UpdateEmployee" asp-controller="Employee" asp-route-id=@employee.ID class="btn btn-warning">Update</a>
+                    <a asp-action="DeleteEmployee" asp-controller="Employee" asp-route-id=@employee.ID class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination justify-content-center">
+        @for (int i = 1; i <= Math.Ceiling((double)(Model.TotalCount / (double)ApiEndpoints.PageSize!)); i++)
+        {
+            <li class="page-item @(i == ((int)ViewData["Page"]!+1) ? "active" : "")">
+                <a class="page-link" asp-action="GetOwnEmployees" asp-controller="Employee" asp-route-page="@(i-1)">@i</a>
+            </li>
+        }
+    </ul>
+</nav>

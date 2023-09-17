@@ -38,5 +38,15 @@ namespace TransportGlobal.Domain.Entities.TransporterContextEntities
             Email = email;
             IsDeleted = isDeleted;
         }
+
+        public CompanyEntity(int ownerUserID, string name, string address, string phoneNumber, string email, bool isDeleted = false)
+        {
+            OwnerUserID = ownerUserID;
+            Name = name;
+            Address = address;
+            PhoneNumber = phoneNumber;
+            Email = email;
+            IsDeleted = isDeleted;
+        }
     }
 }

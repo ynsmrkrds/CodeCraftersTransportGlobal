@@ -6,7 +6,6 @@ using TransportGlobal.Domain.Constants;
 using TransportGlobal.Domain.Entities.MessagingContextEntities;
 using TransportGlobal.Domain.Exceptions;
 using TransportGlobal.Domain.Models;
-using TransportGlobal.Domain.ObjectExtensions;
 using TransportGlobal.Domain.Repositories.MessagingContextRepositories;
 
 namespace TransportGlobal.Application.CQRSs.MessagingContextCQRSs.QueryGetOwnChats
@@ -26,11 +25,11 @@ namespace TransportGlobal.Application.CQRSs.MessagingContextCQRSs.QueryGetOwnCha
         {
             TokenModel tokenModel = TokenHelper.Instance().DecodeTokenInRequest() ?? throw new ClientSideException(ExceptionConstants.TokenError);
 
-            List<ChatEntity> chats = _chatRepository.GetChatsByUserType(tokenModel.UserType, tokenModel.UserID).WithPagination(request.Pagination).ToList();
+            IEnumerable<ChatEntity> chats = _chatRepository.GetChatsByUserType(tokenModel.UserType, tokenModel.UserID);
 
-            List<ChatViewModel> chatViewModels = _mapper.Map<List<ChatViewModel>>(chats);
+            IEnumerable<ChatViewModel> chatViewModels = _mapper.Map<IEnumerable<ChatViewModel>>(chats);
 
-            return Task.FromResult(new GetOwnChatsQueryResponse(chatViewModels));
+            return Task.FromResult(new GetOwnChatsQueryResponse(chatViewModels, request.Pagination));
         }
     }
 }

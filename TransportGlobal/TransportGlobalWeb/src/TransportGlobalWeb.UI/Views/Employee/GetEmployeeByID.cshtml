@@ -1,0 +1,41 @@
+﻿@using TransportGlobalWeb.UI.Models.ViewModels.TransporterContextViewModels;
+@model EmployeeViewModel
+
+<h2>Employee Details</h2>
+
+<div>
+    <h4>Name</h4>
+    <p>@Model.Name</p>
+</div>
+
+<div>
+    <h4>Surname</h4>
+    <p>@Model.Surname</p>
+</div>
+
+<div>
+    <h4>Email</h4>
+    <p>@Model.Email</p>
+</div>
+
+<div>
+    <h4>Title</h4>
+    <p>@Model.Title</p>
+</div>
+
+<div>
+    <h4>Created Date</h4>
+    <p>@Model.CreatedDate.ToString("dd/MM/yyyy HH:mm:ss")</p>
+</div>
+
+<div>
+    <h4>Status</h4>
+    @if (Model.IsDeleted)
+    {
+        <p>Deleted</p>
+    }
+    else
+    {
+        <p>Active</p>
+    }
+</div>
