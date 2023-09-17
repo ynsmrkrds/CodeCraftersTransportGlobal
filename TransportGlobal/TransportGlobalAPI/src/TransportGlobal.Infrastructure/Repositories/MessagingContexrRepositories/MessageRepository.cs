@@ -17,7 +17,7 @@ namespace TransportGlobal.Infrastructure.Repositories.MessagingContexrRepositori
                 .Include(x => x.SenderUser)
                 .Include(x => x.ReceiverUser)
                 .Where(x => x.ChatID == chatID)
-                .OrderByDescending(x => x.CreatedDate)
+                .OrderByDescending(x => x.SendingDate)
                 .AsEnumerable();
         }
 

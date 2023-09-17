@@ -7,5 +7,7 @@ namespace TransportGlobal.Domain.Repositories.TransporterContextRepositories
         bool IsExistsWithSameEmail(string email);
 
         CompanyEntity? GetCompanyByUserID(int userID);
+
+        bool IsCompanyActive(int id);
     }
 }

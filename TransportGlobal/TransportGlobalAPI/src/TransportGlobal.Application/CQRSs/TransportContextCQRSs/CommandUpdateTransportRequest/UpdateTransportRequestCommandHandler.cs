@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandCreateTransportRequest;
 using TransportGlobal.Application.Helpers;
 using TransportGlobal.Domain.Constants;
 using TransportGlobal.Domain.Entities.TransportContextEntities;
@@ -22,6 +23,8 @@ namespace TransportGlobal.Application.CQRSs.TransportContextCQRSs.CommandUpdateT
 
         public Task<UpdateTransportRequestCommandResponse> Handle(UpdateTransportRequestCommandRequest request, CancellationToken cancellationToken)
         {
+            if (request.TransportDate.CompareTo(DateTime.Now) < 0) return Task.FromResult(new UpdateTransportRequestCommandResponse(ResponseConstants.TransportDateEarlier));
+
             TokenModel tokenModel = TokenHelper.Instance().DecodeTokenInRequest() ?? throw new ClientSideException(ExceptionConstants.TokenError);
 
             TransportRequestEntity transportRequestEntity = _transportRequestRepository.GetByID(request.ID) ?? throw new ClientSideException(ExceptionConstants.NotFoundTransportRequest);

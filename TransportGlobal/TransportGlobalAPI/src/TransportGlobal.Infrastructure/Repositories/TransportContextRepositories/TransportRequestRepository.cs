@@ -16,12 +16,14 @@ namespace TransportGlobal.Infrastructure.Repositories.TransportContextRepositori
             return GetAll()
                 .Where(x => x.IsDeleted == false)
                 .Where(x => x.StatusType == TransportRequestStatusType.Pending)
+                .Where(x => x.TransportDate.CompareTo(DateTime.Now) >= 0)
                 .AsEnumerable();
         }
 
         public IEnumerable<TransportRequestEntity> GetTransportRequestsByUserID(int userID)
         {
             return GetAll()
+                .Where(x => x.IsDeleted == false)
                 .Where(x => x.UserID == userID)
                 .AsEnumerable();
         }

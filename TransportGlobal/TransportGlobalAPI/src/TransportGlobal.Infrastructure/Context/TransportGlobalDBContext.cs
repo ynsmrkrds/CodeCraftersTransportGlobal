@@ -5,6 +5,7 @@ using TransportGlobal.Domain.Entities.ReviewContextEntities;
 using TransportGlobal.Domain.Entities.TransportContextEntities;
 using TransportGlobal.Domain.Entities.TransporterContextEntities;
 using TransportGlobal.Domain.Entities.UserContextEntities;
+using TransportGlobal.Infrastructure.Seeds.UserContextSeeds;
 
 namespace TransportGlobal.Infrastructure.Context
 {

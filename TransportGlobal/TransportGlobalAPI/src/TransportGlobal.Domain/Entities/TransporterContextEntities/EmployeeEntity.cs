@@ -28,7 +28,7 @@ namespace TransportGlobal.Domain.Entities.TransporterContextEntities
 
         public EmployeeTitle Title { get; set; }
 
-        public EmployeeEntity(int companyID, int? vehicleID, string name, string surname, string email, EmployeeTitle title, bool isDeleted)
+        public EmployeeEntity(int companyID, int? vehicleID, string name, string surname, string email, EmployeeTitle title)
         {
             CompanyID = companyID;
             VehicleID = vehicleID;
@@ -36,7 +36,6 @@ namespace TransportGlobal.Domain.Entities.TransporterContextEntities
             Surname = surname;
             Email = email;
             Title = title;
-            IsDeleted = isDeleted;
         }
     }
 }

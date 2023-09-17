@@ -99,7 +99,8 @@ namespace TransportGlobalWeb.UI.Controllers
                     DeliveryAddress = apiResponse!.Data!.DeliveryAddress,
                     LoadingAddress = apiResponse!.Data!.LoadingAddress,
                     Volume = apiResponse!.Data!.Volume,
-                    Weight = apiResponse!.Data!.Weight
+                    Weight = apiResponse!.Data!.Weight,
+                    TransportDate = apiResponse!.Data!.TransportDate,
                 };
                 return View(requestModel);
             }
