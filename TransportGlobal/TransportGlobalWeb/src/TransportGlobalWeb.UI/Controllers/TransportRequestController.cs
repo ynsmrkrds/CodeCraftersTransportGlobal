@@ -7,7 +7,7 @@ using TransportGlobalWeb.UI.Models.ConfigurationModels;
 using TransportGlobalWeb.UI.Models.CookieModels;
 using TransportGlobalWeb.UI.Models.RequestModels.TransportContextRequestModels.TransportRequest;
 using TransportGlobalWeb.UI.Models.ResponseModels;
-using TransportGlobalWeb.UI.Models.ResponseModels.TransportResponseModels.TransportRequest;
+using TransportGlobalWeb.UI.Models.ViewModels.TransportContextViewModels;
 
 namespace TransportGlobalWeb.UI.Controllers
 {
@@ -27,10 +27,9 @@ namespace TransportGlobalWeb.UI.Controllers
             string? userCookieJson = CookieHelper.GetCookie(CookieKey.User);
             UserCookieModel? userCookieModel = userCookieJson == null ? null : BaseCookieModel.FromJson<UserCookieModel>(userCookieJson);
 
-
             if (userCookieModel!.UserType == UserType.Customer)
             {
-                ApiResponseModel<GetAllTransportRequestsResponseModel>? apiResponse = _transportRequestClient.GetOwnTransportRequests(page);
+                ApiResponseModel<ListResponseModel<TransportRequestViewModel>>? apiResponse = _transportRequestClient.GetOwnTransportRequests(page);
 
                 IActionResult onData()
                 {
@@ -44,7 +43,7 @@ namespace TransportGlobalWeb.UI.Controllers
             }
             else if (userCookieModel.UserType == UserType.Shipper)
             {
-                ApiResponseModel<GetAllTransportRequestsResponseModel>? apiResponse = _transportRequestClient.GetPendingTransportRequests(page);
+                ApiResponseModel<ListResponseModel<TransportRequestViewModel>>? apiResponse = _transportRequestClient.GetPendingTransportRequests(page);
 
                 IActionResult onData()
                 {
@@ -64,7 +63,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult GetTransportRequestByID(int id)
         {
-            ApiResponseModel<GetTransportRequestResponseModel>? apiResponse = _transportRequestClient.GetTransportRequestByID(id);
+            ApiResponseModel<TransportRequestViewModel>? apiResponse = _transportRequestClient.GetTransportRequestByID(id);
 
             IActionResult onData()
             {
@@ -89,7 +88,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult UpdateTransportRequest(int id)
         {
-            ApiResponseModel<GetTransportRequestResponseModel>? apiResponse = _transportRequestClient.GetTransportRequestByID(id);
+            ApiResponseModel<TransportRequestViewModel>? apiResponse = _transportRequestClient.GetTransportRequestByID(id);
 
             IActionResult onData()
             {
@@ -100,7 +99,8 @@ namespace TransportGlobalWeb.UI.Controllers
                     DeliveryAddress = apiResponse!.Data!.DeliveryAddress,
                     LoadingAddress = apiResponse!.Data!.LoadingAddress,
                     Volume = apiResponse!.Data!.Volume,
-                    Weight = apiResponse!.Data!.Weight
+                    Weight = apiResponse!.Data!.Weight,
+                    TransportDate = apiResponse!.Data!.TransportDate,
                 };
                 return View(requestModel);
             }
@@ -117,7 +117,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult CompleteTransportRequest(int id)
         {
-            ApiResponseModel<NonDataResponseModel>? apiResponse = _transportRequestClient.CompleteTransportRequest(new CompleteTransportRequestRequestModel() { ID = id});
+            ApiResponseModel<NonDataResponseModel>? apiResponse = _transportRequestClient.CompleteTransportRequest(new CompleteTransportRequestRequestModel() { ID = id });
             return CreateActionResult(apiResponse, null, actionName: "GetOwnTransportContracts", controllerName: "TransportContract");
         }
 

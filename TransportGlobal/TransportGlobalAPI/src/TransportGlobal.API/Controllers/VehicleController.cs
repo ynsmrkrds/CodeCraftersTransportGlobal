@@ -1,13 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 using TransportGlobal.API.Extensions.Attributes;
 using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandCreateVehicle;
 using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandDeleteVehicle;
 using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.CommandUpdateVehicle;
 using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.QueryGetOwnVehicles;
 using TransportGlobal.Application.CQRSs.TransporterContextCQRSs.QueryGetVehicle;
-using TransportGlobal.Application.DTOs.ResponseDTOs;
 using TransportGlobal.Domain.Enums.UserContextEnums;
 using TransportGlobal.Domain.Models;
 
@@ -24,7 +22,7 @@ namespace TransportGlobal.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        [Authority(UserType.Shipper)]
+        [Authority(UserType.Shipper, UserType.Customer)]
         public async Task<IActionResult> Get(int id)
         {
             GetVehicleQueryResponse queryResponse = await _mediator.Send(new GetVehicleQueryRequest(id));

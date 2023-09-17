@@ -1,6 +1,7 @@
-﻿@using TransportGlobalWeb.UI.Enums.UserContextEnums;
-@using TransportGlobalWeb.UI.Models.ConfigurationModels;
-@model GetAllTransportRequestsResponseModel
+﻿@using TransportGlobalWeb.UI.Enums.TransportContextEnums;
+@using TransportGlobalWeb.UI.Enums.UserContextEnums;
+@using TransportGlobalWeb.UI.Models.ViewModels.TransportContextViewModels;
+@model ListResponseModel<TransportRequestViewModel>
 @inject ApiEndpointsConfigurationModel ApiEndpoints
 
 <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -22,6 +23,10 @@
         <tr>
             <th>Transport Type</th>
             <th>Transport Date</th>
+            @if ((UserType)ViewData["UserType"]! == UserType.Customer)
+            {
+                <th>Status</th>
+            }
             <th>Actions</th>
         </tr>
     </thead>
@@ -30,11 +35,18 @@
         {
             <tr>
                 <td>@transportRequest.TransportType</td>
-                <td>@transportRequest.TransportDate</td>
+                <td>@transportRequest.TransportDate.ToString("dd/MM/yyyy")</td>
+                @if ((UserType)ViewData["UserType"]! == UserType.Customer)
+                {
+                    <td>@transportRequest.StatusType</td>
+                }
                 <td>
                     <a asp-action="GetTransportRequestByID" asp-controller="TransportRequest" asp-route-id=@transportRequest.ID class="btn btn-primary">Detail</a>
-                    <a asp-action="UpdateTransportRequest" asp-controller="TransportRequest" asp-route-id=@transportRequest.ID class="btn btn-warning">Update</a>
-                    <a asp-action="DeleteTransportRequest" asp-controller="TransportRequest" asp-route-id=@transportRequest.ID class="btn btn-danger">Delete</a>
+                    @if (transportRequest.StatusType == TransportRequestStatusType.Pending && (UserType)ViewData["UserType"]! == UserType.Customer)
+                    {
+                        <a asp-action="UpdateTransportRequest" asp-controller="TransportRequest" asp-route-id=@transportRequest.ID class="btn btn-warning">Update</a>
+                        <a asp-action="DeleteTransportRequest" asp-controller="TransportRequest" asp-route-id=@transportRequest.ID class="btn btn-danger">Delete</a>
+                    }
                     @if ((UserType)ViewData["UserType"]! == UserType.Shipper)
                     {
                         <a asp-action="CreateTransportContract" asp-controller="TransportContract" asp-route-transportRequestID=@transportRequest.ID class="btn btn-warning">Create Contract</a>

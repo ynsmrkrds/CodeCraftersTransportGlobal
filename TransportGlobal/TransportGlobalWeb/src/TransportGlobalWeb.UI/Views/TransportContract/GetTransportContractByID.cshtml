@@ -1,9 +1,10 @@
 ﻿@using TransportGlobalWeb.UI.Enums.TransportContextEnums;
-@using TransportGlobalWeb.UI.Enums;
 @using TransportGlobalWeb.UI.Enums.UserContextEnums;
+@using TransportGlobalWeb.UI.Enums;
 @using TransportGlobalWeb.UI.Helpers;
 @using TransportGlobalWeb.UI.Models.CookieModels;
-@model GetTransportContractResponseModel
+@using TransportGlobalWeb.UI.Models.ViewModels.TransportContextViewModels;
+@model TransportContractViewModel
 
 @{
     string? userCookieJson = CookieHelper.GetCookie(CookieKey.User);
@@ -27,7 +28,7 @@
     <p>@Model.CreatedDate.ToString("dd/MM/yyyy HH:mm:ss")</p>
 </div>
 
-@if(userCookieModel!.UserType == UserType.Customer && Model.Status == TransportContractStatusType.Pending)
+@if(userCookieModel!.UserType == UserType.Customer && Model.Status == TransportContractStatusType.Pending && Model.Company.IsDeleted == false)
 {
     <div>
         <a asp-action="AgreeTransportContract" asp-controller="TransportContract" asp-route-id=@Model.ID class="btn btn-primary">Agree Contract</a>

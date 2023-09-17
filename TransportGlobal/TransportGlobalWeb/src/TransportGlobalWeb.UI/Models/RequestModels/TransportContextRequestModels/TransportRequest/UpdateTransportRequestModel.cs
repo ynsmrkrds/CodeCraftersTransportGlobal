@@ -12,6 +12,8 @@ namespace TransportGlobalWeb.UI.Models.RequestModels.TransportContextRequestMode
 
         public double Volume { get; set; }
 
+        public DateTime TransportDate { get; set; }
+
         public string LoadingAddress { get; set; } = string.Empty;
 
         public string DeliveryAddress { get; set; } = string.Empty;

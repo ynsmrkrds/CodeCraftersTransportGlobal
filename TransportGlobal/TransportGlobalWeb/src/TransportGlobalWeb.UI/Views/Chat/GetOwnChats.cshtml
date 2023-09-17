@@ -1,10 +1,9 @@
-﻿@using TransportGlobalWeb.UI.Enums.UserContextEnums;
-@using TransportGlobalWeb.UI.Enums;
+﻿@using TransportGlobalWeb.UI.Enums;
+@using TransportGlobalWeb.UI.Enums.UserContextEnums;
 @using TransportGlobalWeb.UI.Helpers;
-@using TransportGlobalWeb.UI.Models.ConfigurationModels;
 @using TransportGlobalWeb.UI.Models.CookieModels;
-@using TransportGlobalWeb.UI.Models.ResponseModels.TransporterResponseModels.Employee;
-@model GetOwnChatsResponseModel
+@using TransportGlobalWeb.UI.Models.ViewModels.MessagingContextViewModels;
+@model ListResponseModel<ChatViewModel>
 @inject ApiEndpointsConfigurationModel ApiEndpoints
 
 @{
@@ -20,6 +19,7 @@
     <thead>
         <tr>
             <th>Chats</th>
+            <th>Transport Request</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -35,8 +35,9 @@
                 {
                     <td>@($"{chat.SenderUser.Name} {chat.SenderUser.Surname}")</td>
                 }
+                <td>@($"{chat.TransportRequest.TransportType} - {chat.TransportRequest.TransportDate.ToString("dd/MM/yyyy")}")</td>
                 <td>
-                    <a asp-action="GetMessagesByChatID" asp-controller="Message" asp-route-id=@chat.ID asp-route-transportRequestID=@chat.TransportRequestID class="btn btn-primary">Show Messages</a>
+                    <a asp-action="GetMessagesByChatID" asp-controller="Message" asp-route-id=@chat.ID asp-route-transportRequestID=@chat.TransportRequest.ID class="btn btn-primary">Show Messages</a>
                 </td>
             </tr>
         }

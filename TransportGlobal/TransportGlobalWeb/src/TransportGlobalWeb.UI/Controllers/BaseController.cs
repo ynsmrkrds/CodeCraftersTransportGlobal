@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TransportGlobalWeb.UI.Extensions.Attributes;
+using TransportGlobalWeb.UI.Models;
 using TransportGlobalWeb.UI.Models.ConstantModels;
 using TransportGlobalWeb.UI.Models.ResponseModels;
 
@@ -9,11 +10,11 @@ namespace TransportGlobalWeb.UI.Controllers
     public class BaseController : Controller
     {
         [NonAction]
-        public IActionResult CreateActionResult<T>(ApiResponseModel<T>? apiResponse, Func<IActionResult>? onData, object? model = null, object? routeValues = null, string? actionName = null, string? controllerName = null) where T : BaseResponseModel
+        public IActionResult CreateActionResult<T>(ApiResponseModel<T>? apiResponse, Func<IActionResult>? onData, object? model = null, object? routeValues = null, string? actionName = null, string? controllerName = null) where T : IApiData
         {
             IActionResult actionResult;
 
-            if (apiResponse?.Data != null)
+            if (apiResponse != null && apiResponse!.Data != null)
             {
                 if (onData == null) throw new ArgumentNullException(nameof(onData));
                 actionResult = onData();

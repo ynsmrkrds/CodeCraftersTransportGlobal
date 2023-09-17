@@ -4,6 +4,7 @@ using TransportGlobalWeb.UI.Models.ConfigurationModels.UserContextConfigurationM
 using TransportGlobalWeb.UI.Models.RequestModels.UserContextRequestModels.User;
 using TransportGlobalWeb.UI.Models.ResponseModels;
 using TransportGlobalWeb.UI.Models.ResponseModels.UserResponseModels.User;
+using TransportGlobalWeb.UI.Models.ViewModels.UserContextViewModels;
 
 namespace TransportGlobalWeb.UI.ApiClients.UserContextApiClients
 {
@@ -32,12 +33,12 @@ namespace TransportGlobalWeb.UI.ApiClients.UserContextApiClients
             return SendRequest<NonDataResponseModel>(request);
         }
 
-        public ApiResponseModel<GetProfileResponseModel>? GetProfile()
+        public ApiResponseModel<UserViewModel>? GetProfile()
         {
             RestRequest request = new(_configurationModel.GetProfile, Method.Get);
             request = AddAuthorizationHeader(request);
 
-            return SendRequest<GetProfileResponseModel>(request);
+            return SendRequest<UserViewModel>(request);
         }
 
         public ApiResponseModel<NonDataResponseModel>? UpdateProfile(UpdateProfileRequestModel updateProfileRequestModel)

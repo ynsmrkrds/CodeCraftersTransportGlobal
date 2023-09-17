@@ -139,7 +139,10 @@ namespace TransportGlobal.Infrastructure.Repositories
 
         public virtual IQueryable<T> GetAll()
         {
-            return _context.Set<T>().AsNoTracking().AsQueryable();
+            return _context.Set<T>()
+                .AsNoTracking()
+                .OrderByDescending(x => x.CreatedDate)
+                .AsQueryable();
         }
 
         public IQueryable<T> Where(Expression<Func<T, bool>> expression)

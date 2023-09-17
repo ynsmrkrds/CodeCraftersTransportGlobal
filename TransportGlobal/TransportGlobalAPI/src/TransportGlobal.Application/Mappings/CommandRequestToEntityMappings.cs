@@ -46,10 +46,10 @@ namespace TransportGlobal.Application.Mappings
             CreateMap<UpdateVehicleCommandRequest, VehicleEntity>();
 
             CreateMap<CreateEmployeeCommandRequest, EmployeeEntity>()
-                 .ConstructUsing(src => new EmployeeEntity(0, src.VehicleID ?? null, src.Name, src.Surname, src.Email, src.Title, false));
+                 .ConstructUsing(src => new EmployeeEntity(0, src.VehicleID ?? null, src.Name, src.Surname, src.Email, src.Title));
 
             CreateMap<UpdateEmployeeCommandRequest, EmployeeEntity>()
-                 .ConstructUsing(src => new EmployeeEntity(0, src.VehicleID ?? null, src.Name, src.Surname, src.Email, src.Title, false));
+                 .ConstructUsing(src => new EmployeeEntity(0, src.VehicleID ?? null, src.Name, src.Surname, src.Email, src.Title));
             #endregion
 
             #region Transport Bounded Context Mappings

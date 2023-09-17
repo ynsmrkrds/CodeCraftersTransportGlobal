@@ -3,7 +3,7 @@ using TransportGlobalWeb.UI.Models.ConfigurationModels;
 using TransportGlobalWeb.UI.Models.ConfigurationModels.TransportContextConfiguraitonModels;
 using TransportGlobalWeb.UI.Models.RequestModels.TransportContextRequestModels.TransportRequest;
 using TransportGlobalWeb.UI.Models.ResponseModels;
-using TransportGlobalWeb.UI.Models.ResponseModels.TransportResponseModels.TransportRequest;
+using TransportGlobalWeb.UI.Models.ViewModels.TransportContextViewModels;
 
 namespace TransportGlobalWeb.UI.ApiClients.TransportContextApiClients
 {
@@ -15,28 +15,28 @@ namespace TransportGlobalWeb.UI.ApiClients.TransportContextApiClients
             _configurationModel = apiEndpoints.TransportContextEndpoints!.TransportRequestEndpoints!;
         }
 
-        public ApiResponseModel<GetAllTransportRequestsResponseModel>? GetOwnTransportRequests(int page)
+        public ApiResponseModel<ListResponseModel<TransportRequestViewModel>>? GetOwnTransportRequests(int page)
         {
             RestRequest request = new($"{_configurationModel.GetOwnTransportRequest}/{page}/{_apiEndpoints.PageSize}", Method.Get);
             request = AddAuthorizationHeader(request);
 
-            return SendRequest<GetAllTransportRequestsResponseModel>(request);
+            return SendRequest<ListResponseModel<TransportRequestViewModel>>(request);
         }
 
-        public ApiResponseModel<GetAllTransportRequestsResponseModel>? GetPendingTransportRequests(int page)
+        public ApiResponseModel<ListResponseModel<TransportRequestViewModel>>? GetPendingTransportRequests(int page)
         {
             RestRequest request = new($"{_configurationModel.GetPendingTransportRequests}/{page}/{_apiEndpoints.PageSize}", Method.Get);
             request = AddAuthorizationHeader(request);
 
-            return SendRequest<GetAllTransportRequestsResponseModel>(request);
+            return SendRequest<ListResponseModel<TransportRequestViewModel>>(request);
         }
 
-        public ApiResponseModel<GetTransportRequestResponseModel>? GetTransportRequestByID(int id)
+        public ApiResponseModel<TransportRequestViewModel>? GetTransportRequestByID(int id)
         {
             RestRequest request = new($"{_configurationModel.CrudTransportRequest}/{id}", Method.Get);
             request = AddAuthorizationHeader(request);
 
-            return SendRequest<GetTransportRequestResponseModel>(request);
+            return SendRequest<TransportRequestViewModel>(request);
         }
 
         public ApiResponseModel<NonDataResponseModel>? CreateTransportRequest(CreateTransportRequestRequestModel createTransportRequestModel)
@@ -57,18 +57,18 @@ namespace TransportGlobalWeb.UI.ApiClients.TransportContextApiClients
             return SendRequest<NonDataResponseModel>(request);
         }
 
-        public ApiResponseModel<NonDataResponseModel>? CompleteTransportRequest(CompleteTransportRequestRequestModel completeTransportRequestRequestModel)
+        public ApiResponseModel<NonDataResponseModel>? DeleteTransportRequest(int id)
         {
-            RestRequest request = new(_configurationModel.CompleteTransportRequest, Method.Put);
-            request.AddBody(completeTransportRequestRequestModel, ContentType.Json);
+            RestRequest request = new($"{_configurationModel.CrudTransportRequest}/{id}", Method.Delete);
             request = AddAuthorizationHeader(request);
 
             return SendRequest<NonDataResponseModel>(request);
         }
 
-        public ApiResponseModel<NonDataResponseModel>? DeleteTransportRequest(int id)
+        public ApiResponseModel<NonDataResponseModel>? CompleteTransportRequest(CompleteTransportRequestRequestModel completeTransportRequestRequestModel)
         {
-            RestRequest request = new($"{_configurationModel.CrudTransportRequest}/{id}", Method.Delete);
+            RestRequest request = new(_configurationModel.CompleteTransportRequest, Method.Put);
+            request.AddBody(completeTransportRequestRequestModel, ContentType.Json);
             request = AddAuthorizationHeader(request);
 
             return SendRequest<NonDataResponseModel>(request);

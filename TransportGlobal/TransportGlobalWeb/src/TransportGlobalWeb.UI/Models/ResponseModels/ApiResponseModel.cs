@@ -2,7 +2,7 @@
 
 namespace TransportGlobalWeb.UI.Models.ResponseModels
 {
-    public class ApiResponseModel<T> where T : BaseResponseModel
+    public class ApiResponseModel<T> where T : IApiData
     {
         public T? Data { get; private set; }
 

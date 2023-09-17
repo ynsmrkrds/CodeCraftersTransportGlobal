@@ -2,9 +2,9 @@
 @using TransportGlobalWeb.UI.Enums.MessagingContextEnums;
 @using TransportGlobalWeb.UI.Enums.UserContextEnums;
 @using TransportGlobalWeb.UI.Helpers;
-@using TransportGlobalWeb.UI.Models.ConfigurationModels;
 @using TransportGlobalWeb.UI.Models.CookieModels;
-@model GetMessagesByChatIDResponseModel
+@using TransportGlobalWeb.UI.Models.ViewModels.MessagingContextViewModels;
+@model ListResponseModel<MessageViewModel>
 @inject ApiEndpointsConfigurationModel ApiEndpoints
 
 @{

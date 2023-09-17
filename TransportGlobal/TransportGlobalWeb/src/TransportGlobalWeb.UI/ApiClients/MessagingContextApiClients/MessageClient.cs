@@ -3,7 +3,7 @@ using TransportGlobalWeb.UI.Models.ConfigurationModels;
 using TransportGlobalWeb.UI.Models.ConfigurationModels.MessagingContextConfigurationModels;
 using TransportGlobalWeb.UI.Models.RequestModels.MessagingContextRequestModels.Message;
 using TransportGlobalWeb.UI.Models.ResponseModels;
-using TransportGlobalWeb.UI.Models.ResponseModels.MessagingResponseModels.Message;
+using TransportGlobalWeb.UI.Models.ViewModels.MessagingContextViewModels;
 
 namespace TransportGlobalWeb.UI.ApiClients.MessagingContextApiClients
 {
@@ -16,12 +16,12 @@ namespace TransportGlobalWeb.UI.ApiClients.MessagingContextApiClients
             _configurationModel = apiEndpoints!.MessagingContextEndpoints!.MessageEndpoints!;
         }
 
-        public ApiResponseModel<GetMessagesByChatIDResponseModel>? GetMessagesByChatID(int chatID, int page)
+        public ApiResponseModel<ListResponseModel<MessageViewModel>>? GetMessagesByChatID(int chatID, int page)
         {
             RestRequest request = new($"{_configurationModel.GetMessageByChatID}/{chatID}/{page}/{_apiEndpoints.PageSize}", Method.Get);
             request = AddAuthorizationHeader(request);
 
-            return SendRequest<GetMessagesByChatIDResponseModel>(request);
+            return SendRequest<ListResponseModel<MessageViewModel>>(request);
         }
 
         public ApiResponseModel<NonDataResponseModel>? CreateMessage(CreateMessageRequestModel createMessageRequestModel)

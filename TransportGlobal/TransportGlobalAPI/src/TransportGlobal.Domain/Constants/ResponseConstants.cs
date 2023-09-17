@@ -60,5 +60,6 @@ namespace TransportGlobal.Domain.Constants
 
         public static readonly ResponseConstantModel CannotCompleteTransportRequest = new(false, "You can not complete this transport request!");
 
+        public static readonly ResponseConstantModel TransportDateEarlier = new(false, "Transport date cannot be before today!");
     }
 }

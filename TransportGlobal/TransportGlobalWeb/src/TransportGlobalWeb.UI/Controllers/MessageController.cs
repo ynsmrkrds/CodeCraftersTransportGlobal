@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using TransportGlobalWeb.UI.ApiClients.MessagingContextApiClients;
-using TransportGlobalWeb.UI.Models.ResponseModels.MessagingResponseModels.Chat;
-using TransportGlobalWeb.UI.Models.ResponseModels;
-using TransportGlobalWeb.UI.Models.ResponseModels.MessagingResponseModels.Message;
-using TransportGlobalWeb.UI.ApiClients.TransporterContextApiClients;
-using TransportGlobalWeb.UI.Models.RequestModels.TransporterContextRequestModels.Company;
 using TransportGlobalWeb.UI.Models.RequestModels.MessagingContextRequestModels.Message;
+using TransportGlobalWeb.UI.Models.ResponseModels;
+using TransportGlobalWeb.UI.Models.ViewModels.MessagingContextViewModels;
 
 namespace TransportGlobalWeb.UI.Controllers
 {
@@ -21,7 +17,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult GetMessagesByChatID(int id, int transportRequestID, int page = 0)
         {
-            ApiResponseModel<GetMessagesByChatIDResponseModel>? apiResponse = _messageClient.GetMessagesByChatID(id, page);
+            ApiResponseModel<ListResponseModel<MessageViewModel>>? apiResponse = _messageClient.GetMessagesByChatID(id, page);
 
             IActionResult onData()
             {

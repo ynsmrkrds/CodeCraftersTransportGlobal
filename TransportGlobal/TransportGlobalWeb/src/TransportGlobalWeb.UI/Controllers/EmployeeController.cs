@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
 using TransportGlobalWeb.UI.ApiClients.TransporterContextApiClients;
 using TransportGlobalWeb.UI.Models.ConfigurationModels;
 using TransportGlobalWeb.UI.Models.RequestModels.TransporterContextRequestModels.Employee;
 using TransportGlobalWeb.UI.Models.ResponseModels;
-using TransportGlobalWeb.UI.Models.ResponseModels.TransporterResponseModels.Employee;
-using TransportGlobalWeb.UI.Models.ResponseModels.TransporterResponseModels.Vehicle;
+using TransportGlobalWeb.UI.Models.ViewModels.TransporterContextViewModels;
 
 namespace TransportGlobalWeb.UI.Controllers
 {
@@ -24,7 +22,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult GetOwnEmployees(int page = 0)
         {
-            ApiResponseModel<GetOwnEmployeesResponseModel>? apiResponse = _employeeClient.GetOwnEmployees(page);
+            ApiResponseModel<ListResponseModel<EmployeeViewModel>>? apiResponse = _employeeClient.GetOwnEmployees(page);
 
             IActionResult onData()
             {
@@ -38,7 +36,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult GetVehicleEmployees(int id, int page = 0)
         {
-            ApiResponseModel<GetVehicleEmployeesResponseModel>? apiResponse = _employeeClient.GetVehicleEmployees(id, page);
+            ApiResponseModel<ListResponseModel<EmployeeViewModel>>? apiResponse = _employeeClient.GetVehicleEmployees(id, page);
 
             IActionResult onData()
             {
@@ -53,7 +51,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult GetEmployeeByID(int id)
         {
-            ApiResponseModel<GetEmployeeResponseModel>? apiResponse = _employeeClient.GetEmployeeByID(id);
+            ApiResponseModel<EmployeeViewModel>? apiResponse = _employeeClient.GetEmployeeByID(id);
 
             IActionResult onData()
             {
@@ -81,7 +79,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult UpdateEmployee(int id)
         {
-            ApiResponseModel<GetEmployeeResponseModel>? apiResponse = _employeeClient.GetEmployeeByID(id);
+            ApiResponseModel<EmployeeViewModel>? apiResponse = _employeeClient.GetEmployeeByID(id);
 
             IActionResult onData()
             {
@@ -121,9 +119,9 @@ namespace TransportGlobalWeb.UI.Controllers
 
         private void AddOwnVehiclesListToView()
         {
-            List<VehicleResponseModel> vehicles = new();
+            List<VehicleViewModel> vehicles = new();
 
-            ApiResponseModel<GetOwnVehiclesResponseModel>? apiResponse = _vehicleClient.GetOwnVehicles(0);
+            ApiResponseModel<ListResponseModel<VehicleViewModel>>? apiResponse = _vehicleClient.GetOwnVehicles(0);
             if (apiResponse?.Data != null)
             {
                 double totalPageCount = Math.Ceiling((double)(apiResponse!.Data!.TotalCount / (double)_configurationModel.PageSize!));

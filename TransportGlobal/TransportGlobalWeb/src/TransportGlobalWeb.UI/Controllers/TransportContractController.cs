@@ -4,8 +4,8 @@ using TransportGlobalWeb.UI.ApiClients.TransporterContextApiClients;
 using TransportGlobalWeb.UI.Models.ConfigurationModels;
 using TransportGlobalWeb.UI.Models.RequestModels.TransportContextRequestModels.TransportContract;
 using TransportGlobalWeb.UI.Models.ResponseModels;
-using TransportGlobalWeb.UI.Models.ResponseModels.TransporterResponseModels.Vehicle;
-using TransportGlobalWeb.UI.Models.ResponseModels.TransportResponseModels.TransportContract;
+using TransportGlobalWeb.UI.Models.ViewModels.TransportContextViewModels;
+using TransportGlobalWeb.UI.Models.ViewModels.TransporterContextViewModels;
 
 namespace TransportGlobalWeb.UI.Controllers
 {
@@ -25,7 +25,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult GetOwnTransportContracts(int page = 0)
         {
-            ApiResponseModel<GetOwnTransportContractResponseModel>? apiResponse = _transportContractClient.GetOwnTransportContracts(page);
+            ApiResponseModel<ListResponseModel<TransportContractViewModel>>? apiResponse = _transportContractClient.GetOwnTransportContracts(page);
 
             IActionResult onData()
             {
@@ -39,7 +39,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult GetTransportContractByID(int id)
         {
-            ApiResponseModel<GetTransportContractResponseModel>? apiResponse = _transportContractClient.GetTransportRequestByID(id);
+            ApiResponseModel<TransportContractViewModel>? apiResponse = _transportContractClient.GetTransportRequestByID(id);
 
             IActionResult onData()
             {
@@ -72,15 +72,15 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult AgreeTransportContract(int id)
         {
-            ApiResponseModel<NonDataResponseModel>? apiResponse = _transportContractClient.AgreeTransportContract(new AgreeTransportContractRequestModel() { ID = id});
+            ApiResponseModel<NonDataResponseModel>? apiResponse = _transportContractClient.AgreeTransportContract(new AgreeTransportContractRequestModel() { ID = id });
             return CreateActionResult(apiResponse, null, actionName: "GetTransportContractByID", controllerName: "TransportContract", routeValues: new { id });
         }
 
         private void AddOwnVehiclesListToView()
         {
-            List<VehicleResponseModel> vehicles = new();
+            List<VehicleViewModel> vehicles = new();
 
-            ApiResponseModel<GetOwnVehiclesResponseModel>? apiResponse = _vehicleClient.GetOwnVehicles(0);
+            ApiResponseModel<ListResponseModel<VehicleViewModel>>? apiResponse = _vehicleClient.GetOwnVehicles(0);
             if (apiResponse?.Data != null)
             {
                 double totalPageCount = Math.Ceiling((double)(apiResponse!.Data!.TotalCount / (double)_configurationModel.PageSize!));

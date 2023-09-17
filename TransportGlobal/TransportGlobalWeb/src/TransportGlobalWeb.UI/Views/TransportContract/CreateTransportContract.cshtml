@@ -1,4 +1,6 @@
-﻿@model CreateTransportContractRequestModel
+﻿@using TransportGlobalWeb.UI.Models.RequestModels.TransportContextRequestModels.TransportContract;
+@using TransportGlobalWeb.UI.Models.ViewModels.TransporterContextViewModels;
+@model CreateTransportContractRequestModel
 
 <h1>Create Transport Contract</h1>
 
@@ -10,7 +12,7 @@
         <label asp-for="VehicleID">Vehicle</label>
         <select asp-for="VehicleID" class="form-control">
             <option value=0>Select Vehicle</option>
-            @foreach (VehicleResponseModel vehicleItem in (ViewData["Vehicles"]! as List<VehicleResponseModel>)!)
+            @foreach (VehicleViewModel vehicleItem in (ViewData["Vehicles"]! as List<VehicleViewModel>)!)
             {
                 <option value="@vehicleItem.ID">@vehicleItem.IdentificationNumber</option>
             }

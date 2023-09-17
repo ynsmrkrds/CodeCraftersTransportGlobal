@@ -25,7 +25,7 @@ namespace TransportGlobal.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        [Authority(UserType.Shipper)]
+        [Authority(UserType.Shipper, UserType.Customer)]
         public async Task<IActionResult> Get(int id)
         {
             GetEmployeeQueryResponse queryResponse = await _mediator.Send(new GetEmployeeQueryRequest(id));

@@ -9,6 +9,7 @@ using TransportGlobalWeb.UI.Models.CookieModels;
 using TransportGlobalWeb.UI.Models.RequestModels.UserContextRequestModels.User;
 using TransportGlobalWeb.UI.Models.ResponseModels;
 using TransportGlobalWeb.UI.Models.ResponseModels.UserResponseModels.User;
+using TransportGlobalWeb.UI.Models.ViewModels.UserContextViewModels;
 
 namespace TransportGlobalWeb.UI.Controllers
 {
@@ -67,7 +68,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult Profile()
         {
-            ApiResponseModel<GetProfileResponseModel>? apiResponse = _userClient.GetProfile();
+            ApiResponseModel<UserViewModel>? apiResponse = _userClient.GetProfile();
 
             IActionResult onData()
             {
@@ -79,7 +80,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult UpdateProfile()
         {
-            ApiResponseModel<GetProfileResponseModel>? apiResponse = _userClient.GetProfile();
+            ApiResponseModel<UserViewModel>? apiResponse = _userClient.GetProfile();
 
             IActionResult onData()
             {
@@ -113,6 +114,14 @@ namespace TransportGlobalWeb.UI.Controllers
             ApiResponseModel<NonDataResponseModel>? apiResponse = _userClient.UpdatePassword(updatePasswordRequestModel);
 
             return CreateActionResult(apiResponse, null);
+        }
+
+        public IActionResult Logout()
+        {
+            bool isSuccess = CookieHelper.RemoveCookie(CookieKey.User);
+            if (isSuccess) return RedirectToAction("Login");
+
+            throw new Exception("An error occurred in the logout process!");
         }
     }
 }

@@ -2,7 +2,7 @@
 using TransportGlobalWeb.UI.Models.ConfigurationModels;
 using TransportGlobalWeb.UI.Models.ConfigurationModels.MessagingContextConfigurationModels;
 using TransportGlobalWeb.UI.Models.ResponseModels;
-using TransportGlobalWeb.UI.Models.ResponseModels.MessagingResponseModels.Chat;
+using TransportGlobalWeb.UI.Models.ViewModels.MessagingContextViewModels;
 
 namespace TransportGlobalWeb.UI.ApiClients.MessagingContextApiClients
 {
@@ -15,12 +15,12 @@ namespace TransportGlobalWeb.UI.ApiClients.MessagingContextApiClients
             _configurationModel = apiEndpoints!.MessagingContextEndpoints!.ChatEndpoints!;
         }
 
-        public ApiResponseModel<GetOwnChatsResponseModel>? GetOwnChats(int page)
+        public ApiResponseModel<ListResponseModel<ChatViewModel>>? GetOwnChats(int page)
         {
             RestRequest request = new($"{_configurationModel.GetOwnChats}/{page}/{_apiEndpoints.PageSize}", Method.Get);
             request = AddAuthorizationHeader(request);
 
-            return SendRequest<GetOwnChatsResponseModel>(request);
+            return SendRequest<ListResponseModel<ChatViewModel>>(request);
         }
     }
 }

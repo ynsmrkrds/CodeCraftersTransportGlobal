@@ -1,4 +1,5 @@
-﻿using TransportGlobal.Domain.Entities.TransporterContextEntities;
+﻿using System.Security.Cryptography.X509Certificates;
+using TransportGlobal.Domain.Entities.TransporterContextEntities;
 using TransportGlobal.Domain.Repositories.TransporterContextRepositories;
 using TransportGlobal.Infrastructure.Context;
 
@@ -22,6 +23,13 @@ namespace TransportGlobal.Infrastructure.Repositories.TransporterContextReposito
             return GetAll()
                 .Where(x => x.IsDeleted == false)
                 .FirstOrDefault(x => x.OwnerUserID == userID);
+        }
+
+        public bool IsCompanyActive(int id)
+        {
+            return GetAll()
+                .Where(x => x.ID == id)
+                .Any(x => x.IsDeleted == false);
         }
     }
 }

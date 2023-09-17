@@ -1,4 +1,6 @@
 ﻿@using TransportGlobalWeb.UI.Enums.TransporterContextEnums;
+@using TransportGlobalWeb.UI.Models.RequestModels.TransporterContextRequestModels.Employee;
+@using TransportGlobalWeb.UI.Models.ViewModels.TransporterContextViewModels;
 @model CreateEmployeeRequestModel
 
 <h1>Create Employee</h1>
@@ -8,7 +10,7 @@
         <label asp-for="VehicleID">Vehicle</label>
         <select asp-for="VehicleID" class="form-control">
             <option value=0>Select Vehicle</option>
-            @foreach (VehicleResponseModel vehicleItem in (ViewData["Vehicles"]! as List<VehicleResponseModel>)!)
+            @foreach (VehicleViewModel vehicleItem in (ViewData["Vehicles"]! as List<VehicleViewModel>)!)
             {
                 <option value="@vehicleItem.ID">@vehicleItem.IdentificationNumber</option>
             }

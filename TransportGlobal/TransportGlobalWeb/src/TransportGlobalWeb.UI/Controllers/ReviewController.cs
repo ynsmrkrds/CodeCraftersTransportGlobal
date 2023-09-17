@@ -2,7 +2,7 @@
 using TransportGlobalWeb.UI.ApiClients.ReviewContextApiClients;
 using TransportGlobalWeb.UI.Models.RequestModels.ReviewContextRequestModels.Review;
 using TransportGlobalWeb.UI.Models.ResponseModels;
-using TransportGlobalWeb.UI.Models.ResponseModels.ReviewResponseModels.Review;
+using TransportGlobalWeb.UI.Models.ViewModels.ReviewContextViewModels;
 
 namespace TransportGlobalWeb.UI.Controllers
 {
@@ -17,7 +17,7 @@ namespace TransportGlobalWeb.UI.Controllers
 
         public IActionResult GetCompanyReviews(int id, int page = 0)
         {
-            ApiResponseModel<GetCompanyReviewsResponseModel>? apiResponse = _reviewClient.GetCompanyReviews(id, page);
+            ApiResponseModel<ListResponseModel<ReviewViewModel>>? apiResponse = _reviewClient.GetCompanyReviews(id, page);
 
             IActionResult onData()
             {

@@ -15,9 +15,9 @@ namespace TransportGlobal.Infrastructure.Repositories.MessagingContexrRepositori
         public IEnumerable<ChatEntity> GetChatsByUserType(UserType userType, int userID)
         {
             IQueryable<ChatEntity> chats = GetAll()
+                .Include(x => x.TransportRequest)
                 .Include(x => x.SenderUser)
-                .Include(x => x.ReceiverUser)
-                .OrderByDescending(x => x.CreatedDate);
+                .Include(x => x.ReceiverUser);
 
             chats = userType switch
             {
